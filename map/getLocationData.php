@@ -12,7 +12,7 @@ try {
 
 // purpose is to fetch all the location values and have it prepoulate the map from the database
 
-$locations = $db->prepare("SELECT * FROM location ORDER BY RAND()");
+$locations = $db->prepare("SELECT * FROM location ORDER BY RAND() LIMIT 14");
 $locations->execute();
 $locationResults = $locations->fetchAll(PDO::FETCH_ASSOC);
 
