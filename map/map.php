@@ -114,13 +114,34 @@
             height: 85vh;
             background: #0f0f0f;
             display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
             border: 2px solid purple;
+            background: linen;
+        }
+        
+        .state-changes-container {
+            display: flex;
+        }
+
+        .battle-zone {
+            display: none;
+            flex-direction: column;
+            border: 2px solid hotpink;
+        }
+
+        .PC-cards {
+            position: absolute;
+            height: 20%;
+            bottom: 0;
         }
     </style>
 </head>
 
 <body>
-    <div class="map"> <!-- excepting the first location, these should be generated from database pulls, displaying E/B and location name-->
+    <div class="map">
         <div class="card-zone" id="start">
             <div class="location-card" id="start-loc">Exit 9</div>
         </div>
@@ -134,8 +155,6 @@
         <div class="card-zone" id="zone7"></div>
         <div class="card-zone" id="zone8"></div>
         <div class="card-zone" id="zone9"></div>
-
-        <!-- see map-card.php if you wanna generate locations in php -->
 
     </div>
     <div id="encounter-zone">
@@ -153,10 +172,30 @@
                 </div>
             </div>
         </div>
-        <!-- another div with a class of "battle" here -->
+        <div class="battle-zone">
+            <img class="enemy" src="" />
+            <div class="PC-cards"></div>
+        </div>
     </div>
 
-    <div id="encounter-result">result of your choices will be shown here - yay</div>
+    <div id="encounter-result">
+        <div class="resolution-text">THIS IS THE RESOLUTION OF WHATEVER GIVEN EVENT OR BATTLE</div>
+        <div class="state-changes-container">
+            <div class="attribute energy">
+                <img src="energy.jpg" />
+                <div class="energy-num">60</div>
+            </div>
+            <div class="attribute drunk">
+                <img src="drunk.jpg" />
+                <div class="drunk-num">20</div>
+            </div>
+            <div class="attribute money">
+                <img src="money.jpg" />
+                <div class="money-num">80,000</div>
+            </div>
+        </div>
+        <button>Go</button>
+    </div>
 
 <script>
     document.addEventListener("DOMContentLoaded", () => {
@@ -227,6 +266,8 @@
 
                 const encounterZone = document.querySelector("#encounter-zone");
                 const eventZone = document.querySelector(".event-zone");
+                const battleZone = document.querySelector(".battle-zone");
+                const pcCardZone = document.querySelector(".PC-cards");
 
                 const optionButton1 = document.getElementById('option-button1');
                 const optionButton2 = document.getElementById('option-button2');
@@ -275,24 +316,25 @@
 
                 function locationTrigger(inData) {
                     nextCards.forEach((card) => card.classList.remove("focus"));
-                    // Trigger event or battle at the location, currently only event default
-
                     encounterZone.style.display = "block";
 
                     function hidePops() {
                         encounterZone.style.display = "none";
                         eventZone.style.display = "none";
-                        //add battleZone.style.display = "none" here
+                        battleZone.style.display = "none";
                         encounterResult.style.display = "flex";
                         encounterResult.addEventListener("click", () => encounterResult.style.display = "none");
                     }
 
                     function triggerEvent(inData) {
                         eventZone.style.display = "flex";
-                        eventZone.querySelector(".event-title").innerHTML = inData.title;
-                        eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.image}')`;
-                        eventZone.querySelector(".prompt-container").innerHTML = inData.description;
-                        eventZone.querySelector("#option-button1").innerHTML = inData.options;
+                        eventZone.querySelector(".event-title").innerHTML = inData.event_title;
+                        eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`;
+                        eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
+                        eventZone.querySelector("#option-button1").innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].energy_hit}) (Money ${inData.options[0].money_hit}) (Sobriety ${inData.options[0].sobriety_hit})`;
+                        eventZone.querySelector("#option-button2").innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].energy_hit}) (Money ${inData.options[1].money_hit}) (Sobriety ${inData.options[1].sobriety_hit})`;
+                        eventZone.querySelector("#option-button3").innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].energy_hit}) (Money ${inData.options[2].money_hit}) (Sobriety ${inData.options[2].sobriety_hit})`;
+
 
                         optionButton1.addEventListener('click', function() {
                             //send choice value to db for game-state update
@@ -313,8 +355,67 @@
                         });
                     }
 
-                    //assuming event
+                    //this is loose af
+                    function triggerBattle(inData) {
+
+                        //get enemy data
+                        fetch(`getBattleData.php`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                    body: `locationID=${locationID}`
+                                })
+                            .then(response => {
+                                console.log(response);
+                                if (!response.ok) throw new Error('Network response was not ok');
+                                return response.json();
+                            })
+                            .then(battleData => {
+                                console.log('Received data:', battleData);
+                            })
+                            .catch(error => console.log(error));
+
+                        //get card data
+                        fetch(`getPCCardData.php`, {
+                                    method: 'POST',
+                            })
+                            .then(response => {
+                                console.log(response);
+                                if (!response.ok) throw new Error('Network response was not ok');
+                                return response.json();
+                            })
+                            .then(PCcardData => {
+                                console.log('Received data:', PCcardData);
+                            })
+                            .catch(error => console.log(error));
+                        }
+
+                        function playCard() {
+                            //what does the card do when clicked?
+                        }
+
+                        //generate battle
+                        battleZone.style.display = "flex";
+                        document.querySelector(".enemy").style.backgroundImage = //battleData.img_url;
+                        PCcardData.forEach((card) => {
+                            const newCardDiv = document.createElement("div");
+                            newCardDiv.classList.add("card-body");
+                            newCardDiv.innerHTML = `<div class="card-image"></div>
+                                                    <div class="card-text">
+                                                    <span class="card-title"></span>
+                                                    <span class="card-action-text"></span>
+                                                    </div>`;
+                            newCardDiv.querySelector(".card-image").backgroundImage = card.card_img;
+                            newCardDiv.querySelector(".card-title").innerHTML = card.card_text;
+                            newCardDiv.querySelector(".card-action-text").innerHTML = card.card_action_text;
+                            newCardDiv.addEventListener("click", playCard);
+                            pcCardZone.appendChild(newCardDiv);
+                    });
+
+                    //assuming event, will later need a flag and if/else for "e" or "b"
                     triggerEvent(inData);
+                    //or triggerBattle(inData);
 
                     gameRound += 1;
                     prepareRound();
