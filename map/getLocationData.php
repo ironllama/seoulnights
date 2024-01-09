@@ -12,12 +12,8 @@ try {
 
 // purpose is to fetch all the location values and have it prepoulate the map from the database
 
-$locations = $db->prepare("SELECT * FROM location ORDER BY RAND() LIMIT 14");
+$locations = $db->prepare("SELECT * FROM locations ORDER BY RAND() LIMIT 14");
 $locations->execute();
 $locationResults = $locations->fetchAll(PDO::FETCH_ASSOC);
 
 echo json_encode($locationResults);
-
-// foreach ($locationResults as $result) {
-//     echo "location name is : " . $result['location_name'] . "<br>";
-// };

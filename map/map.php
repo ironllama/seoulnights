@@ -77,7 +77,8 @@
             border: 2px solid red;
         }
 
-        .event-zone, .res {
+        .event-zone,
+        .res {
             width: 100%;
             height: 100%;
             background: linen;
@@ -121,7 +122,7 @@
             border: 2px solid purple;
             background: linen;
         }
-        
+
         .state-changes-container {
             display: flex;
         }
@@ -182,213 +183,215 @@
         <div class="resolution-text">THIS IS THE RESOLUTION OF WHATEVER GIVEN EVENT OR BATTLE</div>
         <div class="state-changes-container">
             <div class="attribute energy">
-                <img src="energy.jpg" />
+                <!-- <img src="energy.jpg" /> -->
                 <div class="energy-num">60</div>
             </div>
             <div class="attribute drunk">
-                <img src="drunk.jpg" />
+                <!-- <img src="drunk.jpg" /> -->
                 <div class="drunk-num">20</div>
             </div>
             <div class="attribute money">
-                <img src="money.jpg" />
+                <!-- <img src="money.jpg" /> -->
                 <div class="money-num">80,000</div>
             </div>
         </div>
         <button>Go</button>
     </div>
 
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        fetch('getLocationData.php')
-            .then(res => res.json())
-            .then(data => {
-                console.log(data);
-                console.log(data.length)
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            fetch('getLocationData.php')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data);
+                    console.log(data.length)
 
-                //map generation
-                const mapElement = document.querySelector(".map");
-                let pathBranchesLeft = 4;
-                let i = 0; // ultimately ends up being the zone identifier
+                    //map generation
+                    const mapElement = document.querySelector(".map");
+                    let pathBranchesLeft = 4;
+                    let i = 0; // ultimately ends up being the zone identifier
 
-                while (data.length > 0) {
-                    let branchPath = false;
-                    const newLocationCard = document.createElement("div");
-                    const parentZone = document.querySelector("#zone" + i);
+                    while (data.length > 0) {
+                        let branchPath = false;
+                        const newLocationCard = document.createElement("div");
+                        const parentZone = document.querySelector("#zone" + i);
 
-                    // Calculate remaining non-branch iterations
-                    const remainingNonBranchIterations = data.length - pathBranchesLeft * 2;
+                        // Calculate remaining non-branch iterations
+                        const remainingNonBranchIterations = data.length - pathBranchesLeft * 2;
 
-                    // Determine if a branch should be created based on remaining iterations and branches
-                    if (pathBranchesLeft > 0 && (Math.floor(Math.random() * remainingNonBranchIterations) === 0 || remainingNonBranchIterations <= 0)) {
-                        branchPath = true;
-                        pathBranchesLeft--;
-                    }
+                        // Determine if a branch should be created based on remaining iterations and branches
+                        if (pathBranchesLeft > 0 && (Math.floor(Math.random() * remainingNonBranchIterations) === 0 || remainingNonBranchIterations <= 0)) {
+                            branchPath = true;
+                            pathBranchesLeft--;
+                        }
 
-                    if (branchPath) {
-                        for (let branchLoc = 0; branchLoc < 2; branchLoc++) {
-                            if (data.length === 0) break; // Prevent creating branches if testArray is empty
+                        if (branchPath) {
+                            for (let branchLoc = 0; branchLoc < 2; branchLoc++) {
+                                if (data.length === 0) break; // Prevent creating branches if testArray is empty
+                                newLocationCard.classList.add("location-card");
+
+                                newLocationCard.id = data[0]["location_id"];
+                                newLocationCard.textContent = data[0]["location_name"];
+                                newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
+                                // const locImg = document.createElement("img");
+                                // locImg.src = data[0]["img_url"];
+                                // newLocationCard.appendChild(locImg);
+                                data.shift();
+
+                                parentZone.appendChild(newLocationCard.cloneNode(true));
+                            }
+                        } else {
                             newLocationCard.classList.add("location-card");
 
-                            newLocationCard.id = data[0]["id"];
+                            newLocationCard.id = data[0]["location_id"];
                             newLocationCard.textContent = data[0]["location_name"];
-                            const locImg = document.createElement("img");
-                            locImg.src = data[0]["img_url"];
-                            newLocationCard.appendChild(locImg);
+                            newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
+                            // const locImg = document.createElement("img");
+                            // locImg.src = data[0]["img_url"];
+                            // newLocationCard.appendChild(locImg);
                             data.shift();
 
-                            parentZone.appendChild(newLocationCard.cloneNode(true));
+                            parentZone.appendChild(newLocationCard);
                         }
-                    } else {
-                        newLocationCard.classList.add("location-card");
 
-                        newLocationCard.id = data[0]["id"];
-                        newLocationCard.textContent = data[0]["location_name"];
-                        const locImg = document.createElement("img");
-                        locImg.src = data[0]["img_url"];
-                        newLocationCard.appendChild(locImg);
-                        data.shift();
-                        
-                        parentZone.appendChild(newLocationCard);
+                        i++;
                     }
 
-                    i++;
-                }
+                    //game prep and start
+                    let gameRound = 0;
 
-                //game prep and start
-                let gameRound = 0;
+                    //get DOM elements
+                    const currentZone = document.querySelector("#start")
+                    let currentCards = currentZone.querySelectorAll(".location-card");
 
-                //get DOM elements
-                const currentZone = document.querySelector("#start")
-                let currentCards = currentZone.querySelectorAll(".location-card");
+                    let nextZone = document.querySelector("#zone" + (gameRound));
+                    let nextCards = nextZone.querySelectorAll(".location-card");
 
-                let nextZone = document.querySelector("#zone" + (gameRound));
-                let nextCards = nextZone.querySelectorAll(".location-card");
+                    const encounterZone = document.querySelector("#encounter-zone");
+                    const eventZone = document.querySelector(".event-zone");
+                    const battleZone = document.querySelector(".battle-zone");
+                    const pcCardZone = document.querySelector(".PC-cards");
 
-                const encounterZone = document.querySelector("#encounter-zone");
-                const eventZone = document.querySelector(".event-zone");
-                const battleZone = document.querySelector(".battle-zone");
-                const pcCardZone = document.querySelector(".PC-cards");
+                    const optionButton1 = document.getElementById('option-button1');
+                    const optionButton2 = document.getElementById('option-button2');
+                    const optionButton3 = document.getElementById('option-button3');
 
-                const optionButton1 = document.getElementById('option-button1');
-                const optionButton2 = document.getElementById('option-button2');
-                const optionButton3 = document.getElementById('option-button3');
-    
-                const encounterResult = document.getElementById("encounter-result");
+                    const encounterResult = document.getElementById("encounter-result");
 
-                function prepareRound() {
-                    if (gameRound < 10) {
+                    function prepareRound() {
+                        if (gameRound < 10) {
 
-                        nextZone = document.querySelector("#zone" + (gameRound)); // identifying the next decision zone
-                        nextCards = nextZone.querySelectorAll(".location-card"); // getting every card within the next decision zone
+                            nextZone = document.querySelector("#zone" + (gameRound)); // identifying the next decision zone
+                            nextCards = nextZone.querySelectorAll(".location-card"); // getting every card within the next decision zone
 
-                        function locationClicked(event) {
-                            nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
-                            let locationID = event.target.id + "";
-                            //Thank you, Alex ㅠㅠ
-                            fetch(`getEventData.php`, {
+                            function locationClicked(event) {
+                                nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
+                                const locationID = event.target.id + "";
+                                //Thank you, Alex ㅠㅠ
+                                fetch(`getEventData1.php`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded'
-                                    },
+                                        },
                                         body: `locationID=${locationID}`
                                     })
+                                    .then(response => {
+                                        console.log(response);
+                                        if (!response.ok) throw new Error('Network response was not ok');
+                                        return response.json();
+                                    })
+                                    .then(encounterData => {
+                                        console.log('Received data:', encounterData);
+                                        locationTrigger(encounterData);
+                                    })
+                                    .catch(error => console.log(error));
+                            }
+
+                            if (nextCards) { // if cards in the current zone exist
+                                nextCards.forEach((card) => card.classList.add("focus")); // adding a focus class to each card in the current zone
+                                nextCards.forEach((card) => card.addEventListener("click", locationClicked)); // essentially removing the click event listener after been clicked
+                                if (nextCards.length == 2) {
+                                    console.log("Player is at a choice of " + nextCards[0].innerHTML + " or " + nextCards[1].innerHTML); // Log player's location
+                                } else console.log("Player is at choice of " + nextCards[0].innerHTML);
+                            }
+                        }
+                    }
+
+                    function locationTrigger(inData) { // once you click on a location this function is triggered
+                        nextCards.forEach((card) => card.classList.remove("focus")); // removing focus from the locations in the clicked zone
+                        encounterZone.style.display = "block"; //displaying the encounter zone
+
+                        function hidePops() { // creating a function that hides the popup
+                            encounterZone.style.display = "none"; // hides the encounter zone
+                            eventZone.style.display = "none"; // hides the eventzone
+                            battleZone.style.display = "none"; // hides the battlezone
+                            encounterResult.style.display = "flex"; // displays encounterResult
+                            encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); // if you click on the encounterResult, it disappears
+                        }
+
+                        function triggerEvent(inData) { // creating a function called trigger event that takes in data assumedly
+                            eventZone.style.display = "flex"; // displays eventzone
+                            eventZone.querySelector(".event-title").innerHTML = inData.event_title; // assigns eventzone title to the returned datasets title key value pair
+                            eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`; // sets background image to event_img key value pair
+                            eventZone.querySelector(".prompt-container").innerHTML = inData.event_description; // sets description to event_desc key value pair
+                            eventZone.querySelector("#option-button1").innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Sobriety ${inData.options[0].option_sobriety})`;
+                            eventZone.querySelector("#option-button2").innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Sobriety ${inData.options[1].option_sobriety})`;
+                            eventZone.querySelector("#option-button3").innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Sobriety ${inData.options[2].option_sobriety})`;
+
+
+                            optionButton1.addEventListener('click', function() {
+                                //send choice value to db for game-state update
+                                console.log("option 1 chosen");
+                                hidePops();
+                            });
+
+                            optionButton2.addEventListener('click', function() {
+                                //send choice value to db for game-state update
+                                console.log("option 2 chosen");
+                                hidePops();
+                            });
+
+                            optionButton3.addEventListener('click', function() {
+                                //send choice value to db for game-state update
+                                console.log("option 3 chosen");
+                                hidePops();
+                            });
+                        }
+
+                        //this is loose af
+                        function triggerBattle(inData) {
+
+                            //get enemy data
+                            fetch(`getBattleData.php`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded'
+                                    },
+                                    body: `locationID=${locationID}`
+                                })
                                 .then(response => {
                                     console.log(response);
                                     if (!response.ok) throw new Error('Network response was not ok');
                                     return response.json();
                                 })
-                                .then(encounterData => {
-                                    console.log('Received data:', encounterData);
-                                    locationTrigger(encounterData);
+                                .then(battleData => {
+                                    console.log('Received data:', battleData);
                                 })
                                 .catch(error => console.log(error));
-                            }
 
-                        if (nextCards) { // if cards in the current zone exist
-                            nextCards.forEach((card) => card.classList.add("focus")); // adding a focus class to each card in the current zone
-                            nextCards.forEach((card) => card.addEventListener("click", locationClicked)); // essentially removing the click event listener after been clicked
-                            if (nextCards.length == 2) {
-                                console.log("Player is at a choice of " + nextCards[0].innerHTML + " or " + nextCards[1].innerHTML); // Log player's location
-                            } else console.log("Player is at choice of " + nextCards[0].innerHTML);
-                        }
-                    }
-                }
-
-                function locationTrigger(inData) {
-                    nextCards.forEach((card) => card.classList.remove("focus"));
-                    encounterZone.style.display = "block";
-
-                    function hidePops() {
-                        encounterZone.style.display = "none";
-                        eventZone.style.display = "none";
-                        battleZone.style.display = "none";
-                        encounterResult.style.display = "flex";
-                        encounterResult.addEventListener("click", () => encounterResult.style.display = "none");
-                    }
-
-                    function triggerEvent(inData) {
-                        eventZone.style.display = "flex";
-                        eventZone.querySelector(".event-title").innerHTML = inData.event_title;
-                        eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`;
-                        eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
-                        eventZone.querySelector("#option-button1").innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].energy_hit}) (Money ${inData.options[0].money_hit}) (Sobriety ${inData.options[0].sobriety_hit})`;
-                        eventZone.querySelector("#option-button2").innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].energy_hit}) (Money ${inData.options[1].money_hit}) (Sobriety ${inData.options[1].sobriety_hit})`;
-                        eventZone.querySelector("#option-button3").innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].energy_hit}) (Money ${inData.options[2].money_hit}) (Sobriety ${inData.options[2].sobriety_hit})`;
-
-
-                        optionButton1.addEventListener('click', function() {
-                            //send choice value to db for game-state update
-                            console.log("option 1 chosen");
-                            hidePops();
-                        }); 
-
-                        optionButton2.addEventListener('click', function() {
-                            //send choice value to db for game-state update
-                            console.log("option 2 chosen");
-                            hidePops();
-                        });
-
-                        optionButton3.addEventListener('click', function() {
-                            //send choice value to db for game-state update
-                            console.log("option 3 chosen");
-                            hidePops();
-                        });
-                    }
-
-                    //this is loose af
-                    function triggerBattle(inData) {
-
-                        //get enemy data
-                        fetch(`getBattleData.php`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                },
-                                    body: `locationID=${locationID}`
-                                })
-                            .then(response => {
-                                console.log(response);
-                                if (!response.ok) throw new Error('Network response was not ok');
-                                return response.json();
-                            })
-                            .then(battleData => {
-                                console.log('Received data:', battleData);
-                            })
-                            .catch(error => console.log(error));
-
-                        //get card data
-                        fetch(`getPCCardData.php`, {
-                                    method: 'POST',
-                            })
-                            .then(response => {
-                                console.log(response);
-                                if (!response.ok) throw new Error('Network response was not ok');
-                                return response.json();
-                            })
-                            .then(PCcardData => {
-                                console.log('Received data:', PCcardData);
-                            })
-                            .catch(error => console.log(error));
+                            //get card data
+                            // fetch(`getPCCardData.php`, {
+                            //         method: 'POST',
+                            //     })
+                            //     .then(response => {
+                            //         console.log(response);
+                            //         if (!response.ok) throw new Error('Network response was not ok');
+                            //         return response.json();
+                            //     })
+                            //     .then(PCcardData => {
+                            //         console.log('Received data:', PCcardData);
+                            //     })
+                            //     .catch(error => console.log(error));
                         }
 
                         function playCard() {
@@ -396,35 +399,35 @@
                         }
 
                         //generate battle
-                        battleZone.style.display = "flex";
-                        document.querySelector(".enemy").style.backgroundImage = //battleData.img_url;
-                        PCcardData.forEach((card) => {
-                            const newCardDiv = document.createElement("div");
-                            newCardDiv.classList.add("card-body");
-                            newCardDiv.innerHTML = `<div class="card-image"></div>
-                                                    <div class="card-text">
-                                                    <span class="card-title"></span>
-                                                    <span class="card-action-text"></span>
-                                                    </div>`;
-                            newCardDiv.querySelector(".card-image").backgroundImage = card.card_img;
-                            newCardDiv.querySelector(".card-title").innerHTML = card.card_text;
-                            newCardDiv.querySelector(".card-action-text").innerHTML = card.card_action_text;
-                            newCardDiv.addEventListener("click", playCard);
-                            pcCardZone.appendChild(newCardDiv);
-                    });
+                        // battleZone.style.display = "flex";
+                        // document.querySelector(".enemy").style.backgroundImage = //battleData.img_url;
+                        //     PCcardData.forEach((card) => {
+                        //         const newCardDiv = document.createElement("div");
+                        //         newCardDiv.classList.add("card-body");
+                        //         newCardDiv.innerHTML = `<div class="card-image"></div>
+                        //                             <div class="card-text">
+                        //                             <span class="card-title"></span>
+                        //                             <span class="card-action-text"></span>
+                        //                             </div>`;
+                        //         newCardDiv.querySelector(".card-image").backgroundImage = card.card_img;
+                        //         newCardDiv.querySelector(".card-title").innerHTML = card.card_text;
+                        //         newCardDiv.querySelector(".card-action-text").innerHTML = card.card_action_text;
+                        //         newCardDiv.addEventListener("click", playCard);
+                        //         pcCardZone.appendChild(newCardDiv);
+                        //     });
 
-                    //assuming event, will later need a flag and if/else for "e" or "b"
-                    triggerEvent(inData);
-                    //or triggerBattle(inData);
+                        //assuming event, will later need a flag and if/else for "e" or "b"
+                        triggerEvent(inData);
+                        //or triggerBattle(inData);
 
-                    gameRound += 1;
+                        gameRound += 1;
+                        prepareRound();
+                    }
+
                     prepareRound();
-                }
-
-                prepareRound();
-            });
-    });
-</script>
+                });
+        });
+    </script>
 </body>
 
 </html>
