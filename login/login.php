@@ -1,5 +1,13 @@
 <?php
+session_start();
 
+echo $_SESSION['name'];
+
+if (isset($_SESSION['name'])) {
+    // Redirect to another page if 'name' is set
+    header('Location: ../map/map.php');
+    exit; // Ensure the script exits after redirection
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +26,7 @@
     <div class="main">
         <div class="buttons">
             <button class="loginButton">Login</button>
-            <button class="playButton"><a href="../map.php">Play</a></button>
+            <button class="playButton"><a href="../map/map.php">Play</a></button>
             <button class="leaderboardButton">Leaderboard</button>
             <button class="signoutButton">Sign Out</button>
         </div>
@@ -69,10 +77,6 @@
         const analytics = getAnalytics(app);
         const provider = new GoogleAuthProvider(app);
 
-
-        // google button init
-
-
         loginButton.addEventListener('click', (e) => {
             signInWithPopup(auth, provider)
 
@@ -85,6 +89,7 @@
                     // The signed-in user info.
                     const user = result.user;
                     console.log(user);
+
 
 
 
@@ -122,13 +127,14 @@
 
         signoutButton.addEventListener("click", (e) => {
             signOut(auth).then(() => {
-                console.log(" Sign-out successful");
                 welcomeMessage.innerHTML = '';
                 loginButton.style.display = "initial";
                 signoutButton.style.display = 'none';
                 playButton.style.display = "none";
                 leaderboardButton.style.display = "none";
                 playerPic.style.display = "none";
+                <?php session_destroy() ?>;
+                console.log(" Sign-out successful");
             }).catch((error) => {
                 // An error happened.
             });

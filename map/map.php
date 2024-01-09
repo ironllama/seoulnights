@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+// if (!isset($_SESSION['loaded'])) {
+//     $_SESSION['loaded'] = true;
+// } else {
+//     unset($_SESSION['name']);
+//     // Destroy the session
+//     session_destroy();
+//     header('Location: ../login/login.php');
+//     exit; // Ensure the script exits after redirection
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -201,12 +212,16 @@
 
         .money-container span::after {
             content: "원";
+      }
+        .username {
+            color: white;
         }
     </style>
 </head>
 
 <body>
     <div class="map">
+        <div class="username"><?php echo $_SESSION['name'] ?></div>
         <div class="card-zone" id="start">
             <div class="location-card" id="start-loc">Exit 9</div>
         </div>
@@ -434,11 +449,11 @@
                             eventZone.querySelector(".event-title").innerHTML = inData.event_title; // assigns eventzone title to the returned datasets title key value pair
                             eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`; // sets background image to event_img key value pair
                             eventZone.querySelector(".prompt-container").innerHTML = inData.event_description; // sets description to event_desc key value pair
-                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Sobriety ${inData.options[0].option_sobriety})`;
+                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Drunk ${inData.options[0].option_drunk})`;
                             optionButton1.id = inData.options[0].option_id;
-                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Sobriety ${inData.options[1].option_sobriety})`;
+                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Drunk ${inData.options[1].option_drunk})`;
                             optionButton2.id = inData.options[1].option_id;
-                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Sobriety ${inData.options[2].option_sobriety})`;
+                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Drunk ${inData.options[2].option_drunk})`;
                             optionButton3.id = inData.options[2].option_id;
 
                             function sendChoice(event) {
