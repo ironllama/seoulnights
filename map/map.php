@@ -1,4 +1,15 @@
 <?php
+session_start();
+
+// if (!isset($_SESSION['loaded'])) {
+//     $_SESSION['loaded'] = true;
+// } else {
+//     unset($_SESSION['name']);
+//     // Destroy the session
+//     session_destroy();
+//     header('Location: ../login/login.php');
+//     exit; // Ensure the script exits after redirection
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -138,11 +149,16 @@
             height: 20%;
             bottom: 0;
         }
+
+        .username {
+            color: white;
+        }
     </style>
 </head>
 
 <body>
     <div class="map">
+        <div class="username"><?php echo $_SESSION['name'] ?></div>
         <div class="card-zone" id="start">
             <div class="location-card" id="start-loc">Exit 9</div>
         </div>
