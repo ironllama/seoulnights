@@ -1,0 +1,72 @@
+.main {
+    height: 80vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+    /* background-color: gray; */
+    font-family: sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.signoutButton,
+.playButton,
+.leaderboardButton {
+    display: none;
+    height: 75px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 30px;
+    text-align: center;
+}
+
+.loginButton {
+    height: 75px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 30px;
+}
+
+.loginButton:hover,
+.signoutButton:hover,
+.playButton:hover,
+.leaderboardButton:hover {
+    background-color: honeydew;
+    height: 80px;
+    width: 220px;
+    border-radius: 10px;
+    font-size: 50px;
+}
+
+h1 {
+    text-align: center;
+    font-size: 100px;
+    background: linear-gradient(to right, red, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
