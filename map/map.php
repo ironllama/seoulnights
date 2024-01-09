@@ -9,6 +9,7 @@
     <title>Map</title>
     <style>
         body {
+            font-family: sans-serif;
             margin: 0;
             padding: 0;
             width: 100vw;
@@ -19,6 +20,7 @@
         }
 
         .map {
+            position: relative;
             padding: 0 1em;
             width: 95vw;
             height: 95vh;
@@ -40,7 +42,7 @@
             justify-content: center;
             align-items: center;
             font-weight: bolder;
-            font-family: sans-serif;
+
         }
 
         .card-zone {
@@ -138,6 +140,68 @@
             height: 20%;
             bottom: 0;
         }
+
+        .hud {
+            margin: .25em .25em 0 0;
+            color: white;
+            -webkit-text-stroke: 1px black;
+            position: absolute;
+            top: 0;
+            right: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden;
+            gap: .25em;
+        }
+
+        .stat {
+            display: flex;
+            align-self: flex-end;
+        }
+
+        .hud label, .hud span {
+            font-size: 1.25em;
+        }
+
+        .progress-container {
+            position: relative;
+            margin-left: .25em;
+        }
+
+        .progress-container span {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+        }
+
+        .progress-container span::after {
+            content: "/100";
+        }
+
+        progress {
+            border: none;
+            font-size: 1.5em;
+        }
+
+        .player-energy-bar::-moz-progress-bar {
+            background-color: cornflowerblue;
+        }
+        .player-energy-bar::-webkit-progress-value {
+            background-color: cornflowerblue;
+        }
+        .player-drunk-bar::-moz-progress-bar {
+            background-color: DarkOliveGreen;
+        }
+        .player-drunk-bar::-webkit-progress-value {
+            background-color: DarkOliveGreen;
+        }
+
+        .money-container span::after {
+            content: "원";
+        }
     </style>
 </head>
 
@@ -157,7 +221,29 @@
         <div class="card-zone" id="zone8"></div>
         <div class="card-zone" id="zone9"></div>
 
+        <div class="hud">
+            <div class="stat">
+                <label>Energy:</label>
+                <div class="progress-container">
+                    <progress max="100" value="75" class="player-energy-bar"></progress>
+                    <span class="player-energy-num">75</span>
+                </div>
+            </div>
+            <div class="stat">
+                <label>Drunk:</label>
+                <div class="progress-container">
+                    <progress max="100" value="50" class="player-drunk-bar"></progress>
+                    <span class="player-drunk-num">50</span>
+                </div>
+            </div>
+            <div class="stat money-container">
+                <label>Money:</label>
+                <span class="player-money-num">100,000</span>
+            </div>
+        </div>
+
     </div>
+
     <div id="encounter-zone">
         <div class="event-zone">
             <div class="event-section">
@@ -195,7 +281,7 @@
                 <div class="money-num">80,000</div>
             </div>
         </div>
-        <button>Go</button>
+        <h3>click to continue...</h3>
     </div>
 
     <script>
@@ -268,15 +354,26 @@
                     let nextCards = nextZone.querySelectorAll(".location-card");
 
                     const encounterZone = document.querySelector("#encounter-zone");
+                    //event
                     const eventZone = document.querySelector(".event-zone");
-                    const battleZone = document.querySelector(".battle-zone");
-                    const pcCardZone = document.querySelector(".PC-cards");
-
                     const optionButton1 = document.querySelector('.option-button1');
                     const optionButton2 = document.querySelector('.option-button2');
                     const optionButton3 = document.querySelector('.option-button3');
-
+                    //battle
+                    const battleZone = document.querySelector(".battle-zone");
+                    const pcCardZone = document.querySelector(".PC-cards");
+                    //result
                     const encounterResult = document.getElementById("encounter-result");
+                    const resolutionText = document.querySelector(".resolution-text");
+                    const energyChange = document.querySelector(".energy-num");
+                    const drunkChange = document.querySelector(".drunk-num");
+                    const moneyChange = document.querySelector(".money-num");
+                    //hud
+                    const energyBar = document.querySelector(".player-energy-bar");
+                    const drunkBar = document.querySelector(".player-drunk-bar");
+                    const energyNum = document.querySelector(".player-energy-num");
+                    const drunkNum = document.querySelector(".player-drunk-num");
+                    const moneyNum = document.querySelector(".player-money-num");
 
                     function prepareRound() {
                         if (gameRound < 10) {
@@ -326,10 +423,13 @@
                             eventZone.style.display = "none"; // hides the eventzone
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
+
+                            //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTML
+                            //
                             encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); // if you click on the encounterResult, it disappears
                         }
 
-                        function triggerEvent(inData) { // creating a function called trigger event that takes in data assumedly
+                        function triggerEvent(inData) {
                             eventZone.style.display = "flex"; // displays eventzone
                             eventZone.querySelector(".event-title").innerHTML = inData.event_title; // assigns eventzone title to the returned datasets title key value pair
                             eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`; // sets background image to event_img key value pair
@@ -341,23 +441,31 @@
                             optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Sobriety ${inData.options[2].option_sobriety})`;
                             optionButton3.id = inData.options[2].option_id;
 
-                            optionButton1.addEventListener('click', function() {
-                                //send choice value to db for game-state update
-                                console.log("option 1 chosen");
-                                hidePops();
-                            });
+                            function sendChoice(event) {
+                                const choiceID = event.target.id + "";
+                                const currentPlayerState = [choiceID, energyNum.innerHTML, drunkNum.innerHTML, moneyNum.innerHTML];
+                                fetch(`getOptionResults.php`, {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify(currentPlayerState)
+                                    })
+                                    .then(response => {
+                                        console.log(response);
+                                        if (!response.ok) throw new Error('Network response was not ok');
+                                        return response.json();
+                                    })
+                                    .then(optionResultsData => {
+                                        console.log('Received data:', optionResultsData);
+                                        hidePops(optionResultsData);
+                                    })
+                                    .catch(error => console.log(error));
+                            }
 
-                            optionButton2.addEventListener('click', function() {
-                                //send choice value to db for game-state update
-                                console.log("option 2 chosen");
-                                hidePops();
-                            });
-
-                            optionButton3.addEventListener('click', function() {
-                                //send choice value to db for game-state update
-                                console.log("option 3 chosen");
-                                hidePops();
-                            });
+                            optionButton1.addEventListener('click', sendChoice);
+                            optionButton2.addEventListener('click', sendChoice);
+                            optionButton3.addEventListener('click', sendChoice);
                         }
 
                         //this is loose af
