@@ -204,7 +204,7 @@
                 .then(res => res.json())
                 .then(data => {
                     console.log(data);
-                    console.log(data.length)
+                    // console.log(data.length)
 
                     //map generation
                     const mapElement = document.querySelector(".map");
@@ -288,7 +288,7 @@
                                 nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
                                 const locationID = event.target.id + "";
                                 //Thank you, Alex ㅠㅠ
-                                fetch(`getEventData1.php`, {
+                                fetch(`getEventData.php`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded'
