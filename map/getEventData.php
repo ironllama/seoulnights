@@ -5,8 +5,8 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 if (isset($_POST['locationID'])) {
-    $locationID = intval($_POST['locationID']); // assiging location ID to $location
-    // $ass_id = "%" . "(" . $locationID . ")" . "%";
+    $locationID = substr(($_POST['locationID']), 1); // assiging location ID to $location
+
 
     try {
         $db = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
