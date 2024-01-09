@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -15,6 +16,7 @@ try {
 $email = $_POST['email'];
 $full_name = $_POST['name'];
 
+$_SESSION['name'] = $full_name;
 
 $exists = $db->prepare("SELECT * FROM seoulnights_users where email = '$email'");
 $exists->execute();
@@ -24,6 +26,8 @@ if ($ifExists == 0) {
     $newUser = $db->prepare("INSERT INTO seoulnights_users (email,name) VALUES ('$email','$full_name')");
     $newUser->execute();
     echo "New User Added to the database";
+    echo "Current Session Player: " . $_SESSION['name'];
 } else if ($ifExists == 1) {
     echo "User already exists. Was not added to the database";
+    echo "Current Session Player: " . $_SESSION['name'];
 }

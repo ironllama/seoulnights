@@ -56,7 +56,7 @@ if (isset($_POST['locationID'])) {
                 "option_name" => $optionsData["option_description"],
                 "option_energy" => $optionsData["option_energy"],
                 "option_money" => $optionsData["option_money"],
-                "option_sobriety" => $optionsData["option_sobriety"]
+                "option_drunk" => $optionsData["option_drunk"]
             );
             $options[] = $option; // appending each option into the options array
             $eventResult["options"] = $options; // appending the options into the main event array
