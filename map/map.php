@@ -167,9 +167,9 @@
             <div class="event-section">
                 <div class="event-right prompt-container"></div>
                 <div class="event-right option-button-container">
-                    <button id="option-button1" class="option-button">Option 1</button>
-                    <button id="option-button2" class="option-button">Option 2</button>
-                    <button id="option-button3" class="option-button">Option 3</button>
+                    <button class="option-button option-button1">Option 1</button>
+                    <button class="option-button option-button2">Option 2</button>
+                    <button class="option-button option-button3">Option 3</button>
                 </div>
             </div>
         </div>
@@ -231,7 +231,7 @@
                                 newLocationCard.classList.add("location-card");
 
                                 newLocationCard.id = data[0]["location_id"];
-                                newLocationCard.textContent = data[0]["location_name"];
+                                newLocationCard.textContent = "" + newLocationCard.id[0] + " - " + data[0]["location_name"];
                                 newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
                                 // const locImg = document.createElement("img");
                                 // locImg.src = data[0]["img_url"];
@@ -244,7 +244,7 @@
                             newLocationCard.classList.add("location-card");
 
                             newLocationCard.id = data[0]["location_id"];
-                            newLocationCard.textContent = data[0]["location_name"];
+                            newLocationCard.textContent = "" + newLocationCard.id[0] + " - " + data[0]["location_name"];
                             newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
                             // const locImg = document.createElement("img");
                             // locImg.src = data[0]["img_url"];
@@ -272,9 +272,9 @@
                     const battleZone = document.querySelector(".battle-zone");
                     const pcCardZone = document.querySelector(".PC-cards");
 
-                    const optionButton1 = document.getElementById('option-button1');
-                    const optionButton2 = document.getElementById('option-button2');
-                    const optionButton3 = document.getElementById('option-button3');
+                    const optionButton1 = document.querySelector('.option-button1');
+                    const optionButton2 = document.querySelector('.option-button2');
+                    const optionButton3 = document.querySelector('.option-button3');
 
                     const encounterResult = document.getElementById("encounter-result");
 
@@ -334,10 +334,12 @@
                             eventZone.querySelector(".event-title").innerHTML = inData.event_title; // assigns eventzone title to the returned datasets title key value pair
                             eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`; // sets background image to event_img key value pair
                             eventZone.querySelector(".prompt-container").innerHTML = inData.event_description; // sets description to event_desc key value pair
-                            eventZone.querySelector("#option-button1").innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Sobriety ${inData.options[0].option_sobriety})`;
-                            eventZone.querySelector("#option-button2").innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Sobriety ${inData.options[1].option_sobriety})`;
-                            eventZone.querySelector("#option-button3").innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Sobriety ${inData.options[2].option_sobriety})`;
-
+                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Sobriety ${inData.options[0].option_sobriety})`;
+                            optionButton1.id = inData.options[0].option_id;
+                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Sobriety ${inData.options[1].option_sobriety})`;
+                            optionButton2.id = inData.options[1].option_id;
+                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Sobriety ${inData.options[2].option_sobriety})`;
+                            optionButton3.id = inData.options[2].option_id;
 
                             optionButton1.addEventListener('click', function() {
                                 //send choice value to db for game-state update
