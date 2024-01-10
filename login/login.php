@@ -28,7 +28,7 @@ if (isset($_SESSION['name'])) {
     <div class="main">
         <div class="buttons">
             <button class="loginButton">Login</button>
-            <button class="playButton"><a href='../map/map.php'>Play</a></button>
+            <button class="playButton">Play</button>
             <button class="leaderboardButton">Leaderboard</button>
             <button class="signoutButton">Sign Out</button>
         </div>
@@ -109,7 +109,7 @@ if (isset($_SESSION['name'])) {
 
                     // IdP data available using getAdditionalUserInfo(result)
                     // ...
-                    welcomeMessage.innerHTML = ("Welcome " + user.displayName + "!");
+                    welcomeMessage.innerHTML = ("Welcome, " + user.displayName + "!");
                     playerPic.src = user.photoURL;
                     loginButton.style.display = "none";
                     signoutButton.style.display = "initial";
@@ -128,6 +128,7 @@ if (isset($_SESSION['name'])) {
                             .then(res => res.text())
                             .then(data => {
                                 console.log(data)
+                                window.location.href='../map/map.php';
                             })
                     })
                 }).catch((error) => {

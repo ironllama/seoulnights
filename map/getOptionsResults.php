@@ -27,7 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($decoded_data !== null) { // if the data arrived 
 
-
         $optionID = intval($decoded_data[0]); // selecting the 0 index of the data
 
         // finding the values correlated with the selected option
@@ -39,8 +38,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $optionEnergyValue = $optionResults['option_energy'];
         $optionMoneyValue = $optionResults['option_money'];
         $optionDrunkValue = $optionResults['option_drunk'];
-
-
 
         /// now getting current state of the game values ///
         $currentPlayerValues = $db->prepare("SELECT * FROM gameplay_logs where run_sessionID = '$session_id'");
@@ -55,7 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $updatedEnergyLevel = $currentEnergyLevel + $optionEnergyValue;
         $updatedMoneyLevel = $currentMoneyLevel + $optionMoneyValue;
         $updatedDrunkLevel = $currentDrunkLevel + $optionDrunkValue;
-
+        if ($updatedDrunkLevel > 100) $updatedDrunkLevel = 100;
+        if ($updatedDrunkLevel < 0) $updatedDrunkLevel = 0;
+        
         // updating the current run's values for the player
         $updatePlayerValues = $db->prepare("UPDATE gameplay_logs set run_energyLevel = '$updatedEnergyLevel', run_moneyLevel = '$updatedMoneyLevel', run_drunkLevel = '$updatedDrunkLevel' where run_sessionID = '$session_id'");
         $updatePlayerValues->execute();

@@ -19,210 +19,7 @@ if (!isset($_SESSION['loaded'])) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map</title>
-    <style>
-        body {
-            font-family: sans-serif;
-            margin: 0;
-            padding: 0;
-            width: 100vw;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .map {
-            position: relative;
-            padding: 0 1em;
-            width: 95vw;
-            height: 95vh;
-            background: #0f0f0f;
-            border: 2px solid palegreen;
-            box-shadow: 2px 2px hotpink;
-            display: flex;
-            align-items: center;
-            justify-content: space-evenly;
-            overflow: scroll;
-            gap: 1em;
-        }
-
-        .location-card {
-            background-color: linen;
-            width: 100%;
-            height: 20%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: bolder;
-
-        }
-
-        .card-zone {
-            height: 100%;
-            width: 20%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            gap: 1.5em;
-        }
-
-        .focus {
-            animation: 1s linear infinite alternate focused;
-        }
-
-        @keyframes focused {
-            from {
-                box-shadow: 0px 0px 0px hotpink;
-            }
-
-            to {
-                box-shadow: 0px 0px 0px .3em hotpink;
-            }
-        }
-
-        #encounter-zone {
-            position: absolute;
-            z-index: 999;
-            width: 85vw;
-            height: 85vh;
-            background: #0f0f0f;
-            display: none;
-            flex-direction: row;
-            border: 2px solid red;
-        }
-
-        .event-zone,
-        .res {
-            width: 100%;
-            height: 100%;
-            background: linen;
-
-            display: none;
-            flex-direction: row;
-        }
-
-        .event-section {
-            height: 100%;
-            width: 50%;
-            border: 2px solid green;
-        }
-
-        .event-right {
-            height: 50%;
-            border: 2px solid yellow;
-        }
-
-        .option-button-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: space-evenly;
-        }
-
-        .option-button {
-            height: 25%;
-        }
-
-        #encounter-result {
-            position: absolute;
-            z-index: 999;
-            width: 85vw;
-            height: 85vh;
-            background: #0f0f0f;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-
-            border: 2px solid purple;
-            background: linen;
-        }
-
-        .state-changes-container {
-            display: flex;
-        }
-
-        .battle-zone {
-            display: none;
-            flex-direction: column;
-            border: 2px solid hotpink;
-        }
-
-        .PC-cards {
-            position: absolute;
-            height: 20%;
-            bottom: 0;
-        }
-
-        .hud {
-            margin: .25em .25em 0 0;
-            color: white;
-            -webkit-text-stroke: 1px black;
-            position: absolute;
-            top: 0;
-            right: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            overflow: hidden;
-            gap: .25em;
-        }
-
-        .stat {
-            display: flex;
-            align-self: flex-end;
-        }
-
-        .hud label,
-        .hud span {
-            font-size: 1.25em;
-        }
-
-        .progress-container {
-            position: relative;
-            margin-left: .25em;
-        }
-
-        .progress-container span {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-        }
-
-        .progress-container span::after {
-            content: "/100";
-        }
-
-        progress {
-            border: none;
-            font-size: 1.5em;
-        }
-
-        .player-energy-bar::-moz-progress-bar {
-            background-color: cornflowerblue;
-        }
-
-        .player-energy-bar::-webkit-progress-value {
-            background-color: cornflowerblue;
-        }
-
-        .player-drunk-bar::-moz-progress-bar {
-            background-color: DarkOliveGreen;
-        }
-
-        .player-drunk-bar::-webkit-progress-value {
-            background-color: DarkOliveGreen;
-        }
-
-        /* .money-container span::after {
-            content: "원";
-        } */
-
-        .username {
-            color: white;
-        }
-    </style>
+    <link rel="stylesheet" href="mapstyles.css" />
 </head>
 
 <body>
@@ -259,7 +56,7 @@ if (!isset($_SESSION['loaded'])) {
             </div>
             <div class="stat money-container">
                 <label>Money:</label>
-                <span class="player-money-num">100000</span>
+                <span class="player-money-num">100,000</span>
             </div>
         </div>
 
@@ -267,11 +64,11 @@ if (!isset($_SESSION['loaded'])) {
 
     <div id="encounter-zone">
         <div class="event-zone">
-            <div class="event-section">
+            <div class="event-section-left">
                 <div class="event-title"></div>
                 <div class="event-image"></div>
             </div>
-            <div class="event-section">
+            <div class="event-section-right">
                 <div class="event-right prompt-container"></div>
                 <div class="event-right option-button-container">
                     <button class="option-button option-button1">Option 1</button>
@@ -287,22 +84,45 @@ if (!isset($_SESSION['loaded'])) {
     </div>
 
     <div id="encounter-result">
-        <div class="resolution-text">THIS IS THE RESOLUTION OF WHATEVER GIVEN EVENT OR BATTLE</div>
+        <div class="resolution-text">Your night continues!</div>
         <div class="state-changes-container">
             <div class="attribute energy">
                 <!-- <img src="energy.jpg" /> -->
-                <div class="energy-num">60</div>
+                <div class="energy-num">energy change value</div>
             </div>
             <div class="attribute drunk">
                 <!-- <img src="drunk.jpg" /> -->
-                <div class="drunk-num">20</div>
+                <div class="drunk-num">drunk change value</div>
             </div>
             <div class="attribute money">
                 <!-- <img src="money.jpg" /> -->
-                <div class="money-num">80,000</div>
+                <div class="money-num">money change value</div>
             </div>
         </div>
         <h3>click to continue...</h3>
+    </div>
+
+    <div id="end-game">
+        <div class="end-game-text">You win. Nice.</div>
+        <div class="state-changes-container">
+            <div class="attribute energy">
+                <!-- <img src="energy.jpg" /> -->
+                <div class="energy-num">end value</div>
+            </div>
+            <div class="attribute drunk">
+                <!-- <img src="drunk.jpg" /> -->
+                <div class="drunk-num">end value</div>
+            </div>
+            <div class="attribute money">
+                <!-- <img src="money.jpg" /> -->
+                <div class="money-num">end value</div>
+            </div>
+        </div>
+        <div class="final-score">final score</div>
+        <div>
+            <button class="play-again">Play Again</button>
+            <button class="see-leaderboard">Leaderboard</button>
+        </div>
     </div>
 
     <script>
@@ -373,8 +193,11 @@ if (!isset($_SESSION['loaded'])) {
 
                     let nextZone = document.querySelector("#zone" + (gameRound));
                     let nextCards = nextZone.querySelectorAll(".location-card");
+                    const cardZoneList = document.querySelectorAll(".card-zone"); //creates a nodelist of zones
+                    const lastZone = cardZoneList[cardZoneList.length - 1]; //final round
 
                     const encounterZone = document.querySelector("#encounter-zone");
+                    const endGame = document.querySelector("#end-game");
                     //event
                     const eventZone = document.querySelector(".event-zone");
                     const optionButton1 = document.querySelector('.option-button1');
@@ -397,7 +220,7 @@ if (!isset($_SESSION['loaded'])) {
                     const moneyNum = document.querySelector(".player-money-num");
 
                     function prepareRound() {
-                        if (gameRound < 10) {
+                        if (gameRound < cardZoneList.length - 1) {
 
                             nextZone = document.querySelector("#zone" + (gameRound)); // identifying the next decision zone
                             nextCards = nextZone.querySelectorAll(".location-card"); // getting every card within the next decision zone
@@ -405,7 +228,7 @@ if (!isset($_SESSION['loaded'])) {
                             function locationClicked(event) {
                                 nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
                                 const locationID = event.target.id + "";
-                                //Thank you, Alex ㅠㅠ
+
                                 fetch(`getEventData.php`, {
                                         method: 'POST',
                                         headers: {
@@ -439,16 +262,35 @@ if (!isset($_SESSION['loaded'])) {
                         nextCards.forEach((card) => card.classList.remove("focus")); // removing focus from the locations in the clicked zone
                         encounterZone.style.display = "block"; //displaying the encounter zone
 
-                        function hidePops() { // creating a function that hides the popup
+                        function showResults(inData) { // creating a function that hides the popup
                             encounterZone.style.display = "none"; // hides the encounter zone
                             eventZone.style.display = "none"; // hides the eventzone
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
+                            energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
+                            drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
+                            moneyChange.innerHTML = moneyNum.innerHTML + " > " + inData['updatedMoneyLevel'].toLocaleString('en-US');
 
+                            if (inData['updatedEnergyLevel'] <= 0) {
+                                //you lose
+                                energyBar.value = 0;
+                                energyNum.innerHTML = 0;
+                                resolutionText.innerHTML = "You are out of energy and couldn't handle a night out in Hongdae! Try again?"
+                                document.querySelector(".state-changes-container").innerHTML = "";
+                                encounterResult.addEventListener("click", () => {
+                                    window.location.reload();
+                                });
+                            } else {
                             //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTMl
-
-
-                            encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); // if you click on the encounterResult, it disappears
+                                energyBar.value = inData['updatedEnergyLevel'];
+                                energyNum.innerHTML = inData['updatedEnergyLevel'];
+                                drunkBar.value = inData['updatedDrunkLevel'];
+                                drunkNum.innerHTML = inData['updatedDrunkLevel'];
+                                moneyNum.innerHTML = parseInt(inData['updatedMoneyLevel']).toLocaleString('en-US') + "";
+                                if (gameRound >= cardZoneList.length - 1) {
+                                    encounterResult.addEventListener("click", () => endGame.style.display = "flex"); //end game
+                                } else encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); //click to continue game
+                            }
                         }
 
                         function triggerEvent(inData) {
@@ -456,19 +298,33 @@ if (!isset($_SESSION['loaded'])) {
                             eventZone.querySelector(".event-title").innerHTML = inData.event_title; // assigns eventzone title to the returned datasets title key value pair
                             eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`; // sets background image to event_img key value pair
                             eventZone.querySelector(".prompt-container").innerHTML = inData.event_description; // sets description to event_desc key value pair
-                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money}) (Drunk ${inData.options[0].option_drunk})`;
+
+                            let currentMoney = parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10);
+                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[0].option_drunk})`;
                             optionButton1.id = inData.options[0].option_id;
-                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money}) (Drunk ${inData.options[1].option_drunk})`;
+                            if (inData.options[0].option_money + currentMoney >= 0) optionButton1.addEventListener('click', sendChoice);
+                            else optionButton1.style.backgroundColor = "red"; //not enough money
+
+                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[1].option_drunk})`;
                             optionButton2.id = inData.options[1].option_id;
-                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Drunk ${inData.options[2].option_drunk})`;
+                            if (inData.options[1].option_money + currentMoney >= 0) optionButton2.addEventListener('click', sendChoice);
+                            else optionButton2.style.backgroundColor = "red";
+
+                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[2].option_drunk})`;
                             optionButton3.id = inData.options[2].option_id;
+                            if (inData.options[2].option_money + currentMoney >= 0) optionButton3.addEventListener('click', sendChoice);
+                            else optionButton3.style.backgroundColor = "red";
 
                             function sendChoice(event) { // function for sending the options data to be tracked once clicked
+                                optionButton1.removeEventListener('click', sendChoice);
+                                optionButton1.style.backgroundColor = "";
+                                optionButton2.removeEventListener('click', sendChoice);
+                                optionButton2.style.backgroundColor = "";
+                                optionButton3.removeEventListener('click', sendChoice);
+                                optionButton3.style.backgroundColor = "";
                                 const choiceID = event.target.id + "";
-                                // console.log("Choice ID: " + choiceID);
                                 const currentPlayerState = JSON.stringify([choiceID]);
                                 console.log(currentPlayerState);
-                                // console.log("currentPlayerState: " + currentPlayerState);
                                 fetch(`getOptionsResults.php`, {
                                         method: 'POST',
                                         headers: {
@@ -483,21 +339,11 @@ if (!isset($_SESSION['loaded'])) {
                                     })
                                     .then(optionResultsData => {
                                         console.log('Received data: ', optionResultsData);
-                                        hidePops();
-
-
-                                        energyBar.value = optionResultsData['updatedEnergyLevel'];
-                                        energyNum.innerHTML = optionResultsData['updatedEnergyLevel'];
-                                        drunkBar.value = optionResultsData['updatedDrunkLevel'];
-                                        drunkNum.innerHTML = optionResultsData['updatedDrunkLevel'];
-                                        moneyNum.innerHTML = optionResultsData['updatedMoneyLevel'];
+                                        showResults(optionResultsData);
                                     })
                                     .catch(error => console.log(error));
                             }
-
-                            optionButton1.addEventListener('click', sendChoice);
-                            optionButton2.addEventListener('click', sendChoice);
-                            optionButton3.addEventListener('click', sendChoice);
+                        
                         }
 
                         //this is loose af
