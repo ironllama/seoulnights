@@ -1,13 +1,15 @@
 <?php
 session_start();
-
-echo $_SESSION['name'];
+$session_id = session_id();
+echo $session_id;
 
 if (isset($_SESSION['name'])) {
     // Redirect to another page if 'name' is set
-    header('Location: ../map/map.php');
+    // header('Location: ../map/map.php');
+    echo $_SESSION['name'];
     exit; // Ensure the script exits after redirection
-}
+};
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +28,7 @@ if (isset($_SESSION['name'])) {
     <div class="main">
         <div class="buttons">
             <button class="loginButton">Login</button>
-            <button class="playButton"><a href="../map/map.php">Play</a></button>
+            <button class="playButton"><a href='../map/map.php'>Play</a></button>
             <button class="leaderboardButton">Leaderboard</button>
             <button class="signoutButton">Sign Out</button>
         </div>
@@ -113,6 +115,21 @@ if (isset($_SESSION['name'])) {
                     signoutButton.style.display = "initial";
                     playButton.style.display = "initial";
                     leaderboardButton.style.display = "initial";
+
+
+                    playButton.addEventListener("click", function() {
+                        fetch('startNewGame.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'email=' + user.email
+                            })
+                            .then(res => res.text())
+                            .then(data => {
+                                console.log(data)
+                            })
+                    })
                 }).catch((error) => {
                     // Handle Errors here.
                     const errorCode = error.code;
