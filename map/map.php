@@ -1,15 +1,16 @@
 <?php
 session_start();
 
-// if (!isset($_SESSION['loaded'])) {
-//     $_SESSION['loaded'] = true;
-// } else {
-//     unset($_SESSION['name']);
-//     // Destroy the session
-//     session_destroy();
-//     header('Location: ../login/login.php');
-//     exit; // Ensure the script exits after redirection
-// }
+if (!isset($_SESSION['loaded'])) {
+    $_SESSION['loaded'] = true;
+} else {
+    unset($_SESSION['name']);
+    // Destroy the session
+    session_regenerate_id(true);
+    session_destroy();
+    header('Location: ../login/login.php');
+    exit; // Ensure the script exits after redirection
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -171,7 +172,8 @@ session_start();
             align-self: flex-end;
         }
 
-        .hud label, .hud span {
+        .hud label,
+        .hud span {
             font-size: 1.25em;
         }
 
@@ -200,19 +202,23 @@ session_start();
         .player-energy-bar::-moz-progress-bar {
             background-color: cornflowerblue;
         }
+
         .player-energy-bar::-webkit-progress-value {
             background-color: cornflowerblue;
         }
+
         .player-drunk-bar::-moz-progress-bar {
             background-color: DarkOliveGreen;
         }
+
         .player-drunk-bar::-webkit-progress-value {
             background-color: DarkOliveGreen;
         }
 
-        .money-container span::after {
+        /* .money-container span::after {
             content: "원";
-      }
+        } */
+
         .username {
             color: white;
         }
@@ -221,7 +227,6 @@ session_start();
 
 <body>
     <div class="map">
-        <div class="username"><?php echo $_SESSION['name'] ?></div>
         <div class="card-zone" id="start">
             <div class="location-card" id="start-loc">Exit 9</div>
         </div>
@@ -237,23 +242,24 @@ session_start();
         <div class="card-zone" id="zone9"></div>
 
         <div class="hud">
+            <div class="username">Player: <?php echo $_SESSION['name'] ?></div>
             <div class="stat">
                 <label>Energy:</label>
                 <div class="progress-container">
-                    <progress max="100" value="75" class="player-energy-bar"></progress>
-                    <span class="player-energy-num">75</span>
+                    <progress max="100" value="100" class="player-energy-bar"></progress>
+                    <span class="player-energy-num">100</span>
                 </div>
             </div>
             <div class="stat">
                 <label>Drunk:</label>
                 <div class="progress-container">
-                    <progress max="100" value="50" class="player-drunk-bar"></progress>
-                    <span class="player-drunk-num">50</span>
+                    <progress max="100" value="0" class="player-drunk-bar"></progress>
+                    <span class="player-drunk-num">0</span>
                 </div>
             </div>
             <div class="stat money-container">
                 <label>Money:</label>
-                <span class="player-money-num">100,000</span>
+                <span class="player-money-num">100000</span>
             </div>
         </div>
 
@@ -439,8 +445,9 @@ session_start();
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
 
-                            //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTML
-                            //
+                            //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTMl
+
+
                             encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); // if you click on the encounterResult, it disappears
                         }
 
@@ -456,15 +463,18 @@ session_start();
                             optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money}) (Drunk ${inData.options[2].option_drunk})`;
                             optionButton3.id = inData.options[2].option_id;
 
-                            function sendChoice(event) {
+                            function sendChoice(event) { // function for sending the options data to be tracked once clicked
                                 const choiceID = event.target.id + "";
-                                const currentPlayerState = [choiceID, energyNum.innerHTML, drunkNum.innerHTML, moneyNum.innerHTML];
-                                fetch(`getOptionResults.php`, {
+                                // console.log("Choice ID: " + choiceID);
+                                const currentPlayerState = JSON.stringify([choiceID]);
+                                console.log(currentPlayerState);
+                                // console.log("currentPlayerState: " + currentPlayerState);
+                                fetch(`getOptionsResults.php`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/json'
                                         },
-                                        body: JSON.stringify(currentPlayerState)
+                                        body: currentPlayerState
                                     })
                                     .then(response => {
                                         console.log(response);
@@ -472,8 +482,15 @@ session_start();
                                         return response.json();
                                     })
                                     .then(optionResultsData => {
-                                        console.log('Received data:', optionResultsData);
-                                        hidePops(optionResultsData);
+                                        console.log('Received data: ', optionResultsData);
+                                        hidePops();
+
+
+                                        energyBar.value = optionResultsData['updatedEnergyLevel'];
+                                        energyNum.innerHTML = optionResultsData['updatedEnergyLevel'];
+                                        drunkBar.value = optionResultsData['updatedDrunkLevel'];
+                                        drunkNum.innerHTML = optionResultsData['updatedDrunkLevel'];
+                                        moneyNum.innerHTML = optionResultsData['updatedMoneyLevel'];
                                     })
                                     .catch(error => console.log(error));
                             }
