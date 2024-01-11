@@ -339,7 +339,11 @@ if (!isset($_SESSION['loaded'])) {
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
                             console.log((inData['updatedDrunkLevel']/100)*2 + "px");
-                            document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel']/100)*2 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--midX', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--maxX', ((inData['updatedDrunkLevel']/100)*10 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--upY', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--downY', ("-" + (inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
                             energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
                             drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
                             moneyChange.innerHTML = moneyNum.innerHTML + " > " + inData['updatedMoneyLevel'].toLocaleString('en-US');

@@ -2,12 +2,34 @@
 
 :root {
     --maxblur: 0px;
+    --midX: 0px;
+    --maxX: 0px;
+    --upY: 0px;
+    --downY: 0px;
 }
 
 @keyframes blurry {
     0% { filter: blur(0px); }
     100% { filter: blur(var(--maxblur)); }
 }
+
+@keyframes figureEight {
+    0% {
+      transform: translateX(0) translateY(0);
+    }
+    25% {
+      transform: translateX(var(--midX)) translateY(var(--upY));
+    }
+    50% {
+      transform: translateX(var(--maxX)) translateY(0);
+    }
+    75% {
+      transform: translateX(var(--midX)) translateY(var(--downY));
+    }
+    100% {
+      transform: translateX(0) translateY(0);
+    }
+  }
 
 body {
     font-family: "Press Start 2P";
@@ -34,6 +56,7 @@ body {
     justify-content: space-evenly;
     overflow: scroll;
     gap: 1em;
+    animation: 2s ease-in alternate-reverse infinite figureEight;
 }
 
 .location-card {
@@ -44,7 +67,7 @@ body {
     justify-content: center;
     align-items: center;
     font-weight: bolder;
-
+    animation: 2s ease-in alternate-reverse infinite figureEight;
 }
 
 .card-zone {
