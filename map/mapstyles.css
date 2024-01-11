@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
 
+:root {
+    --maxblur: 0px;
+}
+
+@keyframes blurry {
+    0% { filter: blur(0px); }
+    100% { filter: blur(var(--maxblur)); }
+}
+
 body {
     font-family: "Press Start 2P";
     margin: 0;
@@ -9,6 +18,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    animation: 2s ease-in alternate-reverse infinite blurry;
 }
 
 .map {

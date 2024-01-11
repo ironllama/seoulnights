@@ -338,6 +338,8 @@ if (!isset($_SESSION['loaded'])) {
                             eventZone.style.display = "none"; // hides the eventzone
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
+                            console.log((inData['updatedDrunkLevel']/100)*2 + "px");
+                            document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
                             energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
                             drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
                             moneyChange.innerHTML = moneyNum.innerHTML + " > " + inData['updatedMoneyLevel'].toLocaleString('en-US');
