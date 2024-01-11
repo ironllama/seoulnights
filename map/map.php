@@ -41,6 +41,7 @@ if (!isset($_SESSION['loaded'])) {
         <div class="hud">
             <div class="username">Player: <?php echo $_SESSION['name'] ?></div>
             <div class="stat">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue"/></svg>
                 <label>Energy:</label>
                 <div class="progress-container">
                     <progress max="100" value="100" class="player-energy-bar"></progress>
@@ -48,6 +49,7 @@ if (!isset($_SESSION['loaded'])) {
                 </div>
             </div>
             <div class="stat">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen"/></svg>
                 <label>Drunk:</label>
                 <div class="progress-container">
                     <progress max="100" value="0" class="player-drunk-bar"></progress>
@@ -55,6 +57,7 @@ if (!isset($_SESSION['loaded'])) {
                 </div>
             </div>
             <div class="stat money-container">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold"/></svg>
                 <label>Money:</label>
                 <span class="player-money-num">100,000</span>
             </div>
@@ -71,9 +74,72 @@ if (!isset($_SESSION['loaded'])) {
             <div class="event-section-right">
                 <div class="event-right prompt-container"></div>
                 <div class="event-right option-button-container">
-                    <button class="option-button option-button1">Option 1</button>
-                    <button class="option-button option-button2">Option 2</button>
-                    <button class="option-button option-button3">Option 3</button>
+                    <div class="option-container">
+                        <div class="option-info">
+                            <div class="option-description"></div>
+                            <div class="option-EDMchanges">
+                                <div class="energy-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <div class="option-energy"></div>
+                                </div>
+                                <div class="drunk-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <div class="option-drunk"></div>
+                                </div>
+                                <div class="money-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <div class="option-money"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="option-button option-button1">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                        </button>
+                    </div>
+                    <div class="option-container">
+                    <div class="option-info">
+                            <div class="option-description"></div>
+                            <div class="option-EDMchanges">
+                                <div class="energy-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <div class="option-energy"></div>
+                                </div>
+                                <div class="drunk-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <div class="option-drunk"></div>
+                                </div>
+                                <div class="money-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <div class="option-money"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="option-button option-button2">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                        </button>
+                    </div>
+                    <div class="option-container">
+                    <div class="option-info">
+                            <div class="option-description"></div>
+                            <div class="option-EDMchanges">
+                                <div class="energy-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <div class="option-energy"></div>
+                                </div>
+                                <div class="drunk-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <div class="option-drunk"></div>
+                                </div>
+                                <div class="money-svg-box svg-box">
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <div class="option-money"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="option-button option-button3">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -87,15 +153,15 @@ if (!isset($_SESSION['loaded'])) {
         <div class="resolution-text">Your night continues!</div>
         <div class="state-changes-container">
             <div class="attribute energy">
-                <!-- <img src="energy.jpg" /> -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue"/></svg>
                 <div class="energy-num">energy change value</div>
             </div>
             <div class="attribute drunk">
-                <!-- <img src="drunk.jpg" /> -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen"/></svg>
                 <div class="drunk-num">drunk change value</div>
             </div>
             <div class="attribute money">
-                <!-- <img src="money.jpg" /> -->
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold"/></svg>
                 <div class="money-num">money change value</div>
             </div>
         </div>
@@ -200,6 +266,11 @@ if (!isset($_SESSION['loaded'])) {
                     const endGame = document.querySelector("#end-game");
                     //event
                     const eventZone = document.querySelector(".event-zone");
+                    
+                    const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
+                    const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
+                    const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
+                    const optionMoneyArray = Array.from(document.querySelectorAll(".option-money"));
                     const optionButton1 = document.querySelector('.option-button1');
                     const optionButton2 = document.querySelector('.option-button2');
                     const optionButton3 = document.querySelector('.option-button3');
@@ -300,20 +371,30 @@ if (!isset($_SESSION['loaded'])) {
                             eventZone.querySelector(".prompt-container").innerHTML = inData.event_description; // sets description to event_desc key value pair
 
                             let currentMoney = parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10);
-                            optionButton1.innerHTML = `${inData.options[0].option_name} (Energy ${inData.options[0].option_energy}) (Money ${inData.options[0].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[0].option_drunk})`;
+
+                            optionDescriptionArray[0].innerHTML = inData.options[0].option_name;
+                            optionEnergyArray[0].innerHTML = inData.options[0].option_energy;
+                            optionDrunkArray[0].innerHTML = inData.options[0].option_drunk;
+                            optionMoneyArray[0].innerHTML = inData.options[0].option_money;
                             optionButton1.id = inData.options[0].option_id;
                             if (inData.options[0].option_money + currentMoney >= 0) optionButton1.addEventListener('click', sendChoice);
                             else optionButton1.style.backgroundColor = "red"; //not enough money
 
-                            optionButton2.innerHTML = `${inData.options[1].option_name} (Energy ${inData.options[1].option_energy}) (Money ${inData.options[1].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[1].option_drunk})`;
+                            optionDescriptionArray[1].innerHTML = inData.options[1].option_name;
+                            optionEnergyArray[1].innerHTML = inData.options[1].option_energy;
+                            optionDrunkArray[1].innerHTML = inData.options[1].option_drunk;
+                            optionMoneyArray[1].innerHTML = inData.options[1].option_money;
                             optionButton2.id = inData.options[1].option_id;
                             if (inData.options[1].option_money + currentMoney >= 0) optionButton2.addEventListener('click', sendChoice);
-                            else optionButton2.style.backgroundColor = "red";
+                            else optionButton2.style.backgroundColor = "red"; //not enough money
 
-                            optionButton3.innerHTML = `${inData.options[2].option_name} (Energy ${inData.options[2].option_energy}) (Money ${inData.options[2].option_money.toLocaleString('en-US')}원) (Drunk ${inData.options[2].option_drunk})`;
+                            optionDescriptionArray[2].innerHTML = inData.options[2].option_name;
+                            optionEnergyArray[2].innerHTML = inData.options[2].option_energy;
+                            optionDrunkArray[2].innerHTML = inData.options[2].option_drunk;
+                            optionMoneyArray[2].innerHTML = inData.options[2].option_money;
                             optionButton3.id = inData.options[2].option_id;
                             if (inData.options[2].option_money + currentMoney >= 0) optionButton3.addEventListener('click', sendChoice);
-                            else optionButton3.style.backgroundColor = "red";
+                            else optionButton3.style.backgroundColor = "red"; //not enough money
 
                             function sendChoice(event) { // function for sending the options data to be tracked once clicked
                                 optionButton1.removeEventListener('click', sendChoice);
@@ -322,8 +403,7 @@ if (!isset($_SESSION['loaded'])) {
                                 optionButton2.style.backgroundColor = "";
                                 optionButton3.removeEventListener('click', sendChoice);
                                 optionButton3.style.backgroundColor = "";
-                                const choiceID = event.target.id + "";
-                                const currentPlayerState = JSON.stringify([choiceID]);
+                                const currentPlayerState = JSON.stringify([event.currentTarget.id + ""]);
                                 console.log(currentPlayerState);
                                 fetch(`getOptionsResults.php`, {
                                         method: 'POST',

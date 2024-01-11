@@ -84,6 +84,8 @@ body {
 .event-section-left, .event-section-right {
     width: 50%;
     text-align: center;
+    display: flex;
+    flex-direction: column;
 }
 
 .event-section-left {
@@ -91,7 +93,7 @@ body {
 }
 
 .prompt-container {
-    height: 50%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -104,17 +106,63 @@ body {
 .option-button-container {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    flex: 1;
+    border: inset 5px gray;
+}
+
+.option-container {
+    font-family: sans-serif;
+    display: flex;
+    flex: 1;
 }
 
 .option-button {
-
+    width: 25%;
+    flex: 1;
+    border-radius: 0;
+    background: #0f0f0f;
+    fill: #f0f0f0;
 }
 
-.option-results {
-    margin-top: 1em;
+.option-button:hover svg{
+    fill: lime;
+    transform: scale(1.5);
+}
+
+.option-info {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    border: inset 3px gray;
+}
+
+.option-description {
+    flex: 2;
+    border: inset 2px gray;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.option-EDMchanges {
+    border: inset 2px gray;
+    flex: 1;
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
+}
+
+.energy-svg-box, .energy-num {
+    color: cornflowerblue;
+    fill: cornflowerblue;
+}
+.drunk-svg-box, .drunk-num {
+    color: darkolivegreen;
+    fill: darkolivegreen;
+}
+.money-svg-box, .money-num {
+    color: gold;
+    fill: gold;
 }
 
 
@@ -162,6 +210,10 @@ body {
     gap: .25em;
 }
 
+.username {
+    align-self: flex-end;   
+}
+
 .stat {
     display: flex;
     align-self: flex-end;
@@ -170,6 +222,10 @@ body {
 .hud label,
 .hud span {
     font-size: 1.25em;
+}
+
+.hud svg {
+    margin-right: 1em;
 }
 
 .progress-container {
