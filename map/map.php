@@ -20,6 +20,7 @@ if (!isset($_SESSION['loaded'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Map</title>
     <link rel="stylesheet" href="mapstyles.css" />
+    <link rel="stylesheet" href="../battle/battle.css" />
 </head>
 
 <body>
@@ -42,7 +43,9 @@ if (!isset($_SESSION['loaded'])) {
     <div class="hud">
         <div class="username">Player: <?php echo $_SESSION['name'] ?></div>
         <div class="stat">
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue" />
+            </svg>
             <label>Energy:</label>
             <div class="progress-container">
                 <progress max="100" value="100" class="player-energy-bar"></progress>
@@ -50,7 +53,9 @@ if (!isset($_SESSION['loaded'])) {
             </div>
         </div>
         <div class="stat">
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen" />
+            </svg>
             <label>Drunk:</label>
             <div class="progress-container">
                 <progress max="100" value="0" class="player-drunk-bar"></progress>
@@ -58,7 +63,9 @@ if (!isset($_SESSION['loaded'])) {
             </div>
         </div>
         <div class="stat money-container">
-            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold" />
+            </svg>
             <label>Money:</label>
             <span class="player-money-num">100,000</span>
         </div>
@@ -78,73 +85,125 @@ if (!isset($_SESSION['loaded'])) {
                             <div class="option-description"></div>
                             <div class="option-EDMchanges">
                                 <div class="energy-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                                        <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" />
+                                    </svg>
                                     <div class="option-energy"></div>
                                 </div>
                                 <div class="drunk-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                                        <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" />
+                                    </svg>
                                     <div class="option-drunk"></div>
                                 </div>
                                 <div class="money-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                        <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+                                    </svg>
                                     <div class="option-money"></div>
                                 </div>
                             </div>
                         </div>
                         <button class="option-button option-button1">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                            </svg>
                         </button>
                     </div>
                     <div class="option-container">
-                    <div class="option-info">
+                        <div class="option-info">
                             <div class="option-description"></div>
                             <div class="option-EDMchanges">
                                 <div class="energy-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                                        <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" />
+                                    </svg>
                                     <div class="option-energy"></div>
                                 </div>
                                 <div class="drunk-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                                        <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" />
+                                    </svg>
                                     <div class="option-drunk"></div>
                                 </div>
                                 <div class="money-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                        <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+                                    </svg>
                                     <div class="option-money"></div>
                                 </div>
                             </div>
                         </div>
                         <button class="option-button option-button2">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                            </svg>
                         </button>
                     </div>
                     <div class="option-container">
-                    <div class="option-info">
+                        <div class="option-info">
                             <div class="option-description"></div>
                             <div class="option-EDMchanges">
                                 <div class="energy-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                                        <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" />
+                                    </svg>
                                     <div class="option-energy"></div>
                                 </div>
                                 <div class="drunk-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                                        <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" />
+                                    </svg>
                                     <div class="option-drunk"></div>
                                 </div>
                                 <div class="money-svg-box svg-box">
-                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                        <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" />
+                                    </svg>
                                     <div class="option-money"></div>
                                 </div>
                             </div>
                         </div>
                         <button class="option-button option-button3">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z"/></svg>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                            </svg>
                         </button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="battle-zone">
-            <img class="enemy" src="" />
-            <div class="PC-cards"></div>
+            <div class="container">
+                <div class="main">
+                    <div class="top">
+                        <div class="movedescriptionArea">
+                            <h3>Current Move</h3>
+                            <h4 class="movedescription">Example of Move Description</h4>
+                        </div>
+                        <div class="enemy">
+                            <h2 class="enemyname"></h2>
+                            <div class="healthbar">
+                                <progress max="100" value="80" class="enemy-health-bar"></progress>
+                                <span class="enemy-health-num"></span>
+                            </div>
+                            <div class="enemy_pic">
+                                <img class="enemypic" src="">
+                            </div>
+                        </div>
+                        <div class="moveset">
+                            <h2>Enemy Moveset</h2>
+                            <div class="enemymoves"></div>
+                        </div>
+                    </div>
+                    <div class="bot">
+                    </div>
+                    <div class="healthbar">
+                        <progress max="100" value="100" class="player-health-bar"></progress>
+                        <span class="player-health-num">100</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -152,15 +211,21 @@ if (!isset($_SESSION['loaded'])) {
         <div class="resolution-text">Your night continues!</div>
         <div class="state-changes-container">
             <div class="attribute energy">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                    <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue" />
+                </svg>
                 <div class="energy-num">energy change value</div>
             </div>
             <div class="attribute drunk">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                    <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen" />
+                </svg>
                 <div class="drunk-num">drunk change value</div>
             </div>
             <div class="attribute money">
-                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512"><path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold"/></svg>
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                    <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold" />
+                </svg>
                 <div class="money-num">money change value</div>
             </div>
         </div>
@@ -265,7 +330,7 @@ if (!isset($_SESSION['loaded'])) {
                     const endGame = document.querySelector("#end-game");
                     //event
                     const eventZone = document.querySelector(".event-zone");
-                    
+
                     const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
                     const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
                     const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
@@ -288,6 +353,28 @@ if (!isset($_SESSION['loaded'])) {
                     const energyNum = document.querySelector(".player-energy-num");
                     const drunkNum = document.querySelector(".player-drunk-num");
                     const moneyNum = document.querySelector(".player-money-num");
+                    //battle init
+                    playedCards = [];
+                    currentRound = [];
+                    currentEnemy = [];
+                    button = document.querySelector(".battleStart");
+                    mainBattleArea = document.querySelector(".main");
+
+                    backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
+                    currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
+                    document.querySelector(".container").style.backgroundImage = "url(" + currentSessionBG + ")";
+
+                    //enemy section
+                    enemyMoveset = document.querySelector(".enemymoves");
+                    enemyPic = document.querySelector(".enemypic");
+                    enemyName = document.querySelector(".enemyname");
+                    enemyHealthBar = document.querySelector(".enemy-health-bar");
+                    enemyHealthNum = document.querySelector(".enemy-health-num");
+                    enemyMoves = [];
+
+                    //user section
+                    playerHealthBar = document.querySelector(".player-health-bar");
+                    playerHealthNum = document.querySelector(".player-health-num");
 
                     function prepareRound() {
                         if (gameRound < cardZoneList.length - 1) {
@@ -299,7 +386,7 @@ if (!isset($_SESSION['loaded'])) {
                                 nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
                                 const locationID = event.target.id + "";
 
-                                fetch(`getEventData.php`, {
+                                fetch(`getEncounterData.php`, {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded'
@@ -337,12 +424,12 @@ if (!isset($_SESSION['loaded'])) {
                             eventZone.style.display = "none"; // hides the eventzone
                             battleZone.style.display = "none"; // hides the battlezone
                             encounterResult.style.display = "flex"; // displays encounterResult
-                            console.log((inData['updatedDrunkLevel']/100)*2 + "px");
-                            document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel']/100)*2 + "px")); //needs to be tweaked
-                            document.documentElement.style.setProperty('--midX', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
-                            document.documentElement.style.setProperty('--maxX', ((inData['updatedDrunkLevel']/100)*10 + "px")); //needs to be tweaked
-                            document.documentElement.style.setProperty('--upY', ((inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
-                            document.documentElement.style.setProperty('--downY', ("-" + (inData['updatedDrunkLevel']/100)*5 + "px")); //needs to be tweaked
+                            console.log((inData['updatedDrunkLevel'] / 100) * 2 + "px");
+                            document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel'] / 100) * 2 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--midX', ((inData['updatedDrunkLevel'] / 100) * 5 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--maxX', ((inData['updatedDrunkLevel'] / 100) * 10 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--upY', ((inData['updatedDrunkLevel'] / 100) * 5 + "px")); //needs to be tweaked
+                            document.documentElement.style.setProperty('--downY', ("-" + (inData['updatedDrunkLevel'] / 100) * 5 + "px")); //needs to be tweaked
                             energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
                             drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
                             moneyChange.innerHTML = moneyNum.innerHTML + " > " + inData['updatedMoneyLevel'].toLocaleString('en-US');
@@ -357,7 +444,7 @@ if (!isset($_SESSION['loaded'])) {
                                     window.location.reload();
                                 });
                             } else {
-                            //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTMl
+                                //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTMl
                                 energyBar.value = inData['updatedEnergyLevel'];
                                 energyNum.innerHTML = inData['updatedEnergyLevel'];
                                 drunkBar.value = inData['updatedDrunkLevel'];
@@ -428,70 +515,181 @@ if (!isset($_SESSION['loaded'])) {
                                     })
                                     .catch(error => console.log(error));
                             }
-                        
+
                         }
 
-                        //this is loose af
-                        function triggerBattle(inData) {
+                        //triggerBattle function
+                        function triggerBattle(data) {
+                            console.log('works as intended');
+                            backgroundImages = ['../battle/pics/rooftop.jpeg', '../battle/pics/ruraljapan.jpeg'];
+                            currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
+                            document.querySelector(".container").style.backgroundImage = "url(" + currentSessionBG + ")";
+                            battleZone.style.display = "flex";
 
-                            //get enemy data
-                            fetch(`getBattleData.php`, {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/x-www-form-urlencoded'
-                                    },
-                                    body: `locationID=${locationID}`
-                                })
-                                .then(response => {
-                                    console.log(response);
-                                    if (!response.ok) throw new Error('Network response was not ok');
-                                    return response.json();
-                                })
-                                .then(battleData => {
-                                    console.log('Received data:', battleData);
-                                })
-                                .catch(error => console.log(error));
+                            currentEnemy = data;
+                            enemyPic.src = "pics/" + data['enemy_img'];
+                            enemyName.innerHTML = data['enemy_name'];
+                            enemyHealthBar.value = data['enemy_energy'];
+                            enemyHealthBar.max = data['enemy_energy'];
+                            enemyHealthNum.innerHTML = data['enemy_energy'] + "/" + data['enemy_energy'];
 
-                            //get card data
-                            // fetch(`getPCCardData.php`, {
-                            //         method: 'POST',
-                            //     })
-                            //     .then(response => {
-                            //         console.log(response);
-                            //         if (!response.ok) throw new Error('Network response was not ok');
-                            //         return response.json();
-                            //     })
-                            //     .then(PCcardData => {
-                            //         console.log('Received data:', PCcardData);
-                            //     })
-                            //     .catch(error => console.log(error));
+                            enemyMoves = data['enemy_moves'];
+                            enemyMovesetTitle = document.createElement("h3");
+                            enemyMoves.forEach(function(move, index) {
+                                enemyMove = document.createElement("div");
+                                enemyMove.className = "enemyMove" + (index + 1)
+                                enemyMove.id = "move" + move['move_id'];
+
+                                enemyMoveName = document.createElement("div");
+                                enemyMoveName.className = "move" + (index + 1) + "Name";
+                                enemyMoveName.innerHTML = move['move_name'];
+
+                                enemyMoveAttack = document.createElement("div");
+                                enemyMoveAttack.className = "move" + (index + 1) + "Attack";
+                                enemyMoveAttack.innerHTML = "Attack: " + move['move_attack'];
+
+                                enemyMoveDefense = document.createElement("div");
+                                enemyMoveDefense.className = "move" + (index + 1) + "Defense";
+                                enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
+
+                                enemyMoveRegen = document.createElement("div");
+                                enemyMoveRegen.className = "move" + (index + 1) + "Regen";
+                                enemyMoveRegen.innerHTML = "Regen: " + move['move_regen'];
+
+                                enemyMove.appendChild(enemyMoveName);
+                                enemyMove.appendChild(enemyMoveAttack);
+                                enemyMove.appendChild(enemyMoveDefense);
+                                enemyMove.appendChild(enemyMoveRegen);
+
+                                enemyMoveset.append(enemyMove);
+                            })
+
+
+
+                            function getNewCards() {
+                                fetch('../battle/getCards.php')
+                                    .then(res => res.json())
+                                    .then(data => {
+                                        console.log(data);
+                                        cards = data;
+                                        cardArea = document.querySelector(".bot");
+
+                                        cards.slice(0, 4).forEach((card) => {
+                                            cardDiv = document.createElement("div");
+                                            cardDiv.className = "card";
+
+                                            cardDiv.addEventListener("click", function(event) {
+                                                event.stopPropagation();
+                                                playedCards.push(card['card_name']);
+                                                currentRound = card;
+                                                enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
+
+                                                takenPlayerDamage = currentRound['card_defense'] - enemyTurn['move_attack']; // -
+                                                takenEnemyDamage = enemyTurn['move_defend'] - currentRound['card_attack']; // -
+                                                totalPlayerRegen = currentRound['card_regen'];
+                                                totalEnemyRegen = enemyTurn['move_regen'];
+
+                                                if (takenPlayerDamage >= 0) {
+                                                    takenPlayerDamage = 0;
+                                                } else takenPlayerDamage;
+
+                                                if (takenEnemyDamage >= 0) {
+                                                    takenEnemyDamage = 0;
+                                                } else takenEnemyDamage;
+
+                                                roundPlayerEnergy = (takenPlayerDamage + totalPlayerRegen);
+                                                roundEnemyEnergy = (takenEnemyDamage + totalEnemyRegen);
+
+                                                // enemyHealthBar = document.querySelector(".enemy-health-bar");
+                                                // enemyHealthNum = document.querySelector(".enemy-health-num");
+
+                                                if (enemyHealthBar.value + roundEnemyEnergy > currentEnemy['enemy_energy']) {
+                                                    enemyHealthBar.value = currentEnemy['enemy_energy'];
+                                                    enemyHealthNum.innerHTML = currentEnemy['enemy_energy'] + "/" + currentEnemy['enemy_energy'];
+                                                } else {
+                                                    newEnemyHealthValue = (enemyHealthBar.value + roundEnemyEnergy);
+                                                    enemyHealthBar.value = newEnemyHealthValue;
+                                                    enemyHealthNum.innerHTML = newEnemyHealthValue + "/" + currentEnemy['enemy_energy'];
+                                                }
+
+                                                if (playerHealthBar.value + roundPlayerEnergy > 100) {
+                                                    playerHealthBar.value = 100;
+                                                    playerHealthNum.innerHTML = "100/100"
+                                                } else {
+                                                    newPlayerHealthValue = (playerHealthBar.value + roundPlayerEnergy);
+                                                    playerHealthBar.value = newPlayerHealthValue;
+                                                    playerHealthNum.innerHTML = newPlayerHealthValue + "/100";
+                                                }
+
+
+                                                //upon win
+                                                if (enemyHealthBar.value <= 0) {
+                                                    alert("Battle Over, you won!");
+                                                    location.reload();
+                                                }
+
+                                                //upon loss
+                                                if (playerHealthBar.value <= 0) {
+                                                    alert("Battle Over, you lost!");
+                                                    location.reload();
+                                                }
+
+                                                console.log("Turn")
+                                                console.log("Your Move: " + JSON.stringify(currentRound));
+                                                console.log("Enemy Move: " + JSON.stringify(enemyTurn));
+                                                if (playedCards.length % 4 == 0 && playedCards.length > 1) {
+                                                    getNewCards();
+                                                }
+                                                cardArea.removeChild(event.currentTarget);
+                                            });
+
+                                            cardImage = document.createElement("img");
+                                            cardImage.className = "cardpic", cardImage.src = "../battle/pics/" + card['card_img'];
+
+                                            cardDesc = document.createElement("div");
+                                            cardDesc.className = "carddesc";
+
+                                            cardTitle = document.createElement("div")
+                                            cardTitle.className = "cardtitle";
+                                            cardTitle.innerHTML = card['card_name'];
+
+                                            cardAttack = document.createElement("div")
+                                            cardAttack.className = "cardattack";
+                                            cardAttack.innerHTML = "Attack: " + card['card_attack'];
+
+                                            cardDefense = document.createElement("div")
+                                            cardDefense.className = "carddefense";
+                                            cardDefense.innerHTML = "Defense: " + card['card_defense'];
+
+                                            cardRegen = document.createElement("div")
+                                            cardRegen.className = "cardregen";
+                                            cardRegen.innerHTML = "Regen: " + card['card_regen'];
+
+                                            cardDesc.appendChild(cardTitle);
+                                            cardDesc.appendChild(cardAttack);
+                                            cardDesc.appendChild(cardDefense);
+                                            cardDesc.appendChild(cardRegen);
+
+                                            cardDiv.appendChild(cardImage);
+                                            cardDiv.appendChild(cardDesc);
+
+                                            cardArea.appendChild(cardDiv);
+                                        })
+                                    })
+                            }
+                            getNewCards();
                         }
-
-                        function playCard() {
-                            //what does the card do when clicked?
-                        }
-
-                        //generate battle
-                        // battleZone.style.display = "flex";
-                        // document.querySelector(".enemy").style.backgroundImage = //battleData.img_url;
-                        //     PCcardData.forEach((card) => {
-                        //         const newCardDiv = document.createElement("div");
-                        //         newCardDiv.classList.add("card-body");
-                        //         newCardDiv.innerHTML = `<div class="card-image"></div>
-                        //                             <div class="card-text">
-                        //                             <span class="card-title"></span>
-                        //                             <span class="card-action-text"></span>
-                        //                             </div>`;
-                        //         newCardDiv.querySelector(".card-image").backgroundImage = card.card_img;
-                        //         newCardDiv.querySelector(".card-title").innerHTML = card.card_text;
-                        //         newCardDiv.querySelector(".card-action-text").innerHTML = card.card_action_text;
-                        //         newCardDiv.addEventListener("click", playCard);
-                        //         pcCardZone.appendChild(newCardDiv);
-                        //     });
 
                         //assuming event, will later need a flag and if/else for "e" or "b"
-                        triggerEvent(inData);
-                        //or triggerBattle(inData);
+                        // created the flag below
+                        // in getEncounterData, depending on the first character of locationID, it adds that character to the JSON object that is sent back
+                        // if "e" for event, will go to event database and send relevant event data
+                        // if "b" for battle, will goto enemy database and send relevant enemy data
+                        if (inData['encounter_type'] == "event") { // if location is an event location
+                            triggerEvent(inData) // calls the triggerEvent function
+                        } else if (inData['encounter_type'] == "battle") { // if location is a battle location
+                            triggerBattle(inData) // calls the triggerBattle function
+                        };
 
                         gameRound += 1;
                         prepareRound();
