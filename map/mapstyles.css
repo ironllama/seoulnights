@@ -59,7 +59,7 @@ body {
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
     display: flex;
-    overflow: scroll;
+    overflow: hidden;
     gap: 1em;
     animation: 2s ease-in alternate-reverse infinite figureEight;
 }
@@ -325,4 +325,49 @@ progress {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.convenience-store {
+    z-index: 998;
+    position: absolute;
+    height: 75vh;
+    width: 75vw;
+    background: purple;
+    display: none;
+    flex-direction: column;
+    padding: 5px;
+}
+
+.store-button-container {
+    position: fixed;
+    top: 2.5em;
+    left: 2.5em;
+    display: flex;
+    background: green;
+    width: 250px;
+}
+
+.store-button {
+    align-self: flex-start;
+    height: 10vh;
+    width: 10vh;
+    border-radius: 100%;
+    background: plum;
+}
+
+.store-menu {
+    width: 100%;
+    flex: 5;
+    background: lightgreen;
+}
+
+.below-menu {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+}
+
+.leave-store-button {
+    width: 5em;
+    background: lightcoral;
 }
