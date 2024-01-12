@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
@@ -19,24 +20,6 @@ if ($encountertype == 'event') {
     if (isset($_POST['locationID'])) {
         try {
             $db = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
-
-            // Using LIKE to find matching locationID within the associative_ids column
-            // $sql = 'SELECT * FROM events WHERE associative_id LIKE :locationID';
-            // $stmt = $db->prepare($sql);
-
-            // Concatenate wildcards to match the locationID anywhere in associative_ids
-            // $stmt->execute([
-            //     "locationID" => $ass_id
-            // ]);
-
-            // $events = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            // if ($events) {
-            //     shuffle($events);
-            //     echo json_encode($events[0]);
-            // } else {
-            //     echo "No events found with locationID $locationID";
-            // }
 
             $findEvents = $db->prepare("SELECT * FROM location_events WHERE location_id = '$locationID' ORDER BY RAND() LIMIT 1"); // finding all possible events from location_events table
             $findEvents->execute();
@@ -88,14 +71,18 @@ if ($encountertype == 'event') {
         die('Error : ' . $e->getMessage());
     }
 
-    // $locationID = $_POST['location']; // bring in the passed locationID of the location we're at. currently were imitating this by using a button
+    $sessionID = session_id();
 
+
+    //getting enemy data
     $getEnemy = $db->prepare("SELECT * FROM enemies where enemy_locationID = '$locationID' ORDER BY RAND() LIMIT 1"); // were finding 1 enemy that is at this location sorted randomly
     $getEnemy->execute();
     $foundEnemy = $getEnemy->fetch(PDO::FETCH_ASSOC); //returns an object of the enemy from the enemies table
     $foundEnemy['encounter_type'] = 'battle';
     $enemyID = $foundEnemy['enemy_id']; // assign the enemy id to a variable
 
+
+    //getting enemy move data
     $getMoveIDs = $db->prepare("SELECT * FROM enemy_moves where enemy_id = '$enemyID'"); // getting all the moveIDs for the specific enemy
     $getMoveIDs->execute();
     $foundMoveIDs = $getMoveIDs->fetchAll(PDO::FETCH_ASSOC);
@@ -122,6 +109,21 @@ if ($encountertype == 'event') {
         $moves[] = $move; // appending each array to the bigger array
         $foundEnemy['enemy_moves'] = $moves; // appending the bigger array to the original enemy array
     }
+
+
+    //getting current game state
+    $currentGameState = $db->prepare("SELECT * FROM gameplay_logs where run_sessionID = '$sessionID'");
+    $currentGameState->execute();
+    $currentPlayer = $currentGameState->fetch(PDO::FETCH_ASSOC);
+
+    $playerEnergyLevel = $currentPlayer['run_energyLevel'];
+    $playerMoneyLevel = $currentPlayer['run_moneyLevel'];
+    $playerDrunkLevel = $currentPlayer['run_drunkLevel'];
+
+
+    $foundEnemy['currentPlayerEnergy'] = $playerEnergyLevel;
+    $foundEnemy['currentPlayerMoney'] = $playerMoneyLevel;
+    $foundEnemy['currentPlayerDrunk'] = $playerDrunkLevel;
 
     echo json_encode($foundEnemy, JSON_PRETTY_PRINT); // sending it back
 
