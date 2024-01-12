@@ -255,6 +255,16 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
+    <div class="convenience-store">
+        <div class="store-menu"></div>
+        <div class="below-menu">
+            <div class="below-menu-left">Some info about the CU mart or whatever</div>
+            <div class="leave-store-button"></div>
+        </div>
+    </div>
+    <div class="store-button-container">
+        <div class="store-button"></div>
+    </div>
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             fetch('getLocationData.php')
@@ -314,45 +324,58 @@ if (!isset($_SESSION['loaded'])) {
                         i++;
                     }
 
-                    //game prep and start
                     let gameRound = 0;
 
-                    //get DOM elements
+                    //get map elements
                     const currentZone = document.querySelector("#start")
                     let currentCards = currentZone.querySelectorAll(".location-card");
-
                     let nextZone = document.querySelector("#zone" + (gameRound));
                     let nextCards = nextZone.querySelectorAll(".location-card");
                     const cardZoneList = document.querySelectorAll(".card-zone"); //creates a nodelist of zones
                     const lastZone = cardZoneList[cardZoneList.length - 1]; //final round
 
+                    //encounter zones and their children
                     const encounterZone = document.querySelector("#encounter-zone");
                     const endGame = document.querySelector("#end-game");
-                    //event
-                    const eventZone = document.querySelector(".event-zone");
+                        //event
+                        const eventZone = document.querySelector(".event-zone");
+                        const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
+                        const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
+                        const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
+                        const optionMoneyArray = Array.from(document.querySelectorAll(".option-money"));
+                        const optionButton1 = document.querySelector('.option-button1');
+                        const optionButton2 = document.querySelector('.option-button2');
+                        const optionButton3 = document.querySelector('.option-button3');
+                        //battle
+                        const battleZone = document.querySelector(".battle-zone");
+                        const pcCardZone = document.querySelector(".PC-cards");
+                        //result
+                        const encounterResult = document.getElementById("encounter-result");
+                        const resolutionText = document.querySelector(".resolution-text");
+                        const energyChange = document.querySelector(".energy-num");
+                        const drunkChange = document.querySelector(".drunk-num");
+                        const moneyChange = document.querySelector(".money-num");
+                        //endgame
+                        const playAgainButton = document.querySelector(".play-again");
+                        const leaderBoardButton = document.querySelector(".see-leaderboard");
 
-                    const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
-                    const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
-                    const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
-                    const optionMoneyArray = Array.from(document.querySelectorAll(".option-money"));
-                    const optionButton1 = document.querySelector('.option-button1');
-                    const optionButton2 = document.querySelector('.option-button2');
-                    const optionButton3 = document.querySelector('.option-button3');
-                    //battle
-                    const battleZone = document.querySelector(".battle-zone");
-                    const pcCardZone = document.querySelector(".PC-cards");
-                    //result
-                    const encounterResult = document.getElementById("encounter-result");
-                    const resolutionText = document.querySelector(".resolution-text");
-                    const energyChange = document.querySelector(".energy-num");
-                    const drunkChange = document.querySelector(".drunk-num");
-                    const moneyChange = document.querySelector(".money-num");
                     //hud
                     const energyBar = document.querySelector(".player-energy-bar");
                     const drunkBar = document.querySelector(".player-drunk-bar");
                     const energyNum = document.querySelector(".player-energy-num");
                     const drunkNum = document.querySelector(".player-drunk-num");
                     const moneyNum = document.querySelector(".player-money-num");
+
+                    //convenience store
+                    const storeScreen = document.querySelector(".convenience-store");
+                    const storeButton = document.querySelector(".store-button-container");
+                    const leaveStoreButton = document.querySelector(".leave-store-button");
+                    storeButton.addEventListener("click", () => {
+                        storeScreen.style.display = "flex";
+                        getStoreItems();
+                        leaveStoreButton.addEventListener("click", () => storeScreen.style.display = "none");
+                    });
+
                     //battle init
                     playedCards = [];
                     currentRound = [];
@@ -375,6 +398,11 @@ if (!isset($_SESSION['loaded'])) {
                     //user section
                     playerHealthBar = document.querySelector(".player-health-bar");
                     playerHealthNum = document.querySelector(".player-health-num");
+
+                    function getStoreItems() {
+
+                    }
+                    
 
                     function prepareRound() {
                         if (gameRound < cardZoneList.length - 1) {
@@ -407,7 +435,12 @@ if (!isset($_SESSION['loaded'])) {
 
                             if (nextCards) { // if cards in the current zone exist
                                 nextCards.forEach((card) => card.classList.add("focus")); // adding a focus class to each card in the current zone
-                                nextCards.forEach((card) => card.addEventListener("click", locationClicked)); // essentially removing the click event listener after been clicked
+                                nextCards.forEach((card) => { 
+                                    card.addEventListener("click", locationClicked);
+                                    card.addEventListener("click", () => {
+                                        mapElement.scrollTo({ left: nextZone.offsetLeft, behavior: 'smooth' });
+                                    });
+                                });
                                 if (nextCards.length == 2) {
                                     console.log("Player is at a choice of " + nextCards[0].innerHTML + " or " + nextCards[1].innerHTML); // Log player's location
                                 } else console.log("Player is at choice of " + nextCards[0].innerHTML);
@@ -452,6 +485,8 @@ if (!isset($_SESSION['loaded'])) {
                                 moneyNum.innerHTML = parseInt(inData['updatedMoneyLevel']).toLocaleString('en-US') + "";
                                 if (gameRound >= cardZoneList.length - 1) {
                                     encounterResult.addEventListener("click", () => endGame.style.display = "flex"); //end game
+                                    playAgainButton.addEventListener("click", () => window.reload());
+                                    leaderboardButton.addEventListener("click", () => alert("Gotta add a leaderboard"));
                                 } else encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); //click to continue game
                             }
                         }
