@@ -9,27 +9,36 @@
 }
 
 @keyframes blurry {
-    0% { filter: blur(0px); }
-    100% { filter: blur(var(--maxblur)); }
+    0% {
+        filter: blur(0px);
+    }
+
+    100% {
+        filter: blur(var(--maxblur));
+    }
 }
 
 @keyframes figureEight {
     0% {
-      transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
     }
+
     25% {
-      transform: translateX(var(--midX)) translateY(var(--upY));
+        transform: translateX(var(--midX)) translateY(var(--upY));
     }
+
     50% {
-      transform: translateX(var(--maxX)) translateY(0);
+        transform: translateX(var(--maxX)) translateY(0);
     }
+
     75% {
-      transform: translateX(var(--midX)) translateY(var(--downY));
+        transform: translateX(var(--midX)) translateY(var(--downY));
     }
+
     100% {
-      transform: translateX(0) translateY(0);
+        transform: translateX(0) translateY(0);
     }
-  }
+}
 
 body {
     font-family: "Press Start 2P";
@@ -109,7 +118,8 @@ body {
     flex-direction: row;
 }
 
-.event-section-left, .event-section-right {
+.event-section-left,
+.event-section-right {
     width: 50%;
     text-align: center;
     display: flex;
@@ -152,7 +162,7 @@ body {
     fill: #f0f0f0;
 }
 
-.option-button:hover svg{
+.option-button:hover svg {
     fill: lime;
     transform: scale(1.5);
 }
@@ -180,15 +190,20 @@ body {
     align-items: center;
 }
 
-.energy-svg-box, .energy-num {
+.energy-svg-box,
+.energy-num {
     color: cornflowerblue;
     fill: cornflowerblue;
 }
-.drunk-svg-box, .drunk-num {
+
+.drunk-svg-box,
+.drunk-num {
     color: darkolivegreen;
     fill: darkolivegreen;
 }
-.money-svg-box, .money-num {
+
+.money-svg-box,
+.money-num {
     color: gold;
     fill: gold;
 }
@@ -242,7 +257,7 @@ body {
 }
 
 .username {
-    align-self: flex-end;   
+    align-self: flex-end;
 }
 
 .stat {

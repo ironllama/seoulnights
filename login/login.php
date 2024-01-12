@@ -128,7 +128,7 @@ if (isset($_SESSION['name'])) {
                             .then(res => res.text())
                             .then(data => {
                                 console.log(data)
-                                window.location.href='../map/map.php';
+                                window.location.href = '../map/map.php';
                             })
                     })
                 }).catch((error) => {
