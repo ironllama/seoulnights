@@ -389,7 +389,6 @@ if (!isset($_SESSION['loaded'])) {
                     const leaveStoreButton = document.querySelector(".leave-store-button");
                     storeButton.addEventListener("click", () => {
                         storeScreen.style.display = "flex";
-                        getStoreItems();
                         leaveStoreButton.addEventListener("click", () => storeScreen.style.display = "none");
                     });
 
@@ -420,9 +419,9 @@ if (!isset($_SESSION['loaded'])) {
                     let updatedDrunk;
 
                     // store functions
-                    function getStoreItems() {
-                        fetch('../convenience/getStoreItems.php')
-                            .then(response => response.json())
+                    function getStoreItems() { // function to get storeitems upon game init
+                        fetch('../convenience/getStoreItems.php') // hits this api
+                            .then(response => response.json()) //parses as json
                             .then(data => {
                                 console.log(data);
 
@@ -430,46 +429,60 @@ if (!isset($_SESSION['loaded'])) {
                                 let foodContainer = document.querySelector('#food');
 
 
-                                data.items['drink'].forEach(drink => {
+                                data.items['drink'].forEach(drink => { //for each drink
                                     console.log(drink);
-                                    var drinkButton = document.createElement('button');
-                                    drinkButton.classList.add('shopButton');
-                                    drinkButton.innerHTML = `${drink['item']} <br>${drink['price_hit']}`;
-                                    drinkButton.addEventListener('click', () => {
-                                        console.log(drink['id'])
+                                    var drinkButton = document.createElement('button'); //creating a drink button
+                                    drinkButton.classList.add('shopButton'); // adding class called shopbutton
+                                    drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']); // setting the innerHTML to the drink name and price in the database
+                                    drinkButton.addEventListener('click', () => { // adding an event listener to it
+                                        console.log(drink['mart_id'])
                                         console.log(`Clicked on drink: ${drink['item']}`);
-                                        fetch('../convenience/buyItems.php', {
+                                        fetch('../convenience/buyItems.php', { // upon click, goes to an api
                                                 method: 'POST',
                                                 headers: {
                                                     'Content-Type': 'application/json'
                                                 },
-                                                body: JSON.stringify(drink['id'])
+                                                body: JSON.stringify(drink['mart_id']) // sends the clicked drink's id
 
                                             })
                                             .then(response => response.json())
                                             .then(data => {
                                                 console.log(data);
-                                                let user_stats = document.querySelector('#user_stats');
-                                                user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
+                                                // let user_stats = document.querySelector('#user_stats');
+                                                // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
                                             });
 
                                     });
                                     drinks.appendChild(drinkButton);
                                 });
 
-                                data.items['food'].forEach(food => {
-                                    var foodButton = document.createElement('button');
-                                    foodButton.innerHTML = `${food['item']} <br>${food['price_hit']}`;
-                                    foodButton.addEventListener('click', () => {
+                                data.items['food'].forEach(food => { //for each food
+                                    console.log(food);
+                                    var foodButton = document.createElement('button'); //creating a food button
+                                    foodButton.classList.add('shopButton'); // adding class called shopbutton
+                                    foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']); // setting the innerHTML to the food name and price in the database
+                                    foodButton.addEventListener('click', () => { // adding an event listener to it
+                                        console.log(food['mart_id'])
                                         console.log(`Clicked on food: ${food['item']}`);
+                                        fetch('../convenience/buyItems.php', { // upon click, goes to an api
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(food['mart_id']) // sends the clicked food's id
+
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                console.log(data);
+                                                // let user_stats = document.querySelector('#user_stats');
+                                                // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
+                                            });
 
                                     });
-                                    foodContainer.appendChild(foodButton);
+                                    foodContainer.appendChild(foodButton); // was called food, had to change
                                 });
-
-
                             });
-
                     }
 
 
@@ -844,10 +857,19 @@ if (!isset($_SESSION['loaded'])) {
                         gameRound += 1;
                         prepareRound();
                     }
-
+                    getStoreItems();
                     prepareRound();
                 });
         });
+
+
+        function updateHUD() {
+            fetch('updateHUD.php')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+        };
     </script>
 </body>
 

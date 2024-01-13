@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $sessionid = session_id();
 
 try {
@@ -8,33 +8,33 @@ try {
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());
 }
-$itemData = json_decode(file_get_contents('php://input'));
+$itemData = json_decode(file_get_contents('php://input')); // returns clicked item data
 
 
-$stmt = $pdo->prepare("SELECT * from mart_items where id='$itemData'");
-$stmt->execute();
-$drink = $stmt->fetch(PDO::FETCH_ASSOC);
+$item = $pdo->prepare("SELECT * from mart_items where mart_id='$itemData'");
+$item->execute();
+$itemDetails = $item->fetch(PDO::FETCH_ASSOC);
 
-$cost = $drink['price_hit'];
-$energy = $drink['energy_hit'];
-$drunk = $drink['drunk_hit'];
+$itemCost = $itemDetails['price_hit'];
+$itemEnergy = $itemDetails['energy_hit'];
+$itemDrunk = $itemDetails['drunk_hit'];
 
-$stmt = $pdo->prepare("select * from gameplay_logs where run_sessionID= '$sessionid'");
-$stmt->execute();
-$playState = $stmt->fetch(PDO::FETCH_ASSOC);
+$currentGameState = $pdo->prepare("select * from gameplay_logs where run_sessionID= '$sessionid'");
+$currentGameState->execute();
+$currentGameStateDetails = $currentGameState->fetch(PDO::FETCH_ASSOC);
 
-$newEnergy = ($playState['run_energyLevel'] + $energy);
-$newMoney = ($playState['run_moneyLevel'] + $cost);
-$newDrunk = ($playState['run_drunkLevel'] + $drunk);
+$updatedEnergyLevel = ($currentGameStateDetails['run_energyLevel'] + $itemEnergy);
+$updatedMoneyLevel = ($currentGameStateDetails['run_moneyLevel'] + $itemCost);
+$updatedDrunkLevel = ($currentGameStateDetails['run_drunkLevel'] + $itemDrunk);
 
 
-$stmt = $pdo->prepare("update gameplay_logs set run_energyLevel = '$newEnergy', run_moneyLevel = '$newMoney', run_drunkLevel = '$newDrunk' where run_sessionID= '$sessionid'");
-$stmt->execute();
+$updateGameState = $pdo->prepare("update gameplay_logs set run_energyLevel = '$updatedEnergyLevel', run_moneyLevel = '$updatedMoneyLevel', run_drunkLevel = '$updatedDrunkLevel' where run_sessionID= '$sessionid'");
+$updateGameState->execute();
 
 
 $newValues = array(
-    'energy' => $newEnergy,
-    'drunk' => $newDrunk,
-    'money' => $newMoney
+    'energy' => $updatedEnergyLevel,
+    'drunk' => $updatedDrunkLevel,
+    'money' => $updatedMoneyLevel
 );
 echo json_encode($newValues);

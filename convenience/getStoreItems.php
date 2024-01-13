@@ -14,6 +14,9 @@ $stmt = $pdo->prepare("SELECT * FROM mart_items WHERE type = 'food' ORDER BY RAN
 $stmt->execute();
 $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+/// this section was to bring in current game state upon CU enter ///
+/// can delete as this api is only being called upon game init ///
+
 $stmt = $pdo->prepare("SELECT run_energyLevel, run_moneyLevel, run_drunkLevel, run_sessionID FROM `gameplay_logs`");
 $stmt->execute();
 $gameplay_logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
