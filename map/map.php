@@ -256,7 +256,22 @@ if (!isset($_SESSION['loaded'])) {
     </div>
 
     <div class="convenience-store">
-        <div class="store-menu"></div>
+        <div class="store-menu">
+            <div id="inventory">
+                <h2>Inventory</h2>
+                <div id="user_stats"></div>
+            </div>
+            <div class='menu_parent'>
+                <div class='drink_selection'>
+                    <h2>Drinks</h2>
+                    <div id="drinks"></div>
+                </div>
+                <div class='food_selection'>
+                    <h2>Food</h2>
+                    <div id="food"></div>
+                </div>
+            </div>
+        </div>
         <div class="below-menu">
             <div class="below-menu-left">Some info about the CU mart or whatever</div>
             <div class="leave-store-button"></div>
@@ -266,25 +281,25 @@ if (!isset($_SESSION['loaded'])) {
         <div class="store-button"></div>
     </div>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            fetch('getLocationData.php')
-                .then(res => res.json())
+        document.addEventListener("DOMContentLoaded", () => { // upon document load
+            fetch('getLocationData.php') // fetch to this api (gets location data)
+                .then(res => res.json()) // takes back the echo and parses into json format
                 .then(data => {
-                    console.log(data);
-                    // console.log(data.length)
+                    console.log(data); // console.log to see all the locations
+
 
                     //map generation
-                    const mapElement = document.querySelector(".map");
-                    let pathBranchesLeft = 4;
+                    const mapElement = document.querySelector(".map"); // identifies map
+                    let pathBranchesLeft = 4; // init how many forks we want
                     let i = 0; // ultimately ends up being the zone identifier
 
-                    while (data.length > 0) {
-                        let branchPath = false;
-                        const newLocationCard = document.createElement("div");
-                        const parentZone = document.querySelector("#zone" + i);
+                    while (data.length > 0) { // while there are locations still to load
+                        let branchPath = false; // branch is set to false initially
+                        const newLocationCard = document.createElement("div"); // identifies a location card
+                        const parentZone = document.querySelector("#zone" + i); // identifies the zone that the location card is in
 
                         // Calculate remaining non-branch iterations
-                        const remainingNonBranchIterations = data.length - pathBranchesLeft * 2;
+                        const remainingNonBranchIterations = data.length - pathBranchesLeft * 2; // identifies how many more locations can NOT be a fork
 
                         // Determine if a branch should be created based on remaining iterations and branches
                         if (pathBranchesLeft > 0 && (Math.floor(Math.random() * remainingNonBranchIterations) === 0 || remainingNonBranchIterations <= 0)) {
@@ -292,7 +307,7 @@ if (!isset($_SESSION['loaded'])) {
                             pathBranchesLeft--;
                         }
 
-                        if (branchPath) {
+                        if (branchPath) { // if it is supposed to be a branch/fork
                             for (let branchLoc = 0; branchLoc < 2; branchLoc++) {
                                 if (data.length === 0) break; // Prevent creating branches if testArray is empty
                                 newLocationCard.classList.add("location-card");
@@ -307,7 +322,7 @@ if (!isset($_SESSION['loaded'])) {
 
                                 parentZone.appendChild(newLocationCard.cloneNode(true));
                             }
-                        } else {
+                        } else { //otherwise its a singular location
                             newLocationCard.classList.add("location-card");
 
                             newLocationCard.id = data[0]["location_id"];
@@ -324,7 +339,8 @@ if (!isset($_SESSION['loaded'])) {
                         i++;
                     }
 
-                    let gameRound = 0;
+                    //game prep and start
+                    let gameRound = 0; // init game round to be 0
 
                     //get map elements
                     const currentZone = document.querySelector("#start")
@@ -337,27 +353,28 @@ if (!isset($_SESSION['loaded'])) {
                     //encounter zones and their children
                     const encounterZone = document.querySelector("#encounter-zone");
                     const endGame = document.querySelector("#end-game");
-                        //event
-                        const eventZone = document.querySelector(".event-zone");
-                        const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
-                        const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
-                        const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
-                        const optionMoneyArray = Array.from(document.querySelectorAll(".option-money"));
-                        const optionButton1 = document.querySelector('.option-button1');
-                        const optionButton2 = document.querySelector('.option-button2');
-                        const optionButton3 = document.querySelector('.option-button3');
-                        //battle
-                        const battleZone = document.querySelector(".battle-zone");
-                        const pcCardZone = document.querySelector(".PC-cards");
-                        //result
-                        const encounterResult = document.getElementById("encounter-result");
-                        const resolutionText = document.querySelector(".resolution-text");
-                        const energyChange = document.querySelector(".energy-num");
-                        const drunkChange = document.querySelector(".drunk-num");
-                        const moneyChange = document.querySelector(".money-num");
-                        //endgame
-                        const playAgainButton = document.querySelector(".play-again");
-                        const leaderBoardButton = document.querySelector(".see-leaderboard");
+                    //event
+                    const eventZone = document.querySelector(".event-zone");
+                    const optionDescriptionArray = Array.from(document.querySelectorAll(".option-description"));
+                    const optionEnergyArray = Array.from(document.querySelectorAll(".option-energy"));
+                    const optionDrunkArray = Array.from(document.querySelectorAll(".option-drunk"));
+                    const optionMoneyArray = Array.from(document.querySelectorAll(".option-money"));
+                    const optionButton1 = document.querySelector('.option-button1');
+                    const optionButton2 = document.querySelector('.option-button2');
+                    const optionButton3 = document.querySelector('.option-button3');
+                    //battle
+                    const battleZone = document.querySelector(".battle-zone");
+                    const pcCardZone = document.querySelector(".PC-cards");
+                    const cardArea = document.querySelector(".bot");
+                    //result
+                    const encounterResult = document.getElementById("encounter-result");
+                    const resolutionText = document.querySelector(".resolution-text");
+                    const energyChange = document.querySelector(".energy-num");
+                    const drunkChange = document.querySelector(".drunk-num");
+                    const moneyChange = document.querySelector(".money-num");
+                    //endgame
+                    const playAgainButton = document.querySelector(".play-again");
+                    const leaderBoardButton = document.querySelector(".see-leaderboard");
 
                     //hud
                     const energyBar = document.querySelector(".player-energy-bar");
@@ -372,7 +389,6 @@ if (!isset($_SESSION['loaded'])) {
                     const leaveStoreButton = document.querySelector(".leave-store-button");
                     storeButton.addEventListener("click", () => {
                         storeScreen.style.display = "flex";
-                        getStoreItems();
                         leaveStoreButton.addEventListener("click", () => storeScreen.style.display = "none");
                     });
 
@@ -398,11 +414,77 @@ if (!isset($_SESSION['loaded'])) {
                     //user section
                     playerHealthBar = document.querySelector(".player-health-bar");
                     playerHealthNum = document.querySelector(".player-health-num");
+                    let updatedHealh;
+                    let updatedMoney;
+                    let updatedDrunk;
 
-                    function getStoreItems() {
+                    // store functions
+                    function getStoreItems() { // function to get storeitems upon game init
+                        fetch('../convenience/getStoreItems.php') // hits this api
+                            .then(response => response.json()) //parses as json
+                            .then(data => {
+                                console.log(data);
 
+                                let drinks = document.querySelector('#drinks');
+                                let foodContainer = document.querySelector('#food');
+
+
+                                data.items['drink'].forEach(drink => { //for each drink
+                                    console.log(drink);
+                                    var drinkButton = document.createElement('button'); //creating a drink button
+                                    drinkButton.classList.add('shopButton'); // adding class called shopbutton
+                                    drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']); // setting the innerHTML to the drink name and price in the database
+                                    drinkButton.addEventListener('click', () => { // adding an event listener to it
+                                        console.log(drink['mart_id'])
+                                        console.log(`Clicked on drink: ${drink['item']}`);
+                                        fetch('../convenience/buyItems.php', { // upon click, goes to an api
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(drink['mart_id']) // sends the clicked drink's id
+
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                console.log(data);
+                                                // let user_stats = document.querySelector('#user_stats');
+                                                // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
+                                            });
+
+                                    });
+                                    drinks.appendChild(drinkButton);
+                                });
+
+                                data.items['food'].forEach(food => { //for each food
+                                    console.log(food);
+                                    var foodButton = document.createElement('button'); //creating a food button
+                                    foodButton.classList.add('shopButton'); // adding class called shopbutton
+                                    foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']); // setting the innerHTML to the food name and price in the database
+                                    foodButton.addEventListener('click', () => { // adding an event listener to it
+                                        console.log(food['mart_id'])
+                                        console.log(`Clicked on food: ${food['item']}`);
+                                        fetch('../convenience/buyItems.php', { // upon click, goes to an api
+                                                method: 'POST',
+                                                headers: {
+                                                    'Content-Type': 'application/json'
+                                                },
+                                                body: JSON.stringify(food['mart_id']) // sends the clicked food's id
+
+                                            })
+                                            .then(response => response.json())
+                                            .then(data => {
+                                                console.log(data);
+                                                // let user_stats = document.querySelector('#user_stats');
+                                                // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
+                                            });
+
+                                    });
+                                    foodContainer.appendChild(foodButton); // was called food, had to change
+                                });
+                            });
                     }
-                    
+
 
                     function prepareRound() {
                         if (gameRound < cardZoneList.length - 1) {
@@ -435,10 +517,13 @@ if (!isset($_SESSION['loaded'])) {
 
                             if (nextCards) { // if cards in the current zone exist
                                 nextCards.forEach((card) => card.classList.add("focus")); // adding a focus class to each card in the current zone
-                                nextCards.forEach((card) => { 
+                                nextCards.forEach((card) => {
                                     card.addEventListener("click", locationClicked);
                                     card.addEventListener("click", () => {
-                                        mapElement.scrollTo({ left: nextZone.offsetLeft, behavior: 'smooth' });
+                                        mapElement.scrollTo({
+                                            left: nextZone.offsetLeft,
+                                            behavior: 'smooth'
+                                        });
                                     });
                                 });
                                 if (nextCards.length == 2) {
@@ -554,20 +639,30 @@ if (!isset($_SESSION['loaded'])) {
                         }
 
                         //triggerBattle function
-                        function triggerBattle(data) {
-                            console.log('works as intended');
+                        function triggerBattle(data) { // takes in the returned data from getEncounterData.php
+
+                            // random background stuff (not needed)
                             backgroundImages = ['../battle/pics/rooftop.jpeg', '../battle/pics/ruraljapan.jpeg'];
                             currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
                             document.querySelector(".container").style.backgroundImage = "url(" + currentSessionBG + ")";
-                            battleZone.style.display = "flex";
 
-                            currentEnemy = data;
+                            battleZone.style.display = "flex"; // displays battlezon
+                            cardArea.innerHTML = ''; // empties out the cards from previous battle, basically makes sure its a clean slate
+
+                            playerHealthBar.value = data['currentPlayerEnergy']; // initializes the healthbar value at begining of round to the current state of the game
+                            playerHealthNum.innerHTML = data['currentPlayerEnergy']; // shows the client
+
+                            // setting up battle 
+
+                            // initializing enemy
+                            currentEnemy = data; // mainly just to check whats coming back
                             enemyPic.src = "pics/" + data['enemy_img'];
                             enemyName.innerHTML = data['enemy_name'];
                             enemyHealthBar.value = data['enemy_energy'];
                             enemyHealthBar.max = data['enemy_energy'];
                             enemyHealthNum.innerHTML = data['enemy_energy'] + "/" + data['enemy_energy'];
 
+                            // setting up enemy moves to visualize
                             enemyMoves = data['enemy_moves'];
                             enemyMovesetTitle = document.createElement("h3");
                             enemyMoves.forEach(function(move, index) {
@@ -600,44 +695,71 @@ if (!isset($_SESSION['loaded'])) {
                             })
 
 
-
+                            // setting up cards available for client
                             function getNewCards() {
-                                fetch('../battle/getCards.php')
+                                fetch('../battle/getCards.php') // hits this api
                                     .then(res => res.json())
                                     .then(data => {
                                         console.log(data);
-                                        cards = data;
-                                        cardArea = document.querySelector(".bot");
+                                        cards = data; // setting the echo to a variable to check what cards we have
 
-                                        cards.slice(0, 4).forEach((card) => {
+                                        // card creation at bottom of battle screen
+                                        cards.slice(0, 4).forEach((card) => { // only having first 4 cards
                                             cardDiv = document.createElement("div");
                                             cardDiv.className = "card";
 
+                                            // event listener on card click
                                             cardDiv.addEventListener("click", function(event) {
                                                 event.stopPropagation();
-                                                playedCards.push(card['card_name']);
-                                                currentRound = card;
-                                                enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
+                                                playedCards.push(card['card_name']); // pushing into array to track # of cards played
+                                                currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
+                                                enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
 
-                                                takenPlayerDamage = currentRound['card_defense'] - enemyTurn['move_attack']; // -
+                                                // putting the card you clicked, and enemy move into an array to push to an api
+                                                roundData = [currentRound, enemyTurn];
+
+                                                console.log(roundData); // the array
+
+                                                fetch('getRoundResult.php', { // pushing into this api so that backend can do calc
+                                                        method: 'POST',
+                                                        headers: {
+                                                            'Content-Type': 'application/json'
+                                                        },
+                                                        body: JSON.stringify(roundData)
+                                                    })
+                                                    .then(res => res.json())
+                                                    .then(data => { // what we get back is the updated values for the client
+                                                        console.log(data);
+
+                                                        updatedHealth = data['updatedEnergyLevel'];
+                                                        updatedMoney = data['updatedMoneyLevel'];
+                                                        updatedDrunk = data['updatedDrunkLevel'];
+
+                                                        playerHealthBar.value = updatedHealth; // updates actual value here
+                                                        playerHealthNum.innerHTML = updatedHealth + "/100"; // updates for client here so they can view
+
+                                                    })
+
+                                                // enemy stuff is all done on front end
+
+                                                // enemy battle logic which is also the exact same for client, but done on back end
                                                 takenEnemyDamage = enemyTurn['move_defend'] - currentRound['card_attack']; // -
-                                                totalPlayerRegen = currentRound['card_regen'];
                                                 totalEnemyRegen = enemyTurn['move_regen'];
 
-                                                if (takenPlayerDamage >= 0) {
-                                                    takenPlayerDamage = 0;
-                                                } else takenPlayerDamage;
-
+                                                /* because takenEnemyDamage is calc by enemy_defense# - client_attack#, sometimes enemy defense is higher
+                                                because the final calc is done by taking the takenEnemyDamage and adding it to the regen, 
+                                                we don't want to add instances where defense is higher because that shouldnt count as regen
+                                                    so we make it 0, otherwise calculation is correct
+                                                */
                                                 if (takenEnemyDamage >= 0) {
                                                     takenEnemyDamage = 0;
                                                 } else takenEnemyDamage;
 
-                                                roundPlayerEnergy = (takenPlayerDamage + totalPlayerRegen);
+                                                // roundEnemyEnergy = total damage taken by enemy + total amount regen
+                                                // ex. -6 (0 defense from enemy - 6 attack from client ) + 10 (total regen by enemy) = 4. enemy gains 4 health
                                                 roundEnemyEnergy = (takenEnemyDamage + totalEnemyRegen);
 
-                                                // enemyHealthBar = document.querySelector(".enemy-health-bar");
-                                                // enemyHealthNum = document.querySelector(".enemy-health-num");
-
+                                                // this is how the enemy health value gets updated, but it cant go over what it started with
                                                 if (enemyHealthBar.value + roundEnemyEnergy > currentEnemy['enemy_energy']) {
                                                     enemyHealthBar.value = currentEnemy['enemy_energy'];
                                                     enemyHealthNum.innerHTML = currentEnemy['enemy_energy'] + "/" + currentEnemy['enemy_energy'];
@@ -647,37 +769,42 @@ if (!isset($_SESSION['loaded'])) {
                                                     enemyHealthNum.innerHTML = newEnemyHealthValue + "/" + currentEnemy['enemy_energy'];
                                                 }
 
-                                                if (playerHealthBar.value + roundPlayerEnergy > 100) {
-                                                    playerHealthBar.value = 100;
-                                                    playerHealthNum.innerHTML = "100/100"
-                                                } else {
-                                                    newPlayerHealthValue = (playerHealthBar.value + roundPlayerEnergy);
-                                                    playerHealthBar.value = newPlayerHealthValue;
-                                                    playerHealthNum.innerHTML = newPlayerHealthValue + "/100";
-                                                }
-
-
                                                 //upon win
                                                 if (enemyHealthBar.value <= 0) {
+                                                    playedCards = [];
+                                                    enemyMoveset.innerHTML = '';
                                                     alert("Battle Over, you won!");
-                                                    location.reload();
+                                                    fetch('getRoundResult.php')
+                                                        .then(res => res.json())
+                                                        .then(data => showResults(data))
                                                 }
 
                                                 //upon loss
                                                 if (playerHealthBar.value <= 0) {
+                                                    playedCards = [];
                                                     alert("Battle Over, you lost!");
-                                                    location.reload();
+                                                    fetch('getRoundResult.php')
+                                                        .then(res => res.json())
+                                                        .then(data => showResults(data))
                                                 }
 
+                                                // just console.log stuff to verify results
                                                 console.log("Turn")
                                                 console.log("Your Move: " + JSON.stringify(currentRound));
                                                 console.log("Enemy Move: " + JSON.stringify(enemyTurn));
+
+                                                // logic to see if new cards are needed. we check length of playedcards
+                                                // if they've played 4, rerun the getNewCards function
                                                 if (playedCards.length % 4 == 0 && playedCards.length > 1) {
                                                     getNewCards();
                                                 }
+
+                                                // remove the card upon click
                                                 cardArea.removeChild(event.currentTarget);
                                             });
 
+
+                                            // actually creating the cards
                                             cardImage = document.createElement("img");
                                             cardImage.className = "cardpic", cardImage.src = "../battle/pics/" + card['card_img'];
 
@@ -712,14 +839,15 @@ if (!isset($_SESSION['loaded'])) {
                                         })
                                     })
                             }
+                            // run this function at the beginning of each battle clicked
                             getNewCards();
                         }
 
-                        //assuming event, will later need a flag and if/else for "e" or "b"
-                        // created the flag below
-                        // in getEncounterData, depending on the first character of locationID, it adds that character to the JSON object that is sent back
-                        // if "e" for event, will go to event database and send relevant event data
-                        // if "b" for battle, will goto enemy database and send relevant enemy data
+                        /* 
+                        in getEncounterData, depending on the first character of locationID, it adds that character to the JSON object that is sent back
+                        if "e" for event, will go to event database and send relevant event data
+                        if "b" for battle, will goto enemy database and send relevant enemy data */
+
                         if (inData['encounter_type'] == "event") { // if location is an event location
                             triggerEvent(inData) // calls the triggerEvent function
                         } else if (inData['encounter_type'] == "battle") { // if location is a battle location
@@ -729,10 +857,19 @@ if (!isset($_SESSION['loaded'])) {
                         gameRound += 1;
                         prepareRound();
                     }
-
+                    getStoreItems();
                     prepareRound();
                 });
         });
+
+
+        function updateHUD() {
+            fetch('updateHUD.php')
+                .then(res => res.json())
+                .then(data => {
+                    console.log(data)
+                })
+        };
     </script>
 </body>
 
