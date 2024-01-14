@@ -374,7 +374,7 @@ if (!isset($_SESSION['loaded'])) {
                     const moneyChange = document.querySelector(".money-num");
                     //endgame
                     const playAgainButton = document.querySelector(".play-again");
-                    const leaderBoardButton = document.querySelector(".see-leaderboard");
+                    const leaderboardButton = document.querySelector(".see-leaderboard");
 
                     //hud
                     const energyBar = document.querySelector(".player-energy-bar");
@@ -450,6 +450,14 @@ if (!isset($_SESSION['loaded'])) {
                                                 console.log(data);
                                                 // let user_stats = document.querySelector('#user_stats');
                                                 // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
+
+                                                energyBar.value = data['energy'];
+                                                energyNum.innerHTML = data['energy'];
+
+                                                drunkBar.value = data['drunk'];
+                                                drunkNum.innerHTML = data['drunk'];
+
+                                                moneyNum.innerHTML = data['money'];
                                             });
 
                                     });
@@ -475,6 +483,16 @@ if (!isset($_SESSION['loaded'])) {
                                             .then(response => response.json())
                                             .then(data => {
                                                 console.log(data);
+
+                                                energyBar.value = data['energy'];
+                                                energyNum.innerHTML = data['energy'];
+
+                                                drunkBar.value = data['drunk'];
+                                                drunkNum.innerHTML = data['drunk'];
+
+                                                moneyNum.innerHTML = data['money'];
+
+
                                                 // let user_stats = document.querySelector('#user_stats');
                                                 // user_stats.innerHTML = `Energy: ${data.user_stats['run_energyLevel']} <br> Money: ${data.user_stats['run_moneyLevel']} <br> Drunk: ${data.user_stats['run_drunkLevel']}`;
                                             });
@@ -570,7 +588,7 @@ if (!isset($_SESSION['loaded'])) {
                                 moneyNum.innerHTML = parseInt(inData['updatedMoneyLevel']).toLocaleString('en-US') + "";
                                 if (gameRound >= cardZoneList.length - 1) {
                                     encounterResult.addEventListener("click", () => endGame.style.display = "flex"); //end game
-                                    playAgainButton.addEventListener("click", () => window.reload());
+                                    playAgainButton.addEventListener("click", () => window.location.reload());
                                     leaderboardButton.addEventListener("click", () => alert("Gotta add a leaderboard"));
                                 } else encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); //click to continue game
                             }
