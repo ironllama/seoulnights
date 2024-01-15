@@ -30,3 +30,4 @@ if (isset($_POST['locationID'])) {
     echo "No locationID received";
 }
 ?>
+

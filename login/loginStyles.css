@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1em;
+}
+
+body {
+    background: #0F0F0F;
+    color: #F0F0F0;
+    font-family: "Press Start 2P";
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
+}
+
+.welcome {
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.playerPic {
+    margin-top: 1em;
+    border-radius: 5px;
+}
+
+.signoutButton,
+.playButton,
+.leaderboardButton {
+    display: none;
+    height: 75px;
+    width: 200px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.playButton {
+    font-size: 2em;
+}
+
+button {
+    font-family: inherit;
+}
+
+.loginButton {
+    height: 75px;
+    width: 200px;
+    border-radius: 10px;
+    font-size: 2em;
+}
+
+h1 {
+    text-align: center;
+    font-size: 7em;
+    background: linear-gradient(to right, red, blue);
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
