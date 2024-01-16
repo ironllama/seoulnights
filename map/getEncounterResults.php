@@ -24,9 +24,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Check if the JSON data is valid
     $decoded_data = json_decode($json_data); // decoding the data
-
+    
     if ($decoded_data !== null) { // if the data arrived 
 
+        /// now getting current state of the game values ///
+        $currentPlayerValues = $db->prepare("SELECT * FROM gameplay_logs where run_sessionID = '$session_id'");
+        $currentPlayerValues->execute();
+        $playerResults = $currentPlayerValues->fetch(PDO::FETCH_ASSOC);
+
+        $currentEnergyLevel = $playerResults['run_energyLevel'];
+        $currentMoneyLevel = $playerResults['run_moneyLevel'];
+        $currentDrunkLevel = $playerResults['run_drunkLevel'];
+        
+        //checks to see if it's a battle resolution - index[1] represents player's choice of Energy("1"), Drunk("2"), or Money("3")
+        if ($decoded_data[0] === "b") {
+            if ($decoded_data[1] === "1") {
+                $updatedEnergyLevel = $currentEnergyLevel + 15;
+                $updatedMoneyLevel = $currentMoneyLevel;
+                $updatedDrunkLevel = $currentDrunkLevel;
+                if ($updatedEnergyLevel > 100) $updatedEnergyLevel = 100;
+            }
+            if ($decoded_data[1] === "2") {
+                $updatedEnergyLevel = $currentEnergyLevel;
+                $updatedMoneyLevel = $currentMoneyLevel;
+                $updatedDrunkLevel = $currentDrunkLevel + 5;
+            }
+            if ($decoded_data[1] === "3") {
+                $updatedEnergyLevel = $currentEnergyLevel;
+                $updatedMoneyLevel = $currentMoneyLevel + 20000;
+                $updatedDrunkLevel = $currentDrunkLevel;
+            }
+            
+            // updating the current run's values for the player
+            $updatePlayerValues = $db->prepare("UPDATE gameplay_logs set run_energyLevel = '$updatedEnergyLevel', run_moneyLevel = '$updatedMoneyLevel', run_drunkLevel = '$updatedDrunkLevel' where run_sessionID = '$session_id'");
+            $updatePlayerValues->execute();
+
+            $response = [
+                "updatedEnergyLevel" => $updatedEnergyLevel,
+                "updatedMoneyLevel" => $updatedMoneyLevel,
+                "updatedDrunkLevel" => $updatedDrunkLevel
+            ];
+            echo json_encode($response);
+            exit();
+        }
+        
+        //otherwise checks options ID for the options table
         $optionID = intval($decoded_data[0]); // selecting the 0 index of the data
 
         // finding the values correlated with the selected option
@@ -39,21 +81,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $optionMoneyValue = $optionResults['option_money'];
         $optionDrunkValue = $optionResults['option_drunk'];
 
-        /// now getting current state of the game values ///
-        $currentPlayerValues = $db->prepare("SELECT * FROM gameplay_logs where run_sessionID = '$session_id'");
-        $currentPlayerValues->execute();
-        $playerResults = $currentPlayerValues->fetch(PDO::FETCH_ASSOC);
-
-        $currentEnergyLevel = $playerResults['run_energyLevel'];
-        $currentMoneyLevel = $playerResults['run_moneyLevel'];
-        $currentDrunkLevel = $playerResults['run_drunkLevel'];
-
         /// doing the math to update the values ///
         $updatedEnergyLevel = $currentEnergyLevel + $optionEnergyValue;
         $updatedMoneyLevel = $currentMoneyLevel + $optionMoneyValue;
         $updatedDrunkLevel = $currentDrunkLevel + $optionDrunkValue;
         if ($updatedDrunkLevel > 100) $updatedDrunkLevel = 100;
         if ($updatedDrunkLevel < 0) $updatedDrunkLevel = 0;
+        if ($updatedEnergyLevel > 100) $updatedEnergyLevel = 100;
         
         // updating the current run's values for the player
         $updatePlayerValues = $db->prepare("UPDATE gameplay_logs set run_energyLevel = '$updatedEnergyLevel', run_moneyLevel = '$updatedMoneyLevel', run_drunkLevel = '$updatedDrunkLevel' where run_sessionID = '$session_id'");

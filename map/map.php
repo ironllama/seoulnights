@@ -280,6 +280,21 @@ if (!isset($_SESSION['loaded'])) {
     <div class="store-button-container">
         <div class="store-button"></div>
     </div>
+
+    <div class="dynamic-game-element battle-reward">
+        <div class="battle-reward-choice">
+            <div class="battle-reward-label">Energy Up</div>
+            <div class="battle-reward-button">here's a button</div>
+        </div>
+        <div class="battle-reward-choice">
+            <div class="battle-reward-label">Drunk Up</div>
+            <div class="battle-reward-button">here's a button</div>
+        </div>
+        <div class="battle-reward-choice">
+            <div class="battle-reward-label">Money Up</div>
+            <div class="battle-reward-button">here's a button</div>
+        </div>
+    </div>
     <script>
     document.addEventListener("DOMContentLoaded", () => {
             fetch('getLocationData.php')
@@ -352,7 +367,7 @@ if (!isset($_SESSION['loaded'])) {
 
                     //Endgame
                         const playAgainButton = document.querySelector(".play-again");
-                        const leaderBoardButton = document.querySelector(".see-leaderboard");
+                        const leaderboardButton = document.querySelector(".see-leaderboard");
                         const endGame = document.querySelector("#end-game");
 
                     //Convenience Store
@@ -389,11 +404,12 @@ if (!isset($_SESSION['loaded'])) {
                                             .then(response => response.json())
                                             .then(data => {
                                                 console.log(data);
-                                                energyBar.value = data['energy'];
-                                                energyNum.innerHTML = data['energy'];
-                                                drunkBar.value = data['drunk'];
-                                                drunkNum.innerHTML = data['drunk'];
-                                                moneyNum.innerHTML = data['money'];
+                                                updateHUD();
+                                                // energyBar.value = data['energy'];
+                                                // energyNum.innerHTML = data['energy'];
+                                                // drunkBar.value = data['drunk'];
+                                                // drunkNum.innerHTML = data['drunk'];
+                                                // moneyNum.innerHTML = data['money'];
                                             });
                                     });
                                     drinks.appendChild(drinkButton);
@@ -418,11 +434,12 @@ if (!isset($_SESSION['loaded'])) {
                                             .then(response => response.json())
                                             .then(data => {
                                                 console.log(data);
-                                                energyBar.value = data['energy'];
-                                                energyNum.innerHTML = data['energy'];
-                                                drunkBar.value = data['drunk'];
-                                                drunkNum.innerHTML = data['drunk'];
-                                                moneyNum.innerHTML = data['money'];
+                                                updateHUD();
+                                                // energyBar.value = data['energy'];
+                                                // energyNum.innerHTML = data['energy'];
+                                                // drunkBar.value = data['drunk'];
+                                                // drunkNum.innerHTML = data['drunk'];
+                                                // moneyNum.innerHTML = data['money'];
                                             });
                                     });
                                     foodContainer.appendChild(foodButton);
@@ -499,13 +516,10 @@ if (!isset($_SESSION['loaded'])) {
                         encounterZone.style.display = "none";
                         eventZone.style.display = "none";
                         battleZone.style.display = "none";
+                        battleRewardScreen.style.display = "none";
                         encounterResult.style.display = "flex";
-                        console.log((inData['updatedDrunkLevel'] / 100) * 2 + "px");
-                        document.documentElement.style.setProperty('--maxblur', ((inData['updatedDrunkLevel'] / 100) * 2 + "px")); 
-                        document.documentElement.style.setProperty('--midX', ((inData['updatedDrunkLevel'] / 100) * 5 + "px"));
-                        document.documentElement.style.setProperty('--maxX', ((inData['updatedDrunkLevel'] / 100) * 10 + "px"));
-                        document.documentElement.style.setProperty('--upY', ((inData['updatedDrunkLevel'] / 100) * 5 + "px"));
-                        document.documentElement.style.setProperty('--downY', ("-" + (inData['updatedDrunkLevel'] / 100) * 5 + "px"));
+                        console.log(inData);
+
                         energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
                         drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
                         moneyChange.innerHTML = moneyNum.innerHTML + " > " + inData['updatedMoneyLevel'].toLocaleString('en-US');
@@ -518,12 +532,8 @@ if (!isset($_SESSION['loaded'])) {
                             encounterResult.addEventListener("click", () => {
                                 window.location.reload();
                             });
-                        } else { //update hud - energyBar.value, drunkBar.value, energyNum.innerHTML, drunkNum.innerHTMl
-                            energyBar.value = inData['updatedEnergyLevel'];
-                            energyNum.innerHTML = inData['updatedEnergyLevel'];
-                            drunkBar.value = inData['updatedDrunkLevel'];
-                            drunkNum.innerHTML = inData['updatedDrunkLevel'];
-                            moneyNum.innerHTML = parseInt(inData['updatedMoneyLevel']).toLocaleString('en-US') + "";
+                        } else {
+                            updateHUD();
                             if (gameRound >= cardZoneList.length - 1) {
                                 encounterResult.addEventListener("click", () => endGame.style.display = "flex"); //end game
                                 playAgainButton.addEventListener("click", () => window.location.reload());
@@ -544,6 +554,7 @@ if (!isset($_SESSION['loaded'])) {
                         eventZone.querySelector(".event-title").innerHTML = inData.event_title;
                         eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`;
                         eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
+                        optionButtons.forEach((button) => button.classList.add("can-buy"));
                         let currentMoney = parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10);
 
                         //option buttons setup
@@ -589,7 +600,7 @@ if (!isset($_SESSION['loaded'])) {
                             optionButtons[2].removeEventListener('click', sendChoice);
                             const currentPlayerState = JSON.stringify([event.currentTarget.id + ""]);
                             console.log(currentPlayerState);
-                            fetch(`getOptionsResults.php`, {
+                            fetch(`getEncounterResults.php`, {
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json'
@@ -628,6 +639,60 @@ if (!isset($_SESSION['loaded'])) {
                         //user section
                             playerHealthBar = document.querySelector(".player-health-bar");
                             playerHealthNum = document.querySelector(".player-health-num");
+
+                        //battle rewards
+                        let battleRewardScreen = document.querySelector(".battle-reward");
+                        let battleRewardButtons = document.querySelectorAll(".battle-reward-button");
+                        battleRewardButtons[0].addEventListener("click", function() {
+                            sendBattleReward("b1");
+                        });
+                        battleRewardButtons[1].addEventListener("click", function() {
+                            sendBattleReward("b2");
+                        });
+                        battleRewardButtons[2].addEventListener("click", function() {
+                            sendBattleReward("b3");
+                        });
+
+                        function sendBattleReward(inData) {
+                            const rewardChoice = JSON.stringify(inData);
+                            console.log(inData);
+                            fetch(`getEncounterResults.php`, {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: rewardChoice
+                                })
+                                .then(response => {
+                                    console.log(response);
+                                    if (!response.ok) throw new Error('Network response was not ok');
+                                    return response.json();
+                                })
+                                .then(encounterResultsData => {
+                                    console.log('Received data: ', encounterResultsData);
+                                    showResults(encounterResultsData);
+                                })
+                                .catch(error => console.log(error));
+                        }
+                        
+                    function updateHUD() {
+                        fetch('updateHUD.php')
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                energyBar.value = data['run_energyLevel'];
+                                energyNum.innerHTML = data['run_energyLevel'];
+                                drunkBar.value = data['run_drunkLevel'];
+                                drunkNum.innerHTML = data['run_drunkLevel'];
+                                moneyNum.innerHTML = parseInt(data['run_moneyLevel']).toLocaleString('en-US') + "";
+
+                                document.documentElement.style.setProperty('--maxblur', ((data['run_drunkLevel'] / 100) * 2 + "px")); 
+                                document.documentElement.style.setProperty('--midX', ((data['run_drunkLevel'] / 100) * 5 + "px"));
+                                document.documentElement.style.setProperty('--maxX', ((data['run_drunkLevel'] / 100) * 10 + "px"));
+                                document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
+                                document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
+                            })
+                    }
 
                     function triggerBattle(data) {
                         backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
@@ -756,9 +821,7 @@ if (!isset($_SESSION['loaded'])) {
                                                     playedCards = [];
                                                     enemyMoveset.innerHTML = '';
                                                     alert("Battle Over, you won!");
-                                                    fetch('getRoundResult.php')
-                                                        .then(res => res.json())
-                                                        .then(data => showResults(data))
+                                                    battleRewardScreen.style.display = "flex";
                                                 }
 
                                                 //upon loss
@@ -827,15 +890,6 @@ if (!isset($_SESSION['loaded'])) {
                     prepareRound();
                 });
         });
-
-        function updateHUD() {
-            fetch('updateHUD.php')
-                .then(res => res.json())
-                .then(data => {
-                    console.log(data)
-                })
-        };
     </script>
 </body>
-
 </html>
