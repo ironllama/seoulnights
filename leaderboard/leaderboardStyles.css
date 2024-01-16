@@ -1,0 +1,36 @@
+body {
+    background-color: cornflowerblue;
+    font-family: sans-serif;
+}
+
+.main1 {
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    align-items: center;
+}
+
+.leaderboardTitle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+table,
+thead,
+td {
+    border: 1px solid;
+    text-align: center;
+}
+
+thead {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+table {
+    width: 80%
+}
