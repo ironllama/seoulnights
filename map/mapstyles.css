@@ -83,17 +83,29 @@ body {
     gap: 1.5em;
 }
 
-.focus {
-    animation: 1s steps(5) infinite alternate focused;
+.focus-e {
+    animation: 1s steps(5) infinite alternate focusE;
+}
+.focus-b {
+    animation: 1s steps(5) infinite alternate focusB;
 }
 
-@keyframes focused {
+@keyframes focusE {
     from {
-        box-shadow: 0px 0px 0px hotpink;
+        box-shadow: 0px 0px 0px lightskyblue;
     }
 
     to {
-        box-shadow: 0px 0px 0px .5em hotpink;
+        box-shadow: 0px 0px 0px .5em lightskyblue;
+    }
+}
+@keyframes focusB {
+    from {
+        box-shadow: 0px 0px 0px red;
+    }
+
+    to {
+        box-shadow: 0px 0px 0px .5em red;
     }
 }
 
@@ -213,6 +225,9 @@ body {
 
 .battle-zone {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #f0f0f0;
 }
 
 .PC-cards {
@@ -222,6 +237,7 @@ body {
 }
 
 .hud {
+    z-index: 999;
     margin: .25em .25em 0 0;
     color: #F0F0F0;
     -webkit-text-stroke: 1px black;
@@ -355,6 +371,9 @@ progress {
 
 .battle-reward {
     background: pink;
+    height: 80vh;
+    width: 80vw;
+    border: 2px solid black;
 }
 
 .battle-reward-label {

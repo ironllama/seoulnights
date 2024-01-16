@@ -1,17 +1,7 @@
-.main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 99vh;
-    gap: 2px;
-}
-
 .top,
-.bot {
-    /* border: 3px solid black; */
-    height: 45vh;
-    width: 98vw;
+.card-area {
+    flex: 1;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,58 +11,58 @@
     justify-content: space-around;
 }
 
-.bot {
-    gap: 40px;
-}
-
-img {
-    height: 200px;
-}
-
-.enemy {
+.enemy-zone {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 5px;
-}
-
-h2 {
-    margin: 0;
-}
-
-.movedescriptionArea {
-    border: 2px solid;
-    height: 300px;
-    width: 300px;
-    display: flex;
-    justify-content: left;
-    flex-direction: column;
-    align-items: center
-}
-
-.card {
-    border: 2px solid;
-    height: 300px;
-    width: 280px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.5);
-    font-size: 15px;
-
+    gap: 1em;
+    flex: 1;
 }
 
 .enemypic {
     height: 200px;
 }
 
+/* Style the parent div as a grid container */
+.enemymove-zone {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    border-radius: 10px;
+    gap: 1em;
+}
+
+/* Style the child divs */
+.enemyMove {
+    background-color: pink;
+    padding: 10px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.moveset {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card {
+    margin: 1em;
+    width: 25%;
+    border: 2px solid;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 .cardpic {
-    height: 150px;
-    width: 225px;
+    height: 8em;
 }
 
 .carddesc {
@@ -89,54 +79,31 @@ h2 {
     background-color: gray;
 }
 
-.enemymoves {
-    /* border: 2px solid; */
-    height: 300px;
-    width: 500px;
-    border-radius: 10px;
-
-}
-
 h3 {
-    /* border: 2px solid; */
     text-align: center;
 }
 
-/* Style the parent div as a grid container */
-.enemymoves {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* 2 columns */
-    grid-template-rows: repeat(2, 1fr);
-    /* 2 rows */
-    gap: 15px;
-    /* Adjust the gap between the child divs */
-    font-size: 16px;
-}
-
-/* Style the child divs */
-.enemyMove1,
-.enemyMove2,
-.enemyMove3,
-.enemyMove4 {
-    background-color: pink;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-    border-radius: 10px;
-
-}
-
-.moveset {
+.player-healthbar {
+    padding: 1em;
+    position: absolute;
+    bottom: -2em;
+    background: #f0f0f0;
+    border: 2px solid black;
+    width: 80%;
     display: flex;
-    justify-content: center;
+    gap: 1em;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
 }
 
-.container {
-    position: relative;
-    background-size: cover;
-    background-repeat: no-repeat;
-    color: white;
+.player-healthbar progress {
+    flex: 4;
+}
+
+.player-healthbar h5 {
+    position: fixed;
+    bottom: -.6em;
+    padding: 5px;
+    background: #f0f0f0;
+    border: 2px solid black;
 }
