@@ -272,6 +272,10 @@ if (!isset($_SESSION['loaded'])) {
     </div>
     <div class="store-button-container">
         <div class="store-button"></div>
+        <div class="store-intro">
+            <p>Stop by the Convenience Store</p>
+            <p>Visits Remaining: <span class="store-visits-left"></span></p>
+        </div>
     </div>
 
     <div class="dynamic-game-element battle-reward">
