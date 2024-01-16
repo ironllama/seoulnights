@@ -332,16 +332,27 @@ progress {
     top: 2.5em;
     left: 2.5em;
     display: flex;
-    background: green;
-    width: 250px;
+    background: #0f0f0f;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+    color: #F0F0F0;
+    -webkit-text-stroke: 1px black;
+}
+
+.store-intro {
+    font-size: 1em;
+    margin: 1em;
 }
 
 .store-button {
     align-self: flex-start;
     height: 10vh;
     width: 10vh;
-    border-radius: 100%;
-    background: plum;
+    border: inset 5px gray;
+    margin: 1em;
+    animation: 1s steps(5) infinite alternate focusE;
 }
 
 .store-menu {
