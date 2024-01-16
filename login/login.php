@@ -19,6 +19,8 @@ if (isset($_SESSION['name'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome to Seoul Nights!</title>
     <link rel="stylesheet" href="loginStyles.css">
+    <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -27,12 +29,104 @@ if (isset($_SESSION['name'])) {
     <img class="playerPic">
     <div class="main">
         <div class="buttons">
-            <button class="loginButton">Login</button>
+            <button class="loginButton">
+                <img class="logo" src="googlelogin.png">
+                <span>Sign in with Google</span>
+            </button>
+            <a id="kakao-login-btn"></a>
+            <!-- <button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button> -->
+            <!-- <div id="result"></div> -->
             <button class="playButton">Play</button>
             <button class="leaderboardButton">Leaderboard</button>
-            <button class="signoutButton">Sign Out</button>
+            <!-- <button class="signoutButton">Sign Out</button> -->
         </div>
     </div>
+    <script type="text/javascript">
+        const loginButton = document.querySelector(".loginButton");
+        const signoutButton = document.querySelector(".signoutButton");
+        const welcomeMessage = document.querySelector(".welcome");
+        const playButton = document.querySelector(".playButton");
+        const leaderboardButton = document.querySelector(".leaderboardButton");
+        const playerPic = document.querySelector(".playerPic");
+        const kakaoButton = document.getElementById("kakao-login-btn");
+
+        function unlinkApp() {
+            Kakao.API.request({
+                url: '/v1/user/unlink',
+                success: function(res) {
+                    alert('success: ' + JSON.stringify(res))
+                },
+                fail: function(err) {
+                    alert('fail: ' + JSON.stringify(err))
+                },
+            })
+        }
+    </script>
+    <script type="text/javascript">
+        Kakao.init('3ffee278c83057c7a42a90c437cfaae2');
+        console.log(Kakao.isInitialized());
+
+        Kakao.Auth.createLoginButton({
+            container: '#kakao-login-btn',
+            success: function(authObj) {
+                Kakao.API.request({
+                    url: '/v2/user/me',
+                    success: function(result) {
+                        data = result;
+                        console.log(data);
+                        kakao = 'kakao';
+                        playerName = data['properties']['nickname'];
+                        playerImgURL = data['properties']['profile_image']
+                        welcomeMessage.innerHTML = ("Welcome, " + playerName + "!");
+                        playerPic.src = playerImgURL;
+                        playerPic.style.display = "flex";
+                        loginButton.style.display = "none";
+                        // signoutButton.style.display = "initial";
+                        playButton.style.display = "initial";
+                        leaderboardButton.style.display = "initial";
+                        kakaoButton.style.display = "none";
+
+                        fetch('loginAPI.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded',
+                                },
+                                body: 'name=' + playerName + '&loginMethod=' + kakao + '&playerid=' + data.id
+                            })
+                            .then(res => res.text())
+                            .then(data => {
+                                console.log(data)
+                            })
+
+                        playButton.addEventListener("click", function() {
+                            fetch('startNewGame.php', {
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    body: 'player_identifier=' + data.id
+                                })
+                                .then(res => res.text())
+                                .then(data => {
+                                    console.log(data)
+                                    window.location.href = '../map/map.php';
+                                })
+                        })
+
+                    },
+                    fail: function(error) {
+                        alert(
+                            'login success, but failed to request user information: ' +
+                            JSON.stringify(error)
+                        )
+                    },
+                })
+            },
+            fail: function(err) {
+                alert('failed to login: ' + JSON.stringify(err))
+            },
+        })
+    </script>
 </body>
 <script type="module">
     import {
@@ -50,12 +144,6 @@ if (isset($_SESSION['name'])) {
     } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 
     document.addEventListener("DOMContentLoaded", () => {
-        const loginButton = document.querySelector(".loginButton");
-        const signoutButton = document.querySelector(".signoutButton");
-        const welcomeMessage = document.querySelector(".welcome");
-        const playButton = document.querySelector(".playButton");
-        const leaderboardButton = document.querySelector(".leaderboardButton");
-        const playerPic = document.querySelector(".playerPic");
         // Import the functions you need from the SDKs you need
 
         // TODO: Add SDKs for Firebase products that you want to use
@@ -80,6 +168,7 @@ if (isset($_SESSION['name'])) {
         const provider = new GoogleAuthProvider(app);
 
         loginButton.addEventListener('click', (e) => {
+            kakaoButton.style.display = "none";
             signInWithPopup(auth, provider)
 
                 // getRedirectResult(auth)
@@ -100,7 +189,7 @@ if (isset($_SESSION['name'])) {
                             headers: {
                                 'Content-Type': 'application/x-www-form-urlencoded',
                             },
-                            body: 'email=' + user.email + '&name=' + user.displayName
+                            body: 'email=' + user.email + '&name=' + user.displayName + '&loginMethod=google'
                         })
                         .then(res => res.text())
                         .then(data => {
@@ -111,10 +200,12 @@ if (isset($_SESSION['name'])) {
                     // ...
                     welcomeMessage.innerHTML = ("Welcome, " + user.displayName + "!");
                     playerPic.src = user.photoURL;
+                    playerPic.style.display = "flex";
                     loginButton.style.display = "none";
-                    signoutButton.style.display = "initial";
+                    // signoutButton.style.display = "initial";
                     playButton.style.display = "initial";
                     leaderboardButton.style.display = "initial";
+
 
 
                     playButton.addEventListener("click", function() {
@@ -123,7 +214,7 @@ if (isset($_SESSION['name'])) {
                                 headers: {
                                     'Content-Type': 'application/x-www-form-urlencoded',
                                 },
-                                body: 'email=' + user.email
+                                body: 'player_identifier=' + user.email
                             })
                             .then(res => res.text())
                             .then(data => {
@@ -143,20 +234,20 @@ if (isset($_SESSION['name'])) {
                 });
         })
 
-        signoutButton.addEventListener("click", (e) => {
-            signOut(auth).then(() => {
-                welcomeMessage.innerHTML = '';
-                loginButton.style.display = "initial";
-                signoutButton.style.display = 'none';
-                playButton.style.display = "none";
-                leaderboardButton.style.display = "none";
-                playerPic.style.display = "none";
-                <?php session_destroy() ?>;
-                console.log(" Sign-out successful");
-            }).catch((error) => {
-                // An error happened.
-            });
-        })
+        // signoutButton.addEventListener("click", (e) => {
+        //     signOut(auth).then(() => {
+        //         welcomeMessage.innerHTML = '';
+        //         loginButton.style.display = "initial";
+        //         signoutButton.style.display = 'none';
+        //         playButton.style.display = "none";
+        //         leaderboardButton.style.display = "none";
+        //         playerPic.style.display = "none";
+        //         <?php session_destroy() ?>;
+        //         console.log(" Sign-out successful");
+        //     }).catch((error) => {
+        //         // An error happened.
+        //     });
+        // })
     })
 </script>
 
