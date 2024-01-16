@@ -352,3 +352,28 @@ progress {
     height: 85vh;
     display: none;
 }
+
+.battle-reward {
+    background: pink;
+}
+
+.battle-reward-label {
+    flex: 1;
+    background: yellow;
+    justify-content: center;
+    align-items: center;
+}
+
+.battle-reward-button {
+    flex: 1;
+    background: green;
+    margin: 2em;
+    justify-content: center;
+    align-items: center;
+}
+
+.battle-reward-choice{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
