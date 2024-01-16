@@ -173,36 +173,29 @@ if (!isset($_SESSION['loaded'])) {
                 </div>
             </div>
         </div>
-        <div class="battle-zone">
-            <div class="container">
-                <div class="main">
-                    <div class="top">
-                        <div class="movedescriptionArea">
-                            <h3>Current Move</h3>
-                            <h4 class="movedescription">Example of Move Description</h4>
-                        </div>
-                        <div class="enemy">
-                            <h2 class="enemyname"></h2>
-                            <div class="healthbar">
-                                <progress max="100" value="80" class="enemy-health-bar"></progress>
-                                <span class="enemy-health-num"></span>
-                            </div>
-                            <div class="enemy_pic">
-                                <img class="enemypic" src="">
-                            </div>
-                        </div>
-                        <div class="moveset">
-                            <h2>Enemy Moveset</h2>
-                            <div class="enemymoves"></div>
-                        </div>
-                    </div>
-                    <div class="bot">
-                    </div>
+        <div class="battle-zone dynamic-game-element">
+            <div class="top">
+                <div class="enemy-zone">
+                    <h2 class="enemyname"></h2>
                     <div class="healthbar">
-                        <progress max="100" value="100" class="player-health-bar"></progress>
-                        <span class="player-health-num">100</span>
+                        <progress max="100" value="80" class="enemy-health-bar"></progress>
+                        <span class="enemy-health-num"></span>
+                    </div>
+                    <div class="enemy_pic">
+                        <img class="enemypic" src="">
                     </div>
                 </div>
+                <div class="moveset">
+                    <h2>Enemy Moveset</h2>
+                    <div class="enemymove-zone"></div>
+                </div>
+            </div>
+            <div class="card-area">
+            </div>
+            <div class="player-healthbar">
+                <h5>Your Energy</h5>
+                <progress max="100" value="100" class="player-health-bar"></progress>
+                <span class="player-health-num">100</span>
             </div>
         </div>
     </div>
@@ -356,11 +349,30 @@ if (!isset($_SESSION['loaded'])) {
                         const lastZone = cardZoneList[cardZoneList.length - 1]; //final round
 
                     //HUD
+                        const playerHUD = document.querySelector(".hud");
                         const energyBar = document.querySelector(".player-energy-bar");
                         const drunkBar = document.querySelector(".player-drunk-bar");
                         const energyNum = document.querySelector(".player-energy-num");
                         const drunkNum = document.querySelector(".player-drunk-num");
                         const moneyNum = document.querySelector(".player-money-num");
+                    function updateHUD() {
+                        fetch('updateHUD.php')
+                            .then(res => res.json())
+                            .then(data => {
+                                console.log(data)
+                                energyBar.value = data['run_energyLevel'];
+                                energyNum.innerHTML = data['run_energyLevel'];
+                                drunkBar.value = data['run_drunkLevel'];
+                                drunkNum.innerHTML = data['run_drunkLevel'];
+                                moneyNum.innerHTML = parseInt(data['run_moneyLevel']).toLocaleString('en-US') + "";
+
+                                document.documentElement.style.setProperty('--maxblur', ((data['run_drunkLevel'] / 100) * 2 + "px")); 
+                                document.documentElement.style.setProperty('--midX', ((data['run_drunkLevel'] / 100) * 5 + "px"));
+                                document.documentElement.style.setProperty('--maxX', ((data['run_drunkLevel'] / 100) * 10 + "px"));
+                                document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
+                                document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
+                            })
+                    }
 
                     //Encounter zones and their children
                         const encounterZone = document.querySelector("#encounter-zone");
@@ -453,15 +465,12 @@ if (!isset($_SESSION['loaded'])) {
                             nextZone = document.querySelector("#zone" + (gameRound));
                             nextCards = nextZone.querySelectorAll(".location-card");
                             if (nextCards) {
-                                nextCards.forEach((card) => card.classList.add("focus"));
+                                nextCards.forEach((card) => {
+                                    if (card.id[0] === "e") card.classList.add("focus-e");
+                                    else card.classList.add("focus-b");
+                            });
                                 nextCards.forEach((card) => {
                                     card.addEventListener("click", locationClicked);
-                                    card.addEventListener("click", () => {
-                                        mapElement.scrollTo({
-                                            left: nextZone.offsetLeft,
-                                            behavior: 'smooth'
-                                        });
-                                    });
                                 });
                             }
                         }
@@ -469,6 +478,10 @@ if (!isset($_SESSION['loaded'])) {
 
                     //used assigned element data to retrieve associated data from the db and prepare the event or battle expected
                     function locationClicked(event) {
+                        mapElement.scrollTo({
+                                            left: nextZone.offsetLeft,
+                                            behavior: 'smooth'
+                                        });
                         nextCards.forEach((card) => card.removeEventListener("click", locationClicked));
                         const locationID = event.target.id + "";
                         fetch(`getEncounterData.php`, {
@@ -492,7 +505,10 @@ if (!isset($_SESSION['loaded'])) {
 
                     //checks encounter type, fires according function - afterwhich increases global gameRound and starts new gameplay loop
                     function locationTrigger(inData) {
-                        nextCards.forEach((card) => card.classList.remove("focus"));
+                        nextCards.forEach((card) => {
+                            card.classList.remove("focus-e");
+                            card.classList.remove("focus-b");
+                        });
                         encounterZone.style.display = "block";
 
                         if (inData['encounter_type'] == "event") {
@@ -518,6 +534,7 @@ if (!isset($_SESSION['loaded'])) {
                         battleZone.style.display = "none";
                         battleRewardScreen.style.display = "none";
                         encounterResult.style.display = "flex";
+                        playerHUD.style.display = "flex";
                         console.log(inData);
 
                         energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
@@ -625,11 +642,10 @@ if (!isset($_SESSION['loaded'])) {
                         playedCards = [];
                         currentRound = [];
                         currentEnemy = [];
-                        mainBattleArea = document.querySelector(".main");
-                        cardArea = document.querySelector(".bot");
+                        cardArea = document.querySelector(".card-area");
 
                         //enemy section
-                            enemyMoveset = document.querySelector(".enemymoves");
+                            enemyMoveset = document.querySelector(".enemymove-zone");
                             enemyPic = document.querySelector(".enemypic");
                             enemyName = document.querySelector(".enemyname");
                             enemyHealthBar = document.querySelector(".enemy-health-bar");
@@ -674,30 +690,12 @@ if (!isset($_SESSION['loaded'])) {
                                 })
                                 .catch(error => console.log(error));
                         }
-                        
-                    function updateHUD() {
-                        fetch('updateHUD.php')
-                            .then(res => res.json())
-                            .then(data => {
-                                console.log(data)
-                                energyBar.value = data['run_energyLevel'];
-                                energyNum.innerHTML = data['run_energyLevel'];
-                                drunkBar.value = data['run_drunkLevel'];
-                                drunkNum.innerHTML = data['run_drunkLevel'];
-                                moneyNum.innerHTML = parseInt(data['run_moneyLevel']).toLocaleString('en-US') + "";
-
-                                document.documentElement.style.setProperty('--maxblur', ((data['run_drunkLevel'] / 100) * 2 + "px")); 
-                                document.documentElement.style.setProperty('--midX', ((data['run_drunkLevel'] / 100) * 5 + "px"));
-                                document.documentElement.style.setProperty('--maxX', ((data['run_drunkLevel'] / 100) * 10 + "px"));
-                                document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
-                                document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
-                            })
-                    }
 
                     function triggerBattle(data) {
+                        playerHUD.style.display = "none";
                         backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
                         currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
-                        document.querySelector(".container").style.backgroundImage = "url(" + currentSessionBG + ")";
+                        battleZone.style.backgroundImage = "url(" + currentSessionBG + ")";
                         battleZone.style.display = "flex";
                         cardArea.innerHTML = ''; // empties out the cards from previous battle, basically makes sure its a clean slate
                         playerHealthBar.value = data['currentPlayerEnergy']; // initializes the healthbar value at begining of round to the current state of the game
@@ -717,7 +715,8 @@ if (!isset($_SESSION['loaded'])) {
                         enemyMovesetTitle = document.createElement("h3");
                         enemyMoves.forEach(function(move, index) {
                             enemyMove = document.createElement("div");
-                            enemyMove.className = "enemyMove" + (index + 1)
+                            // enemyMove.className = "enemyMove" + (index + 1)
+                            enemyMove.className = "enemyMove";
                             enemyMove.id = "move" + move['move_id'];
 
                             enemyMoveName = document.createElement("div");
