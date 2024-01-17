@@ -13,7 +13,27 @@ if ($_POST['locationID'][0] == "b") {
     $encountertype = "battle";
 };
 
+if ($_POST['locationID'] == 'store') {
+    try {
+        $pdo = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
+    } catch (Exception $e) {
+        die('Error : ' . $e->getMessage());
+    }
 
+    $sessionID = session_id();
+
+    $currentGameState = $pdo->prepare("select * from gameplay_logs where run_sessionID= '$sessionID'");
+    $currentGameState->execute();
+    $currentGameStateDetails = $currentGameState->fetch(PDO::FETCH_ASSOC);
+
+    $newVisits = $currentGameStateDetails["store_visits_left"] - 1;
+
+    $updateGameState = $pdo->prepare("update gameplay_logs set store_visits_left = '$newVisits' where run_sessionID= '$sessionID'");
+    $updateGameState->execute();
+
+    echo $newVisits;
+    exit();
+}
 
 $locationID = substr(($_POST['locationID']), 1); // assiging location ID to $location
 if ($encountertype == 'event') {
