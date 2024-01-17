@@ -8,6 +8,16 @@
     --downY: 0px;
 }
 
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.highlight {
+    animation: pulse 1s infinite;
+}
+
 @keyframes blurry {
     0% {
         filter: blur(0px);
@@ -55,7 +65,7 @@ body {
     background: #0f0f0f;
     padding: 0 1em;
     width: 95vw;
-    height: 95vh;
+    height: 90vh;
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
     display: flex;
@@ -237,12 +247,12 @@ body {
 }
 
 .hud {
-    z-index: 999;
+    z-index: 1000;
     margin: .25em .25em 0 0;
     color: #F0F0F0;
     -webkit-text-stroke: 1px black;
     position: absolute;
-    top: 0;
+    top: .25em;
     right: 0;
     display: flex;
     flex-direction: column;
@@ -253,6 +263,27 @@ body {
     padding: 1em;
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
+}
+
+.map-key {
+    position: fixed;
+    background: #0F0F0F;
+    color: #F0F0F0;
+    bottom: .5em;
+    right: .5em;
+    padding: 2em;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    align-items: flex-end;
+}
+
+.battle-square, .event-square {
+    width: 1em;
+    height: 1em;
+    display: inline-block;
 }
 
 .username {
@@ -278,7 +309,7 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: white;
+    color: #F0F0F0;
 }
 
 .progress-container span::after {
@@ -308,10 +339,11 @@ progress {
 
 .money-container span::after {
     content: "원";
+    font-weight: bolder;
 }
 
 .username {
-    color: white;
+    color: #F0F0F0;
 }
 
 #end-game {
@@ -322,15 +354,15 @@ progress {
 }
 
 .convenience-store {
-    background: purple;
+    background: #F0F0F0;
     flex-direction: column;
     padding: 5px;
 }
 
 .store-button-container {
     position: fixed;
-    top: 2.5em;
-    left: 2.5em;
+    bottom: .5em;
+    left: .5em;
     display: flex;
     background: #0f0f0f;
     justify-content: center;
@@ -352,7 +384,6 @@ progress {
     width: 10vh;
     border: inset 5px gray;
     margin: 1em;
-    animation: 1s steps(5) infinite alternate focusE;
 }
 
 .store-menu {
@@ -381,29 +412,50 @@ progress {
 }
 
 .battle-reward {
-    background: pink;
-    height: 80vh;
-    width: 80vw;
+    background: #0F0F0F;
+    height: 85vh;
+    width: 85vw;
     border: 2px solid black;
+    flex-direction: column;
+    color: lime;
+    border: #f0F0F0;
 }
 
-.battle-reward-label {
+.battle-reward > div {
+    align-self: flex-start;
+}
+.battle-reward-choice-container {
+    flex-direction: row;
+    display: flex;
     flex: 1;
-    background: yellow;
-    justify-content: center;
-    align-items: center;
+}
+
+.battle-reward-choice-container svg {
+    transform: scale(5);
+}
+
+.battle-reward h2 {
+    margin-left: 5em;
+    width: 75%;
 }
 
 .battle-reward-button {
     flex: 1;
-    background: green;
-    margin: 2em;
+    margin: 5em;
+    padding: 2em;
     justify-content: center;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5em;
+    border: inset 10px gray;
+    text-align: center;
+    animation: 1s steps(5) infinite alternate focusE;
 }
 
 .battle-reward-choice{
     flex: 1;
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
