@@ -250,10 +250,6 @@ if (!isset($_SESSION['loaded'])) {
 
     <div class="convenience-store dynamic-game-element">
         <div class="store-menu">
-            <div id="inventory">
-                <h2>Inventory</h2>
-                <div id="user_stats"></div>
-            </div>
             <div class='menu_parent'>
                 <div class='drink_selection'>
                     <h2>Drinks</h2>
@@ -271,27 +267,44 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
     <div class="store-button-container">
-        <div class="store-button"></div>
+        <div class="store-button focus-e"></div>
         <div class="store-intro">
-            <p>Stop by the Convenience Store</p>
-            <p>Visits Remaining: <span class="store-visits-left"></span></p>
+            <p>Convenience Store</p>
+            <p>(Visits Remaining: <span class="store-visits-left">2</span>)</p>
         </div>
     </div>
 
     <div class="dynamic-game-element battle-reward">
-        <div class="battle-reward-choice">
-            <div class="battle-reward-label">Energy Up</div>
-            <div class="battle-reward-button">here's a button</div>
+        <div>
+            <h2>You win the battle! Choose your reward:</h2>
         </div>
-        <div class="battle-reward-choice">
-            <div class="battle-reward-label">Drunk Up</div>
-            <div class="battle-reward-button">here's a button</div>
-        </div>
-        <div class="battle-reward-choice">
-            <div class="battle-reward-label">Money Up</div>
-            <div class="battle-reward-button">here's a button</div>
+        <div class="battle-reward-choice-container">
+            <div class="battle-reward-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
+                    <path d="M349.4 44.6c5.9-13.7 1.5-29.7-10.6-38.5s-28.6-8-39.9 1.8l-256 224c-10 8.8-13.6 22.9-8.9 35.3S50.7 288 64 288H175.5L98.6 467.4c-5.9 13.7-1.5 29.7 10.6 38.5s28.6 8 39.9-1.8l256-224c10-8.8 13.6-22.9 8.9-35.3s-16.6-20.7-30-20.7H272.5L349.4 44.6z" fill="cornflowerblue" />
+                </svg>
+                <div class="battle-reward-label">Energy Boost (+15)!</div>
+            </div>
+            <div class="battle-reward-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512">
+                    <path d="M393.4 9.4c12.5-12.5 32.8-12.5 45.3 0l64 64c12.5 12.5 12.5 32.8 0 45.3c-11.8 11.8-30.7 12.5-43.2 1.9l-9.5 9.5-48.8 48.8c-9.2 9.2-11.5 22.9-8.6 35.6c9.4 40.9-1.9 85.6-33.8 117.5L197.3 493.3c-25 25-65.5 25-90.5 0l-88-88c-25-25-25-65.5 0-90.5L180.2 153.3c31.9-31.9 76.6-43.1 117.5-33.8c12.6 2.9 26.4 .5 35.5-8.6l48.8-48.8 9.5-9.5c-10.6-12.6-10-31.4 1.9-43.2zM99.3 347.3l65.4 65.4c6.2 6.2 16.4 6.2 22.6 0l97.4-97.4c6.2-6.2 6.2-16.4 0-22.6l-65.4-65.4c-6.2-6.2-16.4-6.2-22.6 0L99.3 324.7c-6.2 6.2-6.2 16.4 0 22.6z" fill="darkolivegreen" />
+                </svg>
+                <div class="battle-reward-label">Bottom's Up (+5)!</div>
+            </div>
+            <div class="battle-reward-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                    <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold" />
+                </svg>
+                <div class="battle-reward-label">Cha-ching (+10,000원)!</div>
+            </div>
         </div>
     </div>
+
+    <div class="map-key">
+        <div class="battle-key">Battle = <div class="battle-square focus-b"></div></div>
+        <div class="event-key">Event = <div class="event-square focus-e"></div></div>
+    </div>
+
     <script>
         document.addEventListener("DOMContentLoaded", () => {
             fetch('getLocationData.php')
@@ -323,7 +336,7 @@ if (!isset($_SESSION['loaded'])) {
                                 if (data.length === 0) break; // Prevent creating branches if testArray is empty
                                 newLocationCard.classList.add("location-card");
                                 newLocationCard.id = data[0]["location_id"];
-                                newLocationCard.textContent = "" + newLocationCard.id[0] + " - " + data[0]["location_name"];
+                                newLocationCard.textContent = data[0]["location_name"];
                                 newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
                                 data.shift();
 
@@ -332,7 +345,7 @@ if (!isset($_SESSION['loaded'])) {
                         } else {
                             newLocationCard.classList.add("location-card");
                             newLocationCard.id = data[0]["location_id"];
-                            newLocationCard.textContent = "" + newLocationCard.id[0] + " - " + data[0]["location_name"];
+                            newLocationCard.textContent = data[0]["location_name"];
                             newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
                             data.shift();
 
@@ -376,7 +389,17 @@ if (!isset($_SESSION['loaded'])) {
                                 document.documentElement.style.setProperty('--maxX', ((data['run_drunkLevel'] / 100) * 10 + "px"));
                                 document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
                                 document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
-                            })
+                            });
+                            playerVisualPulse(playerHUD);
+                    }
+
+                    function playerVisualPulse(inElem) {
+                        if (inElem) {
+                            inElem.classList.add("highlight");
+                            setTimeout(function() {
+                                inElem.classList.remove("highlight");
+                            }, 1000);
+                        }
                     }
 
                     //Encounter zones and their children
@@ -390,11 +413,41 @@ if (!isset($_SESSION['loaded'])) {
                     //Convenience Store
                     const storeScreen = document.querySelector(".convenience-store");
                     const storeButton = document.querySelector(".store-button-container");
+                    storeButton.addEventListener("click", storeButtonHandler);
                     const leaveStoreButton = document.querySelector(".leave-store-button");
-                    storeButton.addEventListener("click", () => {
+                    const storeVisitsLeft = document.querySelector(".store-visits-left");
+
+                    function storeButtonHandler() {
                         storeScreen.style.display = "flex";
-                        leaveStoreButton.addEventListener("click", () => storeScreen.style.display = "none");
-                    });
+                        leaveStoreButton.addEventListener("click", () => {
+                            storeScreen.style.display = "none";
+                            storeButton.style.display = "flex";
+                        });
+                        storeButton.style.display = "none";
+                        updateVisitsLeft();
+                    }
+
+                    function updateVisitsLeft() {
+                        fetch(`getEncounterData.php`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: `locationID=store`
+                            })
+                            .then(response => {
+                                return response.text();
+                            })
+                            .then(visitsLeft => {
+                                console.log('Received data:', visitsLeft);
+                                if (visitsLeft <= 0) {
+                                    storeButton.removeEventListener("click", storeButtonHandler);
+                                    document.querySelector(".store-button").classList.remove("focus-e");
+                                }
+                                storeVisitsLeft.innerHTML = visitsLeft;
+                            })
+                            .catch(error => console.log(error));
+                    }
 
                     function getStoreItems() {
                         fetch('../convenience/getStoreItems.php')
@@ -422,11 +475,6 @@ if (!isset($_SESSION['loaded'])) {
                                             .then(data => {
                                                 console.log(data);
                                                 updateHUD();
-                                                // energyBar.value = data['energy'];
-                                                // energyNum.innerHTML = data['energy'];
-                                                // drunkBar.value = data['drunk'];
-                                                // drunkNum.innerHTML = data['drunk'];
-                                                // moneyNum.innerHTML = data['money'];
                                             });
                                     });
                                     drinks.appendChild(drinkButton);
@@ -452,11 +500,6 @@ if (!isset($_SESSION['loaded'])) {
                                             .then(data => {
                                                 console.log(data);
                                                 updateHUD();
-                                                // energyBar.value = data['energy'];
-                                                // energyNum.innerHTML = data['energy'];
-                                                // drunkBar.value = data['drunk'];
-                                                // drunkNum.innerHTML = data['drunk'];
-                                                // moneyNum.innerHTML = data['money'];
                                             });
                                     });
                                     foodContainer.appendChild(foodButton);
@@ -515,6 +558,7 @@ if (!isset($_SESSION['loaded'])) {
                             card.classList.remove("focus-b");
                         });
                         encounterZone.style.display = "block";
+                        storeButton.style.display = "none";
 
                         if (inData['encounter_type'] == "event") {
                             triggerEvent(inData);
@@ -560,7 +604,10 @@ if (!isset($_SESSION['loaded'])) {
                                 encounterResult.addEventListener("click", () => endGame.style.display = "flex"); //end game
                                 playAgainButton.addEventListener("click", () => window.location.reload());
                                 leaderboardButton.addEventListener("click", () => window.location.href = "../leaderboard/leaderboard.php");
-                            } else encounterResult.addEventListener("click", () => encounterResult.style.display = "none"); //click to continue game
+                            } else encounterResult.addEventListener("click", () => {
+                                storeButton.style.display = "flex";
+                                encounterResult.style.display = "none"
+                            }); //click to continue game
                         }
                     }
 
@@ -830,7 +877,10 @@ if (!isset($_SESSION['loaded'])) {
                                                 playedCards = [];
                                                 enemyMoveset.innerHTML = '';
                                                 alert("Battle Over, you won!");
+                                                battleZone.style.display = "none";
                                                 battleRewardScreen.style.display = "flex";
+                                                updateHUD();
+                                                playerHUD.style.display = "flex";
                                             }
 
                                             //upon loss
