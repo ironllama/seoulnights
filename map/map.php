@@ -749,6 +749,10 @@ if (!isset($_SESSION['loaded'])) {
                             enemyMoveset.append(enemyMove);
                         });
 
+                        enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
+                        console.log(enemyTurn);
+
+
                         //nested function - setting up cards available for client
                         function getNewCards() {
                             fetch('../battle/getCards.php')
@@ -766,7 +770,7 @@ if (!isset($_SESSION['loaded'])) {
                                             event.stopPropagation();
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
-                                            enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
+
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
@@ -851,6 +855,9 @@ if (!isset($_SESSION['loaded'])) {
 
                                             // remove the card upon click
                                             cardArea.removeChild(event.currentTarget);
+
+                                            enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
+                                            console.log(enemyTurn);
                                         });
 
                                         // actually creating the cards
