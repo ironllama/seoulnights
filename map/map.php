@@ -260,8 +260,8 @@ if (!isset($_SESSION['loaded'])) {
             </div>
         </div>
         <div class="below-menu">
-            <div class="below-menu-left">Some info about the CU mart or whatever</div>
-            <div class="leave-store-button"></div>
+            <div class="below-menu-left"></div>
+            <div class="leave-store-button">Leave Store</div>
         </div>
     </div>
 
@@ -457,36 +457,36 @@ if (!isset($_SESSION['loaded'])) {
                         console.log(event.currentTarget.id.substring(1));
                         playerVisualPulse(event.currentTarget);
                         fetch('../convenience/buyItems.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(itemID)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            updateHUD();
-                        });
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(itemID)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                updateHUD();
+                            });
                         //update each button in store after purchase
                         document.querySelectorAll(".shopButton").forEach((item) => {
                             let checkItemID = item.id;
                             console.log(checkItemID);
                             fetch('../convenience/buyItems.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(checkItemID)
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data);
-                                if (!data) {
-                                    item.removeEventListener("click", buyItem);
-                                    item.classList.add("cant-buy");
-                                } else item.classList.remove("cant-buy");
-                            });
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(checkItemID)
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+                                    if (!data) {
+                                        item.removeEventListener("click", buyItem);
+                                        item.classList.add("cant-buy");
+                                    } else item.classList.remove("cant-buy");
+                                });
                         })
                     }
 
@@ -503,6 +503,7 @@ if (!isset($_SESSION['loaded'])) {
                                     drinkButton.classList.add('shopButton');
                                     drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']).toLocaleString('en-US');
                                     drinkButton.id = "s" + drink['mart_id'];
+                                    drinkButton.style.backgroundImage = "url(../convenience/mart_icons/" + drink["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > drink['price_hit']) {
                                         drinkButton.addEventListener('click', buyItem);
                                     }
@@ -515,6 +516,7 @@ if (!isset($_SESSION['loaded'])) {
                                     foodButton.classList.add('shopButton');
                                     foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']).toLocaleString('en-US');
                                     foodButton.id = "s" + food['mart_id'];
+                                    foodButton.style.backgroundImage = "url(../convenience/mart_icons/" + food["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > food['price_hit']) {
                                         foodButton.addEventListener('click', buyItem);
                                     }
@@ -780,7 +782,7 @@ if (!isset($_SESSION['loaded'])) {
                         // setting up battle 
                         // initializing enemy
                         currentEnemy = data; // mainly just to check whats coming back
-                        enemyPic.src = "pics/" + data['enemy_img'];
+                        enemyPic.src = "../battle/pics/" + data['enemy_img'];
                         enemyName.innerHTML = data['enemy_name'];
                         enemyHealthBar.value = data['enemy_energy'];
                         enemyHealthBar.max = data['enemy_energy'];

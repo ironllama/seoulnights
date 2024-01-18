@@ -50,6 +50,16 @@ session_start();
         </table>
         <button class="upload">Upload Score</button>
         <div class="uploadComplete"></div>
+        <div class="tw">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Can you beat my score??" data-lang="en" data-show-count="false">Tweet</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+        <br>
+        <div class="fb">
+            <div id="fb-root"></div>
+            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="r16SucX5"></script>
+            <div class="fb-share-button" data-href="https://twitter.com" data-layout="" data-size=""><a target="_blank" href="https://twitter.com" class="fb-xfbml-parse-ignore">Share your score!</a></div>
+        </div>
     </div>
 </body>
 
@@ -63,8 +73,13 @@ session_start();
     uploadCompleteMessage = document.querySelector(".uploadComplete");
     tableBody1 = document.getElementsByTagName("tbody")[0];
     tableBody2 = document.getElementsByTagName("tbody")[1];
+
     errorResult = document.querySelector(".errorresult");
     mainscreenButton = document.querySelector(".mainscreen");
+
+    // sns share
+    facebook = document.querySelector(".fb");
+    twitter = document.querySelector(".tw");
 
 
     // creating a function called getLeaderboard to get leaderboard data
@@ -103,6 +118,31 @@ session_start();
     fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
         .then(res => res.json())
         .then(data => {
+            console.log("final player details: " + data);
+            // creating table elements
+            tableRow = document.createElement("tr");
+            tableRank = document.createElement("td");
+            tableName = document.createElement("td");
+            tableScore = document.createElement("td");
+            tableDate = document.createElement("td");
+
+            tableRank.innerHTML = "?";
+            tableName.innerHTML = data1['player_name'];
+            tableScore.innerHTML = data1['run_score'];
+            tableDate.innerHTML = new Date(data1['run_timestamp']).toLocaleDateString('en-US');
+
+            tableRow.appendChild(tableRank);
+            tableRow.appendChild(tableName);
+            tableRow.appendChild(tableScore);
+            tableRow.appendChild(tableDate);
+
+            tableBody2.appendChild(tableRow);
+        })
+
+
+    fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
+        .then(res => res.json())
+        .then(data => {
             if (data !== false) {
 
                 fetch('updateLeaderboard.php')
@@ -128,6 +168,9 @@ session_start();
 
                         tableBody2.appendChild(tableRow);
                     })
+
+                facebook.style.display = "initial";
+                twitter.style.display = "flex";
             } else {
                 errorResult.innerHTML = "RUN HAS NOT BEEN STARTED";
                 playerStats.style.display = "none";
@@ -144,6 +187,9 @@ session_start();
         uploadButton.style.display = "none";
         playerStats.style.display = "none";
 
+        uploadCompleteMessage.innerHTML = "Score Uploaded and Leaderboard Updated!";
+
+
         fetch('updateLeaderboard.php', {
                 method: 'POST',
                 headers: {
@@ -158,6 +204,8 @@ session_start();
             })
 
         getLeaderboard();
+        facebook.style.display = 'none';
+        twitter.style.display = 'none';
     })
 
 
