@@ -24,6 +24,7 @@ if (isset($_SESSION['name'])) {
 </head>
 
 <body>
+    <div class="fade-out-overlay"></div>
     <h1>Seoul Nights</h1>
     <div class="welcome"></div>
     <img class="playerPic">
@@ -49,6 +50,9 @@ if (isset($_SESSION['name'])) {
         const leaderboardButton = document.querySelector(".leaderboardButton");
         const playerPic = document.querySelector(".playerPic");
         const kakaoButton = document.getElementById("kakao-login-btn");
+        const overlay = document.querySelector(".fade-out-overlay");
+        const audio = new Audio('hongdae-korean.mp3');
+
 
         function unlinkApp() {
             Kakao.API.request({
@@ -98,7 +102,9 @@ if (isset($_SESSION['name'])) {
                                 console.log(data)
                             })
 
-                        playButton.addEventListener("click", function() {
+                        playButton.addEventListener("click", function(event) {
+                            event.preventDefault();
+                            audio.play();
                             fetch('startNewGame.php', {
                                     method: 'POST',
                                     headers: {
@@ -109,7 +115,14 @@ if (isset($_SESSION['name'])) {
                                 .then(res => res.text())
                                 .then(data => {
                                     console.log(data)
-                                    window.location.href = '../map/map.php';
+
+                                    overlay.style.opacity = "1"; // Set overlay opacity to fully opaque
+                                    overlay.style.pointerEvents = "auto"; // Allow interactions with the overlay
+
+                                    // After a delay (for the fade-out effect), navigate to the new site
+                                    setTimeout(function() {
+                                        window.location.href = "../map/map.php";
+                                    }, 10000); // Adjust the delay time (in milliseconds) as needed
                                 })
                         })
 
@@ -207,8 +220,8 @@ if (isset($_SESSION['name'])) {
                     leaderboardButton.style.display = "initial";
 
 
-
                     playButton.addEventListener("click", function() {
+                        audio.play();
                         fetch('startNewGame.php', {
                                 method: 'POST',
                                 headers: {
@@ -218,8 +231,14 @@ if (isset($_SESSION['name'])) {
                             })
                             .then(res => res.text())
                             .then(data => {
-                                console.log(data)
-                                window.location.href = '../map/map.php';
+                                console.log(data);
+                                overlay.style.opacity = "1"; // Set overlay opacity to fully opaque
+                                overlay.style.pointerEvents = "auto"; // Allow interactions with the overlay
+
+                                // After a delay (for the fade-out effect), navigate to the new site
+                                setTimeout(function() {
+                                    window.location.href = "../map/map.php";
+                                }, 10000); // Adjust the delay time (in milliseconds) as needed
                             })
                     })
                 }).catch((error) => {
@@ -248,6 +267,12 @@ if (isset($_SESSION['name'])) {
         //         // An error happened.
         //     });
         // })
+    })
+
+    leaderboardButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        window.location.href = "../leaderboard/leaderboard.php";
     })
 </script>
 

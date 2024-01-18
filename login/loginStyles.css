@@ -89,3 +89,19 @@ a {
     height: 200px;
     width: 200px;
 }
+
+.fade-out-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: 0;
+    pointer-events: none;
+    /* Prevent overlay from blocking interactions with the page */
+    z-index: 9999;
+    /* Ensure overlay appears on top of other elements */
+    transition: opacity 5s;
+    /* Add a smooth fade transition effect */
+}
