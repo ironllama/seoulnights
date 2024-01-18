@@ -73,20 +73,15 @@ session_start();
     playerStats = document.querySelector(".playerRun");
     uploadCompleteMessage = document.querySelector(".uploadComplete");
     tableBody1 = document.getElementsByTagName("tbody")[0];
-    tableBody2 = document.getElementsByTagName("tbody")[1]; <<
-    << << < Updated upstream
-        ===
-        === =
-        errorResult = document.querySelector(".errorresult");
+    tableBody2 = document.getElementsByTagName("tbody")[1];
+
+    errorResult = document.querySelector(".errorresult");
     mainscreenButton = document.querySelector(".mainscreen");
 
     // sns share
     facebook = document.querySelector(".fb");
     twitter = document.querySelector(".tw");
 
-
-    >>>
-    >>> > Stashed changes
 
     // creating a function called getLeaderboard to get leaderboard data
     function getLeaderboard() {
@@ -144,13 +139,9 @@ session_start();
 
             tableBody2.appendChild(tableRow);
         })
-    }
 
-    <<
-    << << < Updated upstream
-        ===
-        === =
-        fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
+
+    fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
         .then(res => res.json())
         .then(data => {
             if (data !== false) {
@@ -188,8 +179,6 @@ session_start();
             }
         })
 
-        >>>
-        >>> > Stashed changes
     getLeaderboard(); // calls function to populate leaderboard
 
 
@@ -197,10 +186,10 @@ session_start();
     //displays update leaderboard button upon upload click
     uploadButton.addEventListener("click", () => {
         uploadButton.style.display = "none";
-        playerStats.style.display = "none"; <<
-        << << < Updated upstream
-        uploadCompleteMessage.innerHTML = "Score Uploaded and Leaderboard Updated!"; ===
-        === =
+        playerStats.style.display = "none";
+
+        uploadCompleteMessage.innerHTML = "Score Uploaded and Leaderboard Updated!";
+
 
         fetch('updateLeaderboard.php', {
                 method: 'POST',
@@ -225,7 +214,6 @@ session_start();
     mainscreenButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        window.location.href = "../map/map.php"; >>>
-        >>> > Stashed changes
+        window.location.href = "../map/map.php";
     })
 </script>
