@@ -457,36 +457,36 @@ if (!isset($_SESSION['loaded'])) {
                         console.log(event.currentTarget.id.substring(1));
                         playerVisualPulse(event.currentTarget);
                         fetch('../convenience/buyItems.php', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
-                            body: JSON.stringify(itemID)
-                        })
-                        .then(response => response.json())
-                        .then(data => {
-                            console.log(data);
-                            updateHUD();
-                        });
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(itemID)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                updateHUD();
+                            });
                         //update each button in store after purchase
                         document.querySelectorAll(".shopButton").forEach((item) => {
                             let checkItemID = item.id;
                             console.log(checkItemID);
                             fetch('../convenience/buyItems.php', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(checkItemID)
-                            })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data);
-                                if (!data) {
-                                    item.removeEventListener("click", buyItem);
-                                    item.classList.add("cant-buy");
-                                } else item.classList.remove("cant-buy");
-                            });
+                                    method: 'POST',
+                                    headers: {
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(checkItemID)
+                                })
+                                .then(response => response.json())
+                                .then(data => {
+                                    console.log(data);
+                                    if (!data) {
+                                        item.removeEventListener("click", buyItem);
+                                        item.classList.add("cant-buy");
+                                    } else item.classList.remove("cant-buy");
+                                });
                         })
                     }
 
@@ -780,7 +780,7 @@ if (!isset($_SESSION['loaded'])) {
                         // setting up battle 
                         // initializing enemy
                         currentEnemy = data; // mainly just to check whats coming back
-                        enemyPic.src = "pics/" + data['enemy_img'];
+                        enemyPic.src = "../battle/pics/" + data['enemy_img'];
                         enemyName.innerHTML = data['enemy_name'];
                         enemyHealthBar.value = data['enemy_energy'];
                         enemyHealthBar.max = data['enemy_energy'];
