@@ -9,9 +9,9 @@
 }
 
 @keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% { transform: scale(1); border: 0px solid #F0F0F0;}
+    50% { transform: scale(1.2); border: 5px solid #F0F0F0;}
+    100% { transform: scale(1); border: 0px solid #F0F0F0;}
 }
 
 .highlight {
@@ -173,7 +173,7 @@ body {
     fill: #f0f0f0;
 }
 
-.can-buy:hover svg {
+.can-choose:hover svg {
     fill: lime;
     transform: scale(1.5);
 }
@@ -353,12 +353,6 @@ progress {
     align-items: center;
 }
 
-.convenience-store {
-    background: #F0F0F0;
-    flex-direction: column;
-    padding: 5px;
-}
-
 .store-button-container {
     position: fixed;
     bottom: .5em;
@@ -378,7 +372,13 @@ progress {
     margin: 1em;
 }
 
-.store-button {
+.convenience-store {
+    background: brown;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.open-store-button {
     align-self: flex-start;
     height: 10vh;
     width: 10vh;
@@ -386,16 +386,51 @@ progress {
     margin: 1em;
 }
 
-.store-menu {
-    width: 100%;
-    flex: 5;
-    background: lightgreen;
+.menu_parent {
+    display: flex;
 }
 
 .below-menu {
-    flex: 1;
     display: flex;
     justify-content: space-between;
+    background: purple;
+    height: 5em;
+}
+
+.shopButton {
+    box-sizing: border-box;
+    width: 10em;
+    height: 10em;
+    background: yellow;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cant-buy {
+    background: red;
+}
+
+.drink_selection, .food_selection {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.drink_selection h2, .food_selection h2 {
+    align-self: flex-start;
+    margin-left: 3.5em;
+}
+
+#drinks, #food {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 1em;
 }
 
 .leave-store-button {
