@@ -50,7 +50,6 @@ session_start();
         </table>
         <button class="upload">Upload Score</button>
         <div class="uploadComplete"></div>
-
         <div class="tw">
             <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Can you beat my score??" data-lang="en" data-show-count="false">Tweet</a>
             <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
