@@ -791,30 +791,30 @@ if (!isset($_SESSION['loaded'])) {
                         // setting up enemy moves to visualize
                         enemyMoves = data['enemy_moves'];
                         enemyMovesetTitle = document.createElement("h3");
-                        enemyMoves.forEach(function(move, index) {
-                            enemyMove = document.createElement("div");
-                            // enemyMove.className = "enemyMove" + (index + 1)
-                            enemyMove.className = "enemyMove";
-                            enemyMove.id = "move" + move['move_id'];
+                        // enemyMoves.forEach(function(move, index) {
+                        //     enemyMove = document.createElement("div");
+                        //     // enemyMove.className = "enemyMove" + (index + 1)
+                        //     enemyMove.className = "enemyMove";
+                        //     enemyMove.id = "move" + move['move_id'];
 
-                            enemyMoveName = document.createElement("div");
-                            enemyMoveName.className = "move" + (index + 1) + "Name";
-                            enemyMoveName.innerHTML = move['move_name'];
+                        //     enemyMoveName = document.createElement("div");
+                        //     enemyMoveName.className = "move" + (index + 1) + "Name";
+                        //     enemyMoveName.innerHTML = move['move_name'];
 
-                            enemyMoveAttack = document.createElement("div");
-                            enemyMoveAttack.className = "move" + (index + 1) + "Attack";
-                            enemyMoveAttack.innerHTML = "Attack: " + move['move_attack'];
+                        //     enemyMoveAttack = document.createElement("div");
+                        //     enemyMoveAttack.className = "move" + (index + 1) + "Attack";
+                        //     enemyMoveAttack.innerHTML = "Attack: " + move['move_attack'];
 
-                            enemyMoveDefense = document.createElement("div");
-                            enemyMoveDefense.className = "move" + (index + 1) + "Defense";
-                            enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
+                        //     enemyMoveDefense = document.createElement("div");
+                        //     enemyMoveDefense.className = "move" + (index + 1) + "Defense";
+                        //     enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
 
-                            enemyMove.appendChild(enemyMoveName);
-                            enemyMove.appendChild(enemyMoveAttack);
-                            enemyMove.appendChild(enemyMoveDefense);
+                        //     enemyMove.appendChild(enemyMoveName);
+                        //     enemyMove.appendChild(enemyMoveAttack);
+                        //     enemyMove.appendChild(enemyMoveDefense);
 
-                            enemyMoveset.append(enemyMove);
-                        });
+                        //     enemyMoveset.append(enemyMove);
+                        // });
 
                         enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
                         console.log(enemyTurn);
@@ -842,7 +842,25 @@ if (!isset($_SESSION['loaded'])) {
                                             event.stopPropagation();
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
+                                        
+                                        let moveID = "#move" + enemyTurn['move_id'];
+                                        if (!enemyMoveset.querySelector(moveID)) {
+                                            enemyMove = document.createElement("div");
+                                            enemyMove.className = "enemyMove";
+                                            enemyMove.id = "move" + enemyTurn['move_id'];
+                                            enemyMoveName = document.createElement("div");
+                                            enemyMoveName.innerHTML = enemyTurn['move_name'];
+                                            enemyMoveAttack = document.createElement("div");
+                                            enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
+                                            enemyMoveDefense = document.createElement("div");
+                                            enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
+                                            enemyMove.appendChild(enemyMoveName);
+                                            enemyMove.appendChild(enemyMoveAttack);
+                                            enemyMove.appendChild(enemyMoveDefense);
+                                            enemyMoveset.append(enemyMove);
+                                        }
 
+                                        playerVisualPulse(enemyMoveset.querySelector(moveID));
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
