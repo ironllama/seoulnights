@@ -34,3 +34,8 @@ thead {
 table {
     width: 80%
 }
+
+.errorresult {
+    font-weight: bold;
+    font-size: 30px;
+}
