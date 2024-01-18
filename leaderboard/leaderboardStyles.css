@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
+
 body {
     background-color: cornflowerblue;
-    font-family: sans-serif;
+    font-family: "Press Start 2P";
 }
 
 .main1 {
@@ -33,4 +35,17 @@ thead {
 
 table {
     width: 80%
+<<<<<<< Updated upstream
+=======
+}
+
+.errorresult {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.tw,
+.fb {
+    display: none;
+>>>>>>> Stashed changes
 }
