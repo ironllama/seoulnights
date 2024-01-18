@@ -59,10 +59,11 @@ body {
     align-items: center;
     justify-content: center;
     animation: 2s ease-in alternate-reverse infinite blurry;
+    background: url("./media/mapbg.png");
 }
 
 .map {
-    background: #0f0f0f;
+    background: rgba(0, 0, 0, .70);
     padding: 0 1em;
     width: 95vw;
     height: 90vh;
@@ -356,10 +357,51 @@ progress {
 }
 
 #end-game {
-    background: yellow;
+    color: #F0F0F0;
+    width: 75%;
+    background: url("./media/mapbg.png");
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+}
+
+.end-game-state {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+}
+
+.end-game-state .attribute {
+    padding: 10px;
+    background: rgba(0, 0, 0, .70);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+}
+
+.end-game-state .attribute svg {
+    transform: scale(5);
+    margin: 5em;
+}
+
+.end-game-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.end-game-buttons button {
+    border: inset 5px gray;
+    width: 10em;
+    height: 10em;
+    background: #0f0f0f;
+    color: lime;
 }
 
 .store-button-container {
@@ -464,7 +506,6 @@ progress {
     color: lime;
     border: #f0F0F0;
 }
-
 
 .battle-reward>div {
     align-self: flex-start;
