@@ -22,9 +22,17 @@
         transform: scale(1);
     }
 
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 
 }
 
@@ -296,7 +304,8 @@ body {
     align-items: flex-end;
 }
 
-.battle-square, .event-square {
+.battle-square,
+.event-square {
     width: 1em;
     height: 1em;
     display: inline-block;
@@ -438,7 +447,7 @@ progress {
 }
 
 
-.battle-reward > div {
+.battle-reward>div {
     align-self: flex-start;
 }
 

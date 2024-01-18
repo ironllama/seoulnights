@@ -301,8 +301,10 @@ if (!isset($_SESSION['loaded'])) {
     </div>
 
     <div class="map-key">
-        <div class="battle-key">Battle = <div class="battle-square focus-b"></div></div>
-        <div class="event-key">Event = <div class="event-square focus-e"></div></div>
+        <div class="battle-key">Battle = <div class="battle-square focus-b"></div>
+        </div>
+        <div class="event-key">Event = <div class="event-square focus-e"></div>
+        </div>
     </div>
 
     <script>
@@ -390,7 +392,7 @@ if (!isset($_SESSION['loaded'])) {
                                 document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
                                 document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
                             });
-                            playerVisualPulse(playerHUD);
+                        playerVisualPulse(playerHUD);
                     }
 
                     function playerVisualPulse(inElem) {
