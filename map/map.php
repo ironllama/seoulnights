@@ -260,8 +260,8 @@ if (!isset($_SESSION['loaded'])) {
             </div>
         </div>
         <div class="below-menu">
-            <div class="below-menu-left">Some info about the CU mart or whatever</div>
-            <div class="leave-store-button"></div>
+            <div class="below-menu-left"></div>
+            <div class="leave-store-button">Leave Store</div>
         </div>
     </div>
 
@@ -503,6 +503,7 @@ if (!isset($_SESSION['loaded'])) {
                                     drinkButton.classList.add('shopButton');
                                     drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']).toLocaleString('en-US');
                                     drinkButton.id = "s" + drink['mart_id'];
+                                    drinkButton.style.backgroundImage = "url(../convenience/mart_icons/" + drink["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > drink['price_hit']) {
                                         drinkButton.addEventListener('click', buyItem);
                                     }
@@ -515,6 +516,7 @@ if (!isset($_SESSION['loaded'])) {
                                     foodButton.classList.add('shopButton');
                                     foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']).toLocaleString('en-US');
                                     foodButton.id = "s" + food['mart_id'];
+                                    foodButton.style.backgroundImage = "url(../convenience/mart_icons/" + food["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > food['price_hit']) {
                                         foodButton.addEventListener('click', buyItem);
                                     }
