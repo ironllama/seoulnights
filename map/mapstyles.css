@@ -9,9 +9,23 @@
 }
 
 @keyframes pulse {
+
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.2);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+
     0% { transform: scale(1); }
     50% { transform: scale(1.2); }
     100% { transform: scale(1); }
+
 }
 
 .highlight {
@@ -96,6 +110,7 @@ body {
 .focus-e {
     animation: 1s steps(5) infinite alternate focusE;
 }
+
 .focus-b {
     animation: 1s steps(5) infinite alternate focusB;
 }
@@ -109,6 +124,7 @@ body {
         box-shadow: 0px 0px 0px .5em lightskyblue;
     }
 }
+
 @keyframes focusB {
     from {
         box-shadow: 0px 0px 0px red;
@@ -421,9 +437,11 @@ progress {
     border: #f0F0F0;
 }
 
+
 .battle-reward > div {
     align-self: flex-start;
 }
+
 .battle-reward-choice-container {
     flex-direction: row;
     display: flex;
@@ -453,7 +471,7 @@ progress {
     animation: 1s steps(5) infinite alternate focusE;
 }
 
-.battle-reward-choice{
+.battle-reward-choice {
     flex: 1;
     display: flex;
     flex-direction: column;

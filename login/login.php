@@ -249,6 +249,12 @@ if (isset($_SESSION['name'])) {
         //     });
         // })
     })
+
+    leaderboardButton.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        window.location.href = "../leaderboard/leaderboard.php";
+    })
 </script>
 
 </html>

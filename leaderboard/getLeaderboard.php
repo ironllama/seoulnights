@@ -13,7 +13,7 @@ try {
 
 $session_id = session_id();
 
-$currentLeaderboard = $db->prepare("SELECT * FROM gameplay_logs WHERE `run_completed?` = 1 ORDER BY run_score DESC LIMIT 10");
+$currentLeaderboard = $db->prepare("SELECT * FROM gameplay_logs WHERE run_completed = 'yes' ORDER BY run_score DESC LIMIT 10");
 $currentLeaderboard->execute();
 $results = $currentLeaderboard->fetchAll(PDO::FETCH_ASSOC);
 
