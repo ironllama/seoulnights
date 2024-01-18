@@ -242,6 +242,12 @@ body {
     background: #f0f0f0;
 }
 
+.enemymove-zone {
+    display: column;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
 .PC-cards {
     position: absolute;
     height: 20%;
