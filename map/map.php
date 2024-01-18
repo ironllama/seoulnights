@@ -807,14 +807,9 @@ if (!isset($_SESSION['loaded'])) {
                             enemyMoveDefense.className = "move" + (index + 1) + "Defense";
                             enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
 
-                            enemyMoveRegen = document.createElement("div");
-                            enemyMoveRegen.className = "move" + (index + 1) + "Regen";
-                            enemyMoveRegen.innerHTML = "Regen: " + move['move_regen'];
-
                             enemyMove.appendChild(enemyMoveName);
                             enemyMove.appendChild(enemyMoveAttack);
                             enemyMove.appendChild(enemyMoveDefense);
-                            enemyMove.appendChild(enemyMoveRegen);
 
                             enemyMoveset.append(enemyMove);
                         });
@@ -825,6 +820,11 @@ if (!isset($_SESSION['loaded'])) {
 
                         //nested function - setting up cards available for client
                         function getNewCards() {
+                            document.querySelectorAll(".enemyMove").forEach((elem) => {
+                                if (elem.querySelector("div").innerHTML === enemyTurn["move_name"]) {
+                                    elem.classList.add("focus-b");
+                                } else elem.classList.remove("focus-b");
+                            });
                             fetch('../battle/getCards.php')
                                 .then(res => res.json())
                                 .then(data => {
@@ -931,6 +931,12 @@ if (!isset($_SESSION['loaded'])) {
 
                                             enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
                                             console.log(enemyTurn);
+
+                                            document.querySelectorAll(".enemyMove").forEach((elem) => {
+                                                if (elem.querySelector("div").innerHTML === enemyTurn["move_name"]) {
+                                                    elem.classList.add("focus-b");
+                                                } else elem.classList.remove("focus-b");
+                                            });
                                         });
 
                                         // actually creating the cards
@@ -952,14 +958,9 @@ if (!isset($_SESSION['loaded'])) {
                                         cardDefense.className = "carddefense";
                                         cardDefense.innerHTML = "Defense: " + card['card_defense'];
 
-                                        cardRegen = document.createElement("div")
-                                        cardRegen.className = "cardregen";
-                                        cardRegen.innerHTML = "Regen: " + card['card_regen'];
-
                                         cardDesc.appendChild(cardTitle);
                                         cardDesc.appendChild(cardAttack);
                                         cardDesc.appendChild(cardDefense);
-                                        cardDesc.appendChild(cardRegen);
 
                                         cardDiv.appendChild(cardImage);
                                         cardDiv.appendChild(cardDesc);
