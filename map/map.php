@@ -104,7 +104,7 @@ if (!isset($_SESSION['loaded'])) {
                                 </div>
                             </div>
                         </div>
-                        <button class="option-button option-button1  can-buy">
+                        <button class="option-button option-button1  can-choose">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
                                 <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                             </svg>
@@ -134,7 +134,7 @@ if (!isset($_SESSION['loaded'])) {
                                 </div>
                             </div>
                         </div>
-                        <button class="option-button option-button2 can-buy">
+                        <button class="option-button option-button2 can-choose">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
                                 <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                             </svg>
@@ -164,7 +164,7 @@ if (!isset($_SESSION['loaded'])) {
                                 </div>
                             </div>
                         </div>
-                        <button class="option-button option-button3 can-buy">
+                        <button class="option-button option-button3 can-choose">
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
                                 <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                             </svg>
@@ -249,16 +249,14 @@ if (!isset($_SESSION['loaded'])) {
     </div>
 
     <div class="convenience-store dynamic-game-element">
-        <div class="store-menu">
-            <div class='menu_parent'>
-                <div class='drink_selection'>
-                    <h2>Drinks</h2>
-                    <div id="drinks"></div>
-                </div>
-                <div class='food_selection'>
-                    <h2>Food</h2>
-                    <div id="food"></div>
-                </div>
+        <div class='menu_parent'>
+            <div class='drink_selection'>
+                <h2>Drinks</h2>
+                <div id="drinks"></div>
+            </div>
+            <div class='food_selection'>
+                <h2>Food</h2>
+                <div id="food"></div>
             </div>
         </div>
         <div class="below-menu">
@@ -266,8 +264,9 @@ if (!isset($_SESSION['loaded'])) {
             <div class="leave-store-button"></div>
         </div>
     </div>
+
     <div class="store-button-container">
-        <div class="store-button focus-e"></div>
+        <div class="open-store-button focus-e"></div>
         <div class="store-intro">
             <p>Convenience Store</p>
             <p>(Visits Remaining: <span class="store-visits-left">2</span>)</p>
@@ -295,14 +294,16 @@ if (!isset($_SESSION['loaded'])) {
                 <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
                     <path d="M64 64C28.7 64 0 92.7 0 128V384c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V128c0-35.3-28.7-64-64-64H64zm64 320H64V320c35.3 0 64 28.7 64 64zM64 192V128h64c0 35.3-28.7 64-64 64zM448 384c0-35.3 28.7-64 64-64v64H448zm64-192c-35.3 0-64-28.7-64-64h64v64zM288 160a96 96 0 1 1 0 192 96 96 0 1 1 0-192z" fill="gold" />
                 </svg>
-                <div class="battle-reward-label">Cha-ching (+10,000원)!</div>
+                <div class="battle-reward-label">Cha-ching (+20,000원)!</div>
             </div>
         </div>
     </div>
 
     <div class="map-key">
-        <div class="battle-key">Battle = <div class="battle-square focus-b"></div></div>
-        <div class="event-key">Event = <div class="event-square focus-e"></div></div>
+        <div class="battle-key">Battle = <div class="battle-square focus-b"></div>
+        </div>
+        <div class="event-key">Event = <div class="event-square focus-e"></div>
+        </div>
     </div>
 
     <script>
@@ -390,7 +391,7 @@ if (!isset($_SESSION['loaded'])) {
                                 document.documentElement.style.setProperty('--upY', ((data['run_drunkLevel'] / 100) * 5 + "px"));
                                 document.documentElement.style.setProperty('--downY', ("-" + (data['run_drunkLevel'] / 100) * 5 + "px"));
                             });
-                            playerVisualPulse(playerHUD);
+                        playerVisualPulse(playerHUD);
                     }
 
                     function playerVisualPulse(inElem) {
@@ -416,6 +417,8 @@ if (!isset($_SESSION['loaded'])) {
                     storeButton.addEventListener("click", storeButtonHandler);
                     const leaveStoreButton = document.querySelector(".leave-store-button");
                     const storeVisitsLeft = document.querySelector(".store-visits-left");
+                    const drinkContainer = document.querySelector('#drinks');
+                    const foodContainer = document.querySelector('#food');
 
                     function storeButtonHandler() {
                         storeScreen.style.display = "flex";
@@ -442,66 +445,79 @@ if (!isset($_SESSION['loaded'])) {
                                 console.log('Received data:', visitsLeft);
                                 if (visitsLeft <= 0) {
                                     storeButton.removeEventListener("click", storeButtonHandler);
-                                    document.querySelector(".store-button").classList.remove("focus-e");
+                                    document.querySelector(".open-store-button").classList.remove("focus-e");
                                 }
                                 storeVisitsLeft.innerHTML = visitsLeft;
                             })
                             .catch(error => console.log(error));
                     }
 
+                    function buyItem(event) {
+                        let itemID = event.currentTarget.id.substring(1);
+                        console.log(event.currentTarget.id.substring(1));
+                        playerVisualPulse(event.currentTarget);
+                        fetch('../convenience/buyItems.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(itemID)
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data);
+                            updateHUD();
+                        });
+                        //update each button in store after purchase
+                        document.querySelectorAll(".shopButton").forEach((item) => {
+                            let checkItemID = item.id;
+                            console.log(checkItemID);
+                            fetch('../convenience/buyItems.php', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(checkItemID)
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+                                if (!data) {
+                                    item.removeEventListener("click", buyItem);
+                                    item.classList.add("cant-buy");
+                                } else item.classList.remove("cant-buy");
+                            });
+                        })
+                    }
+
                     function getStoreItems() {
+                        drinkContainer.innerHTML = "";
+                        foodContainer.innerHTML = "";
                         fetch('../convenience/getStoreItems.php')
                             .then(response => response.json())
                             .then(data => {
                                 console.log(data);
-                                let drinks = document.querySelector('#drinks');
-                                let foodContainer = document.querySelector('#food');
                                 data.items['drink'].forEach(drink => {
                                     console.log(drink);
-                                    var drinkButton = document.createElement('button');
+                                    var drinkButton = document.createElement('div');
                                     drinkButton.classList.add('shopButton');
-                                    drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']);
-                                    drinkButton.addEventListener('click', () => {
-                                        console.log(drink['mart_id'])
-                                        console.log(`Clicked on drink: ${drink['item']}`);
-                                        fetch('../convenience/buyItems.php', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify(drink['mart_id'])
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                console.log(data);
-                                                updateHUD();
-                                            });
-                                    });
-                                    drinks.appendChild(drinkButton);
+                                    drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']).toLocaleString('en-US');
+                                    drinkButton.id = "s" + drink['mart_id'];
+                                    if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > drink['price_hit']) {
+                                        drinkButton.addEventListener('click', buyItem);
+                                    }
+                                    drinkContainer.appendChild(drinkButton);
                                 });
 
                                 data.items['food'].forEach(food => {
                                     console.log(food);
-                                    var foodButton = document.createElement('button');
+                                    var foodButton = document.createElement('div');
                                     foodButton.classList.add('shopButton');
-                                    foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']);
-                                    foodButton.addEventListener('click', () => {
-                                        console.log(food['mart_id'])
-                                        console.log(`Clicked on food: ${food['item']}`);
-                                        fetch('../convenience/buyItems.php', {
-                                                method: 'POST',
-                                                headers: {
-                                                    'Content-Type': 'application/json'
-                                                },
-                                                body: JSON.stringify(food['mart_id'])
-
-                                            })
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                console.log(data);
-                                                updateHUD();
-                                            });
-                                    });
+                                    foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']).toLocaleString('en-US');
+                                    foodButton.id = "s" + food['mart_id'];
+                                    if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > food['price_hit']) {
+                                        foodButton.addEventListener('click', buyItem);
+                                    }
                                     foodContainer.appendChild(foodButton);
                                 });
                             });
@@ -522,6 +538,7 @@ if (!isset($_SESSION['loaded'])) {
                                 });
                             }
                         }
+                        getStoreItems();
                     }
 
                     //used assigned element data to retrieve associated data from the db and prepare the event or battle expected
@@ -624,7 +641,13 @@ if (!isset($_SESSION['loaded'])) {
                         eventZone.querySelector(".event-title").innerHTML = inData.event_title;
                         eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`;
                         eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
-                        optionButtons.forEach((button) => button.classList.add("can-buy"));
+                        optionButtons.forEach((button) => {
+                            button.classList.add("can-choose");
+                            button.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
+                                <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
+                            </svg>)`;
+                            button.style.fill = "";
+                        });
                         let currentMoney = parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10);
 
                         //option buttons setup
@@ -637,7 +660,7 @@ if (!isset($_SESSION['loaded'])) {
                         else {
                             optionButtons[0].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>';
                             optionButtons[0].style.fill = "firebrick";
-                            optionButtons[0].classList.remove("can-buy");
+                            optionButtons[0].classList.remove("can-choose");
                         }
 
                         optionDescriptionArray[1].innerHTML = inData.options[1].option_name;
@@ -649,7 +672,7 @@ if (!isset($_SESSION['loaded'])) {
                         else {
                             optionButtons[1].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>';
                             optionButtons[1].style.fill = "firebrick";
-                            optionButtons[1].classList.remove("can-buy");
+                            optionButtons[1].classList.remove("can-choose");
                         }
 
                         optionDescriptionArray[2].innerHTML = inData.options[2].option_name;
@@ -661,7 +684,7 @@ if (!isset($_SESSION['loaded'])) {
                         else {
                             optionButtons[2].innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><path d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg>';
                             optionButtons[2].style.fill = "firebrick";
-                            optionButtons[2].classList.remove("can-buy");
+                            optionButtons[2].classList.remove("can-choose");
                         }
 
                         function sendChoice(event) { // nested function - sending the options data to be tracked once clicked
@@ -784,20 +807,24 @@ if (!isset($_SESSION['loaded'])) {
                             enemyMoveDefense.className = "move" + (index + 1) + "Defense";
                             enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
 
-                            enemyMoveRegen = document.createElement("div");
-                            enemyMoveRegen.className = "move" + (index + 1) + "Regen";
-                            enemyMoveRegen.innerHTML = "Regen: " + move['move_regen'];
-
                             enemyMove.appendChild(enemyMoveName);
                             enemyMove.appendChild(enemyMoveAttack);
                             enemyMove.appendChild(enemyMoveDefense);
-                            enemyMove.appendChild(enemyMoveRegen);
 
                             enemyMoveset.append(enemyMove);
                         });
 
+                        enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
+                        console.log(enemyTurn);
+
+
                         //nested function - setting up cards available for client
                         function getNewCards() {
+                            document.querySelectorAll(".enemyMove").forEach((elem) => {
+                                if (elem.querySelector("div").innerHTML === enemyTurn["move_name"]) {
+                                    elem.classList.add("focus-b");
+                                } else elem.classList.remove("focus-b");
+                            });
                             fetch('../battle/getCards.php')
                                 .then(res => res.json())
                                 .then(data => {
@@ -813,7 +840,7 @@ if (!isset($_SESSION['loaded'])) {
                                             event.stopPropagation();
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
-                                            enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
+
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
@@ -901,6 +928,15 @@ if (!isset($_SESSION['loaded'])) {
 
                                             // remove the card upon click
                                             cardArea.removeChild(event.currentTarget);
+
+                                            enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
+                                            console.log(enemyTurn);
+
+                                            document.querySelectorAll(".enemyMove").forEach((elem) => {
+                                                if (elem.querySelector("div").innerHTML === enemyTurn["move_name"]) {
+                                                    elem.classList.add("focus-b");
+                                                } else elem.classList.remove("focus-b");
+                                            });
                                         });
 
                                         // actually creating the cards
@@ -922,14 +958,9 @@ if (!isset($_SESSION['loaded'])) {
                                         cardDefense.className = "carddefense";
                                         cardDefense.innerHTML = "Defense: " + card['card_defense'];
 
-                                        cardRegen = document.createElement("div")
-                                        cardRegen.className = "cardregen";
-                                        cardRegen.innerHTML = "Regen: " + card['card_regen'];
-
                                         cardDesc.appendChild(cardTitle);
                                         cardDesc.appendChild(cardAttack);
                                         cardDesc.appendChild(cardDefense);
-                                        cardDesc.appendChild(cardRegen);
 
                                         cardDiv.appendChild(cardImage);
                                         cardDiv.appendChild(cardDesc);
@@ -941,7 +972,7 @@ if (!isset($_SESSION['loaded'])) {
                         // run this function at the beginning of each battle clicked
                         getNewCards();
                     }
-                    getStoreItems();
+
                     prepareRound();
                 });
         });

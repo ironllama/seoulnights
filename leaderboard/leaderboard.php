@@ -16,6 +16,7 @@ session_start();
 
 <body>
     <?php echo session_id() ?>
+    <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
             <h1>Leaderboard</h1>
@@ -34,7 +35,7 @@ session_start();
         </table>
         <br>
         <br>
-        <br>
+        <div class="errorresult"></div>
         <table class="playerRun">
             <thead>
                 <tr>
@@ -71,12 +72,12 @@ session_start();
     uploadButton = document.querySelector(".upload");
     playerStats = document.querySelector(".playerRun");
     uploadCompleteMessage = document.querySelector(".uploadComplete");
-    rankCounter = 1;
     tableBody1 = document.getElementsByTagName("tbody")[0];
-    tableBody2 = document.getElementsByTagName("tbody")[1];
-<<<<<<< Updated upstream
-=======
-    errorResult = document.querySelector(".errorresult");
+    tableBody2 = document.getElementsByTagName("tbody")[1]; <<
+    << << < Updated upstream
+        ===
+        === =
+        errorResult = document.querySelector(".errorresult");
     mainscreenButton = document.querySelector(".mainscreen");
 
     // sns share
@@ -84,13 +85,16 @@ session_start();
     twitter = document.querySelector(".tw");
 
 
->>>>>>> Stashed changes
+    >>>
+    >>> > Stashed changes
 
     // creating a function called getLeaderboard to get leaderboard data
     function getLeaderboard() {
+        rankCounter = 1;
         fetch('getLeaderboard.php')
             .then(res => res.json())
             .then(data => {
+                tableBody1.innerHTML = "";
                 data.forEach((row) => {
 
                     // creating table elements
@@ -115,35 +119,38 @@ session_start();
                     rankCounter++;
                 })
             })
-
-        fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
-            .then(res => res.json())
-            .then(data => {
-                console.log("final player details: " + data);
-                // creating table elements
-                tableRow = document.createElement("tr");
-                tableRank = document.createElement("td");
-                tableName = document.createElement("td");
-                tableScore = document.createElement("td");
-                tableDate = document.createElement("td");
-
-                tableRank.innerHTML = "?";
-                tableName.innerHTML = data['player_name'];
-                tableScore.innerHTML = data['run_score'];
-                tableDate.innerHTML = new Date(data['run_timestamp']).toLocaleDateString('en-US');
-
-                tableRow.appendChild(tableRank);
-                tableRow.appendChild(tableName);
-                tableRow.appendChild(tableScore);
-                tableRow.appendChild(tableDate);
-
-                tableBody2.appendChild(tableRow);
-            })
     }
 
-<<<<<<< Updated upstream
-=======
     fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
+        .then(res => res.json())
+        .then(data => {
+            console.log("final player details: " + data);
+            // creating table elements
+            tableRow = document.createElement("tr");
+            tableRank = document.createElement("td");
+            tableName = document.createElement("td");
+            tableScore = document.createElement("td");
+            tableDate = document.createElement("td");
+
+            tableRank.innerHTML = "?";
+            tableName.innerHTML = data1['player_name'];
+            tableScore.innerHTML = data1['run_score'];
+            tableDate.innerHTML = new Date(data1['run_timestamp']).toLocaleDateString('en-US');
+
+            tableRow.appendChild(tableRank);
+            tableRow.appendChild(tableName);
+            tableRow.appendChild(tableScore);
+            tableRow.appendChild(tableDate);
+
+            tableBody2.appendChild(tableRow);
+        })
+    }
+
+    <<
+    << << < Updated upstream
+        ===
+        === =
+        fetch('../map/updateHUD.php') //calls to existing api that gets current state of run
         .then(res => res.json())
         .then(data => {
             if (data !== false) {
@@ -181,7 +188,8 @@ session_start();
             }
         })
 
->>>>>>> Stashed changes
+        >>>
+        >>> > Stashed changes
     getLeaderboard(); // calls function to populate leaderboard
 
 
@@ -189,10 +197,10 @@ session_start();
     //displays update leaderboard button upon upload click
     uploadButton.addEventListener("click", () => {
         uploadButton.style.display = "none";
-        playerStats.style.display = "none";
-<<<<<<< Updated upstream
-        uploadCompleteMessage.innerHTML = "Score Uploaded and Leaderboard Updated!";
-=======
+        playerStats.style.display = "none"; <<
+        << << < Updated upstream
+        uploadCompleteMessage.innerHTML = "Score Uploaded and Leaderboard Updated!"; ===
+        === =
 
         fetch('updateLeaderboard.php', {
                 method: 'POST',
@@ -217,7 +225,7 @@ session_start();
     mainscreenButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        window.location.href = "../map/map.php";
->>>>>>> Stashed changes
+        window.location.href = "../map/map.php"; >>>
+        >>> > Stashed changes
     })
 </script>

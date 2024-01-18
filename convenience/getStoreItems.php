@@ -6,11 +6,11 @@ try {
     die("Error: " . $e->getMessage());
 }
 
-$stmt = $pdo->prepare("SELECT * FROM mart_items WHERE type = 'drink' ORDER BY RAND() LIMIT 10");
+$stmt = $pdo->prepare("SELECT * FROM mart_items WHERE type = 'drink' ORDER BY RAND() LIMIT 6");
 $stmt->execute();
 $drink = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-$stmt = $pdo->prepare("SELECT * FROM mart_items WHERE type = 'food' ORDER BY RAND() LIMIT 10");
+$stmt = $pdo->prepare("SELECT * FROM mart_items WHERE type = 'food' ORDER BY RAND() LIMIT 6");
 $stmt->execute();
 $food = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

@@ -34,9 +34,7 @@ thead {
 }
 
 table {
-    width: 80%
-<<<<<<< Updated upstream
-=======
+    width: 80% <<<<<<< Updated upstream=======
 }
 
 .errorresult {
@@ -47,5 +45,5 @@ table {
 .tw,
 .fb {
     display: none;
->>>>>>> Stashed changes
+    >>>>>>>Stashed changes
 }
