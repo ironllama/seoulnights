@@ -313,7 +313,9 @@ if (!isset($_SESSION['loaded'])) {
     </div>
 
     <script>
+        mapMusic = new Audio("media/mapmusic.mp3");
         document.addEventListener("DOMContentLoaded", () => {
+            mapMusic.play();
             fetch('getLocationData.php')
                 .then(res => res.json())
                 .then(data => {
@@ -416,6 +418,7 @@ if (!isset($_SESSION['loaded'])) {
                     const playAgainButton = document.querySelector(".play-again");
                     const leaderboardButton = document.querySelector(".see-leaderboard");
                     const endGame = document.querySelector("#end-game");
+                    const finalScore = document.querySelector(".final-score");
 
                     //Convenience Store
                     const storeScreen = document.querySelector(".convenience-store");
@@ -631,6 +634,11 @@ if (!isset($_SESSION['loaded'])) {
                                     document.querySelector(".end-energy-num").innerHTML = energyBar.value;
                                     document.querySelector(".end-drunk-num").innerHTML = drunkBar.value;
                                     document.querySelector(".end-money-num").innerHTML = moneyNum.innerHTML;
+                                    fetch('../leaderboard/updateLeaderboard.php')
+                                        .then(res => res.json())
+                                        .then(data => {
+                                            finalScore.innerHTML = data['run_score'];
+                                        })
                                 }); //end game
                                 playAgainButton.addEventListener("click", () => window.location.reload());
                                 leaderboardButton.addEventListener("click", () => window.location.href = "../leaderboard/leaderboard.php");
@@ -732,6 +740,7 @@ if (!isset($_SESSION['loaded'])) {
                     currentRound = [];
                     currentEnemy = [];
                     cardArea = document.querySelector(".card-area");
+                    battleMusic = new Audio("media/battlemusic.mp3");
 
                     //enemy section
                     enemyMoveset = document.querySelector(".enemymove-zone");
@@ -781,6 +790,8 @@ if (!isset($_SESSION['loaded'])) {
                     }
 
                     function triggerBattle(data) {
+                        mapMusic.volume = 0.1;
+                        battleMusic.play();
                         playerHUD.style.display = "none";
                         backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
                         currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
@@ -853,25 +864,25 @@ if (!isset($_SESSION['loaded'])) {
                                             event.stopPropagation();
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
-                                        
-                                        let moveID = "#move" + enemyTurn['move_id'];
-                                        if (!enemyMoveset.querySelector(moveID)) {
-                                            enemyMove = document.createElement("div");
-                                            enemyMove.className = "enemyMove";
-                                            enemyMove.id = "move" + enemyTurn['move_id'];
-                                            enemyMoveName = document.createElement("div");
-                                            enemyMoveName.innerHTML = enemyTurn['move_name'];
-                                            enemyMoveAttack = document.createElement("div");
-                                            enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
-                                            enemyMoveDefense = document.createElement("div");
-                                            enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
-                                            enemyMove.appendChild(enemyMoveName);
-                                            enemyMove.appendChild(enemyMoveAttack);
-                                            enemyMove.appendChild(enemyMoveDefense);
-                                            enemyMoveset.append(enemyMove);
-                                        }
 
-                                        playerVisualPulse(enemyMoveset.querySelector(moveID));
+                                            let moveID = "#move" + enemyTurn['move_id'];
+                                            if (!enemyMoveset.querySelector(moveID)) {
+                                                enemyMove = document.createElement("div");
+                                                enemyMove.className = "enemyMove";
+                                                enemyMove.id = "move" + enemyTurn['move_id'];
+                                                enemyMoveName = document.createElement("div");
+                                                enemyMoveName.innerHTML = enemyTurn['move_name'];
+                                                enemyMoveAttack = document.createElement("div");
+                                                enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
+                                                enemyMoveDefense = document.createElement("div");
+                                                enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
+                                                enemyMove.appendChild(enemyMoveName);
+                                                enemyMove.appendChild(enemyMoveAttack);
+                                                enemyMove.appendChild(enemyMoveDefense);
+                                                enemyMoveset.append(enemyMove);
+                                            }
+
+                                            playerVisualPulse(enemyMoveset.querySelector(moveID));
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
@@ -935,11 +946,15 @@ if (!isset($_SESSION['loaded'])) {
                                                 battleRewardScreen.style.display = "flex";
                                                 updateHUD();
                                                 playerHUD.style.display = "flex";
+                                                battleMusic.pause();
+                                                mapMusic.volume = 1;
                                             }
 
                                             //upon loss
                                             if (playerHealthBar.value <= 0) {
                                                 playedCards = [];
+                                                battleMusic.pause();
+                                                mapMusic.volume = 1;
                                                 alert("Battle Over, you lost!");
                                                 fetch('getRoundResult.php')
                                                     .then(res => res.json())

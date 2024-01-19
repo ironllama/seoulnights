@@ -97,6 +97,7 @@ body {
     animation: 2s ease-in alternate-reverse infinite figureEight;
     background-repeat: no-repeat;
     background-size: cover;
+    color: white;
 }
 
 .card-zone {
@@ -476,7 +477,7 @@ progress {
     width: 10em;
     height: 10em;
     color: #F0F0F0;
-    background: rgba(0,0,0,.75);
+    background: rgba(0, 0, 0, .75);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -493,7 +494,8 @@ progress {
 }
 
 
-.drink_selection, .food_selection {
+.drink_selection,
+.food_selection {
     flex: 1;
     height: 100%;
     display: flex;
@@ -509,7 +511,8 @@ progress {
     margin-left: 3.5em;
 }
 
-#drinks, #food {
+#drinks,
+#food {
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -521,6 +524,7 @@ progress {
 #drinks {
     background-image: url("../convenience/mart_icons/cooler.png");
 }
+
 #food {
     background-image: url("../convenience/mart_icons/snacks.png");
 }
