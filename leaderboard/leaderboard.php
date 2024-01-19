@@ -19,7 +19,9 @@ session_start();
     <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
+            <img class="ribbon" src="pics/award.svg">
             <h1>Leaderboard</h1>
+            <img class="ribbon" src="pics/award.svg">
         </div>
         <table class="leaderboard">
             <thead>
@@ -50,15 +52,17 @@ session_start();
         </table>
         <button class="upload">Upload Score</button>
         <div class="uploadComplete"></div>
-        <div class="tw">
-            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Can you beat my score??" data-lang="en" data-show-count="false">Tweet</a>
-            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-        </div>
-        <br>
-        <div class="fb">
-            <div id="fb-root"></div>
-            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="r16SucX5"></script>
-            <div class="fb-share-button" data-href="https://twitter.com" data-layout="" data-size=""><a target="_blank" href="https://twitter.com" class="fb-xfbml-parse-ignore">Share your score!</a></div>
+        <div class="sns">
+            <div class="tw">
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="Can you beat my score??" data-lang="en" data-show-count="false">Tweet</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <br>
+            <div class="fb">
+                <div id="fb-root"></div>
+                <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v18.0" nonce="r16SucX5"></script>
+                <div class="fb-share-button" data-href="https://twitter.com" data-layout="" data-size=""><a target="_blank" href="https://twitter.com" class="fb-xfbml-parse-ignore">Share your score!</a></div>
+            </div>
         </div>
     </div>
 </body>
@@ -73,6 +77,7 @@ session_start();
     uploadCompleteMessage = document.querySelector(".uploadComplete");
     tableBody1 = document.getElementsByTagName("tbody")[0];
     tableBody2 = document.getElementsByTagName("tbody")[1];
+    twitterMessage = document.querySelector(".twitter-share-button");
 
     errorResult = document.querySelector(".errorresult");
     mainscreenButton = document.querySelector(".mainscreen");
@@ -111,6 +116,8 @@ session_start();
 
                     tableBody1.appendChild(tableRow);
                     rankCounter++;
+
+
                 })
             })
     }
@@ -161,6 +168,8 @@ session_start();
                         tableScore.innerHTML = data1['run_score'];
                         tableDate.innerHTML = new Date(data1['run_timestamp']).toLocaleDateString('en-US');
 
+                        twitterMessage.setAttribute("data-text", `Can you beat my score of ${data1['run_score']}?? Play SeoulNights Hongdae Edition @`);
+
                         tableRow.appendChild(tableRank);
                         tableRow.appendChild(tableName);
                         tableRow.appendChild(tableScore);
@@ -200,10 +209,9 @@ session_start();
             .then(res => res.text())
             .then(data => {
                 console.log(data);
-                uploadCompleteMessage.innerHTML = data;
+                uploadCompleteMessage.innerHTML = data; // just outputs "score uploaded"
+                getLeaderboard();
             })
-
-        getLeaderboard();
         facebook.style.display = 'none';
         twitter.style.display = 'none';
     })
