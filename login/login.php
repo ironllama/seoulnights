@@ -25,7 +25,7 @@ if (isset($_SESSION['name'])) {
 
 <body>
     <div class="fade-out-overlay"></div>
-    <h1>Seoul Nights</h1>
+    <img class="logo1" src="logo.png">
     <div class="welcome"></div>
     <img class="playerPic">
     <div class="main">
