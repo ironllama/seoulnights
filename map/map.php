@@ -312,6 +312,8 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
+    <div class="narration-box typewriter">Your night continues... Where will you go?</div>
+
     <script>
         mapMusic = new Audio("media/mapmusic.mp3");
         document.addEventListener("DOMContentLoaded", () => {
@@ -319,7 +321,7 @@ if (!isset($_SESSION['loaded'])) {
             fetch('getLocationData.php')
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
+                    console.log("getLocationData:", data);
 
                     //map generation
                     const mapElement = document.querySelector(".map");
@@ -386,7 +388,7 @@ if (!isset($_SESSION['loaded'])) {
                         fetch('updateHUD.php')
                             .then(res => res.json())
                             .then(data => {
-                                console.log(data)
+                                console.log("updateHUD:", data)
                                 energyBar.value = data['run_energyLevel'];
                                 energyNum.innerHTML = data['run_energyLevel'];
                                 drunkBar.value = data['run_drunkLevel'];
@@ -411,8 +413,27 @@ if (!isset($_SESSION['loaded'])) {
                         }
                     }
 
-                    //Encounter zones and their children
+                    //Encounter Zone, Narration Box
                     const encounterZone = document.querySelector("#encounter-zone");
+                    const narrationBox = document.querySelector(".narration-box");
+
+                    function narrationTypewriter(inString) {
+                        narrationBox.innerHTML = inString;
+                        narrationBox.classList.remove('typewriter');
+                        narrationBox.style.width = "0";
+                        void narrationBox.offsetWidth;
+                        narrationBox.classList.add('typewriter');
+                    }
+
+                    function formatAsOclock(hour) {
+                        hour = hour + 20;
+                        hour = Math.max(0, Math.min(23, hour));
+                        const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);
+                        const amPm = hour < 12 ? 'AM' : 'PM';
+                        const oclockString = `${formattedHour} o'clock ${amPm}`;
+
+                        return oclockString;
+                    }
 
                     //Endgame
                     const playAgainButton = document.querySelector(".play-again");
@@ -434,6 +455,7 @@ if (!isset($_SESSION['loaded'])) {
                         leaveStoreButton.addEventListener("click", () => {
                             storeScreen.style.display = "none";
                             storeButton.style.display = "flex";
+                            narrationTypewriter("You leave the store...");
                         });
                         storeButton.style.display = "none";
                         updateVisitsLeft();
@@ -451,7 +473,7 @@ if (!isset($_SESSION['loaded'])) {
                                 return response.text();
                             })
                             .then(visitsLeft => {
-                                console.log('Received data:', visitsLeft);
+                                console.log('Visits Left:', visitsLeft);
                                 if (visitsLeft <= 0) {
                                     storeButton.removeEventListener("click", storeButtonHandler);
                                     document.querySelector(".open-store-button").classList.remove("focus-e");
@@ -474,13 +496,13 @@ if (!isset($_SESSION['loaded'])) {
                             })
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data);
+                                console.log("buyItems:", data);
                                 updateHUD();
                             });
                         //update each button in store after purchase
                         document.querySelectorAll(".shopButton").forEach((item) => {
                             let checkItemID = item.id;
-                            console.log(checkItemID);
+                            console.log("Checking total money vs price of:", checkItemID);
                             fetch('../convenience/buyItems.php', {
                                     method: 'POST',
                                     headers: {
@@ -490,7 +512,7 @@ if (!isset($_SESSION['loaded'])) {
                                 })
                                 .then(response => response.json())
                                 .then(data => {
-                                    console.log(data);
+                                    console.log("You can buy this:", data);
                                     if (!data) {
                                         item.removeEventListener("click", buyItem);
                                         item.classList.add("cant-buy");
@@ -505,7 +527,7 @@ if (!isset($_SESSION['loaded'])) {
                         fetch('../convenience/getStoreItems.php')
                             .then(response => response.json())
                             .then(data => {
-                                console.log(data);
+                                console.log("drinks:", data);
                                 data.items['drink'].forEach(drink => {
                                     console.log(drink);
                                     var drinkButton = document.createElement('div');
@@ -520,7 +542,7 @@ if (!isset($_SESSION['loaded'])) {
                                 });
 
                                 data.items['food'].forEach(food => {
-                                    console.log(food);
+                                    console.log("food:", food);
                                     var foodButton = document.createElement('div');
                                     foodButton.classList.add('shopButton');
                                     foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']).toLocaleString('en-US');
@@ -573,7 +595,7 @@ if (!isset($_SESSION['loaded'])) {
                                 return response.json();
                             })
                             .then(encounterData => {
-                                console.log('Received data:', encounterData);
+                                console.log('locationClicked:', encounterData);
                                 locationTrigger(encounterData);
                             })
                             .catch(error => console.log(error));
@@ -606,13 +628,18 @@ if (!isset($_SESSION['loaded'])) {
                     const moneyChange = document.querySelector(".money-num");
                     //shows splash screen after a location encounter is resolved, displaying gamestate changes    
                     function showResults(inData) {
+                        narrationBox.classList.remove("battle-mode");
+                        console.log(gameRound, cardZoneList.length);
+                        if (gameRound < cardZoneList.length - 1) {
+                            narrationTypewriter(`It is now ${formatAsOclock(gameRound)}. Your night continues...`);
+                        } else narrationTypewriter(`You have survived Seoul Nights: Hongdae!`);
                         encounterZone.style.display = "none";
                         eventZone.style.display = "none";
                         battleZone.style.display = "none";
                         battleRewardScreen.style.display = "none";
                         encounterResult.style.display = "flex";
                         playerHUD.style.display = "flex";
-                        console.log(inData);
+                        console.log("Data coming into showResults:", inData);
 
                         energyChange.innerHTML = energyBar.value + " > " + inData['updatedEnergyLevel'];
                         drunkChange.innerHTML = drunkBar.value + " > " + inData['updatedDrunkLevel'];
@@ -713,7 +740,7 @@ if (!isset($_SESSION['loaded'])) {
                             optionButtons[1].removeEventListener('click', sendChoice);
                             optionButtons[2].removeEventListener('click', sendChoice);
                             const currentPlayerState = JSON.stringify([event.currentTarget.id + ""]);
-                            console.log(currentPlayerState);
+                            console.log("id of chosen option button:", currentPlayerState);
                             fetch(`getEncounterResults.php`, {
                                     method: 'POST',
                                     headers: {
@@ -727,7 +754,7 @@ if (!isset($_SESSION['loaded'])) {
                                     return response.json();
                                 })
                                 .then(optionResultsData => {
-                                    console.log('Received data: ', optionResultsData);
+                                    console.log('sendChoice received:', optionResultsData);
                                     showResults(optionResultsData);
                                 })
                                 .catch(error => console.log(error));
@@ -769,7 +796,7 @@ if (!isset($_SESSION['loaded'])) {
 
                     function sendBattleReward(inData) {
                         const rewardChoice = JSON.stringify(inData);
-                        console.log(inData);
+                        console.log("sendBattleReward input:", inData);
                         fetch(`getEncounterResults.php`, {
                                 method: 'POST',
                                 headers: {
@@ -783,15 +810,20 @@ if (!isset($_SESSION['loaded'])) {
                                 return response.json();
                             })
                             .then(encounterResultsData => {
-                                console.log('Received data: ', encounterResultsData);
+                                console.log('getEncounterResults echo: ', encounterResultsData);
                                 showResults(encounterResultsData);
                             })
                             .catch(error => console.log(error));
                     }
 
                     function triggerBattle(data) {
+
+                        narrationBox.classList.add("battle-mode");
+                        narrationTypewriter(`A wild ${data['enemy_name']} appeared!`);
+                      
                         mapMusic.volume = 0.1;
                         battleMusic.play();
+                      
                         playerHUD.style.display = "none";
                         backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
                         currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
@@ -813,34 +845,9 @@ if (!isset($_SESSION['loaded'])) {
                         // setting up enemy moves to visualize
                         enemyMoves = data['enemy_moves'];
                         enemyMovesetTitle = document.createElement("h3");
-                        // enemyMoves.forEach(function(move, index) {
-                        //     enemyMove = document.createElement("div");
-                        //     // enemyMove.className = "enemyMove" + (index + 1)
-                        //     enemyMove.className = "enemyMove";
-                        //     enemyMove.id = "move" + move['move_id'];
-
-                        //     enemyMoveName = document.createElement("div");
-                        //     enemyMoveName.className = "move" + (index + 1) + "Name";
-                        //     enemyMoveName.innerHTML = move['move_name'];
-
-                        //     enemyMoveAttack = document.createElement("div");
-                        //     enemyMoveAttack.className = "move" + (index + 1) + "Attack";
-                        //     enemyMoveAttack.innerHTML = "Attack: " + move['move_attack'];
-
-                        //     enemyMoveDefense = document.createElement("div");
-                        //     enemyMoveDefense.className = "move" + (index + 1) + "Defense";
-                        //     enemyMoveDefense.innerHTML = "Defend: " + move['move_defend'];
-
-                        //     enemyMove.appendChild(enemyMoveName);
-                        //     enemyMove.appendChild(enemyMoveAttack);
-                        //     enemyMove.appendChild(enemyMoveDefense);
-
-                        //     enemyMoveset.append(enemyMove);
-                        // });
 
                         enemyTurn = enemyMoves[Math.floor(Math.random() * 4)]; // enemy picks a random move from the 4 or however many available
-                        console.log(enemyTurn);
-
+                        console.log("enemy turn", enemyTurn);
 
                         //nested function - setting up cards available for client
                         function getNewCards() {
@@ -852,7 +859,7 @@ if (!isset($_SESSION['loaded'])) {
                             fetch('../battle/getCards.php')
                                 .then(res => res.json())
                                 .then(data => {
-                                    console.log(data);
+                                    console.log("getCards:", data);
                                     cards = data;
 
                                     // card creation at bottom of battle screen
@@ -864,6 +871,28 @@ if (!isset($_SESSION['loaded'])) {
                                             event.stopPropagation();
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
+
+                                        
+                                        let moveID = "#move" + enemyTurn['move_id'];
+                                        if (!enemyMoveset.querySelector(moveID)) {
+                                            enemyMove = document.createElement("div");
+                                            enemyMove.className = "enemyMove";
+                                            enemyMove.id = "move" + enemyTurn['move_id'];
+                                            enemyMoveName = document.createElement("div");
+                                            enemyMoveName.innerHTML = enemyTurn['move_name'];
+                                            enemyMoveAttack = document.createElement("div");
+                                            enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
+                                            enemyMoveDefense = document.createElement("div");
+                                            enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
+                                            enemyMove.appendChild(enemyMoveName);
+                                            enemyMove.appendChild(enemyMoveAttack);
+                                            enemyMove.appendChild(enemyMoveDefense);
+                                            enemyMoveset.append(enemyMove);
+                                        }
+
+                                        narrationTypewriter(enemyTurn["move_desc"]);
+                                        playerVisualPulse(enemyMoveset.querySelector(moveID));
+
 
                                             let moveID = "#move" + enemyTurn['move_id'];
                                             if (!enemyMoveset.querySelector(moveID)) {
@@ -884,10 +913,11 @@ if (!isset($_SESSION['loaded'])) {
 
                                             playerVisualPulse(enemyMoveset.querySelector(moveID));
 
+
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
 
-                                            console.log(roundData); // the array
+                                            console.log("roundData:", roundData); // the array
 
                                             fetch('getRoundResult.php', { // pushing into this api so that backend can do calc
                                                     method: 'POST',
@@ -898,7 +928,7 @@ if (!isset($_SESSION['loaded'])) {
                                                 })
                                                 .then(res => res.json())
                                                 .then(data => { // what we get back is the updated values for the client
-                                                    console.log(data);
+                                                    console.log("getRoundResult:", data);
 
                                                     updatedHealth = data['updatedEnergyLevel'];
                                                     updatedMoney = data['updatedMoneyLevel'];
@@ -941,7 +971,7 @@ if (!isset($_SESSION['loaded'])) {
                                             if (enemyHealthBar.value <= 0) {
                                                 playedCards = [];
                                                 enemyMoveset.innerHTML = '';
-                                                alert("Battle Over, you won!");
+                                                narrationTypewriter(`You defeated ${enemyName.innerHTML}!`);
                                                 battleZone.style.display = "none";
                                                 battleRewardScreen.style.display = "flex";
                                                 updateHUD();
@@ -953,9 +983,12 @@ if (!isset($_SESSION['loaded'])) {
                                             //upon loss
                                             if (playerHealthBar.value <= 0) {
                                                 playedCards = [];
+
+
                                                 battleMusic.pause();
                                                 mapMusic.volume = 1;
                                                 alert("Battle Over, you lost!");
+
                                                 fetch('getRoundResult.php')
                                                     .then(res => res.json())
                                                     .then(data => showResults(data))
@@ -976,7 +1009,7 @@ if (!isset($_SESSION['loaded'])) {
                                             cardArea.removeChild(event.currentTarget);
 
                                             enemyTurn = enemyMoves[Math.floor(Math.random() * 4)];
-                                            console.log(enemyTurn);
+                                            console.log("enemyTurn:", enemyTurn);
 
                                             document.querySelectorAll(".enemyMove").forEach((elem) => {
                                                 if (elem.querySelector("div").innerHTML === enemyTurn["move_name"]) {
@@ -1018,7 +1051,7 @@ if (!isset($_SESSION['loaded'])) {
                         // run this function at the beginning of each battle clicked
                         getNewCards();
                     }
-
+                    narrationTypewriter("You arrive at Hongdae Station, Exit 9...");
                     prepareRound();
                 });
         });
