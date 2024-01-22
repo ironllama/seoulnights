@@ -13,8 +13,6 @@ enemyName = document.querySelector(".enemyname");
 enemyHealthBar = document.querySelector(".enemy-health-bar");
 enemyHealthNum = document.querySelector(".enemy-health-num");
 enemyMoves = [];
-moveZoneName = document.querySelector(".enemy-name-span");
-enemyMoveWarning = document.querySelector(".unknown-enemy-move-div");
 
 //user section
 playerHealthBar = document.querySelector(".player-health-bar");
@@ -82,7 +80,6 @@ function triggerBattle(data) {
     enemyHealthBar.value = data['enemy_energy'];
     enemyHealthBar.max = data['enemy_energy'];
     enemyHealthNum.innerHTML = data['enemy_energy'] + "/" + data['enemy_energy'];
-    moveZoneName.innerHTML = data['enemy_name'];
 
     // setting up enemy moves to visualize
     enemyMoves = data['enemy_moves'];
