@@ -188,7 +188,6 @@ if (!isset($_SESSION['loaded'])) {
                 <div class="moveset">
                     <h2>Enemy Moveset</h2>
                     <div class="enemymove-zone">
-                        <div class="unknown-enemy-move-div focus-b"><span class="enemy-name-span"></span> is about to use a new move!</div>
                     </div>
                 </div>
             </div>
