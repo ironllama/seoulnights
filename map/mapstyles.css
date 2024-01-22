@@ -262,13 +262,19 @@ body {
     align-items: center;
     border: 3px solid #F0F0F0;
     -webkit-text-stroke: 1px #F0F0F0;
+    font-size: 1.5em;
+    gap: 1.5em;
+}
+
+.resolution-text {
+    padding: 2em;
+    text-align: center;
 }
 
 .state-changes-container {
     display: flex;
     justify-content: space-between;
     width: 75%;
-    background: rgba(0, 0, 0, .70);
 }
 
 .hud {
@@ -425,6 +431,7 @@ progress {
 }
 
 .end-game-buttons {
+    color: #F0F0F0;
     display: flex;
     justify-content: space-evenly;
     width: 100%;
@@ -432,10 +439,11 @@ progress {
 
 .end-game-buttons button {
     border: inset 5px gray;
-    width: 10em;
-    height: 10em;
+    padding: 1em;
+    height: 3em;
     background: #0f0f0f;
     color: lime;
+    font-size: 1.5em;
 }
 
 .store-button-container {
