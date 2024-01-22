@@ -67,7 +67,7 @@ button {
     gap: 30px;
 }
 
-h1 {
+h1 { 
     text-align: center;
     font-size: 7em;
     background: linear-gradient(to right, red, blue);
@@ -104,8 +104,4 @@ a {
     /* Ensure overlay appears on top of other elements */
     transition: opacity 5s;
     /* Add a smooth fade transition effect */
-}
-
-.logo1 {
-    height: 60%
 }

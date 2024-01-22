@@ -25,13 +25,13 @@ if (isset($_SESSION['name'])) {
 
 <body>
     <div class="fade-out-overlay"></div>
-    <img class="logo1" src="logo.png">
+    <img class="logo1" src="../media/login/logo.png">
     <div class="welcome"></div>
     <img class="playerPic">
     <div class="main">
         <div class="buttons">
             <button class="loginButton">
-                <img class="logo" src="googlelogin.png">
+                <img class="logo" src="../media/login/googlelogin.png">
                 <span>Sign in with Google</span>
             </button>
             <a id="kakao-login-btn"></a>
@@ -51,7 +51,7 @@ if (isset($_SESSION['name'])) {
         const playerPic = document.querySelector(".playerPic");
         const kakaoButton = document.getElementById("kakao-login-btn");
         const overlay = document.querySelector(".fade-out-overlay");
-        const audio = new Audio('hongdae-korean.mp3');
+        const audio = new Audio('../media/music/hongdae-korean.mp3');
 
 
         function unlinkApp() {

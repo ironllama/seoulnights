@@ -19,9 +19,9 @@ session_start();
     <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
-            <img class="ribbon" src="pics/award.svg">
+            <img class="ribbon" src="../media/leaderboard/award.svg">
             <h1>Leaderboard</h1>
-            <img class="ribbon" src="pics/award.svg">
+            <img class="ribbon" src="../media/leaderboard/award.svg">
         </div>
         <table class="leaderboard">
             <thead>
