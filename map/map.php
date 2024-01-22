@@ -315,7 +315,7 @@ if (!isset($_SESSION['loaded'])) {
     <div class="narration-box typewriter">Your night continues... Where will you go?</div>
 
     <script>
-        mapMusic = new Audio("media/mapmusic.mp3");
+        mapMusic = new Audio("../media/music/mapmusic.mp3");
         document.addEventListener("DOMContentLoaded", () => {
             mapMusic.play();
             fetch('getLocationData.php')
@@ -348,7 +348,7 @@ if (!isset($_SESSION['loaded'])) {
                                 newLocationCard.classList.add("location-card");
                                 newLocationCard.id = data[0]["location_id"];
                                 newLocationCard.textContent = data[0]["location_name"];
-                                newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
+                                newLocationCard.style.backgroundImage = "url(../media/locations/" + data[0]["location_img"] + ")";
                                 data.shift();
 
                                 parentZone.appendChild(newLocationCard.cloneNode(true));
@@ -357,7 +357,7 @@ if (!isset($_SESSION['loaded'])) {
                             newLocationCard.classList.add("location-card");
                             newLocationCard.id = data[0]["location_id"];
                             newLocationCard.textContent = data[0]["location_name"];
-                            newLocationCard.style.backgroundImage = "url(pics/" + data[0]["location_img"] + ")";
+                            newLocationCard.style.backgroundImage = "url(../media/locations/" + data[0]["location_img"] + ")";
                             data.shift();
 
                             parentZone.appendChild(newLocationCard);
@@ -534,7 +534,7 @@ if (!isset($_SESSION['loaded'])) {
                                     drinkButton.classList.add('shopButton');
                                     drinkButton.innerHTML = drink['item'] + "<br>" + Math.abs(drink['price_hit']).toLocaleString('en-US');
                                     drinkButton.id = "s" + drink['mart_id'];
-                                    drinkButton.style.backgroundImage = "url(../convenience/mart_icons/" + drink["item_img"];
+                                    drinkButton.style.backgroundImage = "url(../media/mart/" + drink["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > drink['price_hit']) {
                                         drinkButton.addEventListener('click', buyItem);
                                     }
@@ -547,7 +547,7 @@ if (!isset($_SESSION['loaded'])) {
                                     foodButton.classList.add('shopButton');
                                     foodButton.innerHTML = food['item'] + "<br>" + Math.abs(food['price_hit']).toLocaleString('en-US');
                                     foodButton.id = "s" + food['mart_id'];
-                                    foodButton.style.backgroundImage = "url(../convenience/mart_icons/" + food["item_img"];
+                                    foodButton.style.backgroundImage = "url(../media/mart/" + food["item_img"];
                                     if (parseInt(moneyNum.innerHTML.replace(/,/g, ''), 10) > food['price_hit']) {
                                         foodButton.addEventListener('click', buyItem);
                                     }
@@ -767,7 +767,7 @@ if (!isset($_SESSION['loaded'])) {
                     currentRound = [];
                     currentEnemy = [];
                     cardArea = document.querySelector(".card-area");
-                    battleMusic = new Audio("media/battlemusic.mp3");
+                    battleMusic = new Audio("../media/music/battlemusic.mp3")
 
                     //enemy section
                     enemyMoveset = document.querySelector(".enemymove-zone");
@@ -820,14 +820,14 @@ if (!isset($_SESSION['loaded'])) {
 
                         narrationBox.classList.add("battle-mode");
                         narrationTypewriter(`A wild ${data['enemy_name']} appeared!`);
-                      
+
                         mapMusic.volume = 0.1;
                         battleMusic.play();
-                      
+
                         playerHUD.style.display = "none";
                         backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
                         currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
-                        battleZone.style.backgroundImage = "url(" + currentSessionBG + ")";
+                        battleZone.style.backgroundImage = "url(../media/" + currentSessionBG + ")";
                         battleZone.style.display = "flex";
                         cardArea.innerHTML = ''; // empties out the cards from previous battle, basically makes sure its a clean slate
                         playerHealthBar.value = data['currentPlayerEnergy']; // initializes the healthbar value at begining of round to the current state of the game
@@ -836,7 +836,7 @@ if (!isset($_SESSION['loaded'])) {
                         // setting up battle 
                         // initializing enemy
                         currentEnemy = data; // mainly just to check whats coming back
-                        enemyPic.src = "../battle/pics/" + data['enemy_img'];
+                        enemyPic.src = "../media/enemies/" + data['enemy_img'];
                         enemyName.innerHTML = data['enemy_name'];
                         enemyHealthBar.value = data['enemy_energy'];
                         enemyHealthBar.max = data['enemy_energy'];
@@ -872,29 +872,8 @@ if (!isset($_SESSION['loaded'])) {
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
 
-                                        
-                                        let moveID = "#move" + enemyTurn['move_id'];
-                                        if (!enemyMoveset.querySelector(moveID)) {
-                                            enemyMove = document.createElement("div");
-                                            enemyMove.className = "enemyMove";
-                                            enemyMove.id = "move" + enemyTurn['move_id'];
-                                            enemyMoveName = document.createElement("div");
-                                            enemyMoveName.innerHTML = enemyTurn['move_name'];
-                                            enemyMoveAttack = document.createElement("div");
-                                            enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
-                                            enemyMoveDefense = document.createElement("div");
-                                            enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
-                                            enemyMove.appendChild(enemyMoveName);
-                                            enemyMove.appendChild(enemyMoveAttack);
-                                            enemyMove.appendChild(enemyMoveDefense);
-                                            enemyMoveset.append(enemyMove);
-                                        }
-
-                                        narrationTypewriter(enemyTurn["move_desc"]);
-                                        playerVisualPulse(enemyMoveset.querySelector(moveID));
-
-
                                             let moveID = "#move" + enemyTurn['move_id'];
+
                                             if (!enemyMoveset.querySelector(moveID)) {
                                                 enemyMove = document.createElement("div");
                                                 enemyMove.className = "enemyMove";
@@ -911,7 +890,28 @@ if (!isset($_SESSION['loaded'])) {
                                                 enemyMoveset.append(enemyMove);
                                             }
 
+                                            narrationTypewriter(enemyTurn["move_desc"]);
                                             playerVisualPulse(enemyMoveset.querySelector(moveID));
+
+
+                                            // let moveID = "#move" + enemyTurn['move_id'];
+                                            // if (!enemyMoveset.querySelector(moveID)) {
+                                            //     enemyMove = document.createElement("div");
+                                            //     enemyMove.className = "enemyMove";
+                                            //     enemyMove.id = "move" + enemyTurn['move_id'];
+                                            //     enemyMoveName = document.createElement("div");
+                                            //     enemyMoveName.innerHTML = enemyTurn['move_name'];
+                                            //     enemyMoveAttack = document.createElement("div");
+                                            //     enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
+                                            //     enemyMoveDefense = document.createElement("div");
+                                            //     enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
+                                            //     enemyMove.appendChild(enemyMoveName);
+                                            //     enemyMove.appendChild(enemyMoveAttack);
+                                            //     enemyMove.appendChild(enemyMoveDefense);
+                                            //     enemyMoveset.append(enemyMove);
+                                            // }
+
+                                            // playerVisualPulse(enemyMoveset.querySelector(moveID));
 
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
@@ -1020,7 +1020,7 @@ if (!isset($_SESSION['loaded'])) {
 
                                         // actually creating the cards
                                         cardImage = document.createElement("img");
-                                        cardImage.className = "cardpic", cardImage.src = "../battle/pics/" + card['card_img'];
+                                        cardImage.className = "cardpic", cardImage.src = "../media/cards/" + card['card_img'];
 
                                         cardDesc = document.createElement("div");
                                         cardDesc.className = "carddesc";
