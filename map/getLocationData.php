@@ -39,3 +39,7 @@ foreach ($locationResults as &$row) {
 
 // Output the JSON result
 echo json_encode($locationResults);
+
+// foreach ($locationResults as $result) {
+//     echo "location name is : " . $result['location_name'] . "<br>";
+// };
