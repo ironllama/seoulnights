@@ -24,13 +24,31 @@
     height: 200px;
 }
 
-/* Style the parent div as a grid container */
 .enemymove-zone {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     border-radius: 10px;
     gap: 1em;
+}
+
+.unknown-enemy-move-div {
+    z-index: 9999;
+    display: none;
+    position: absolute;
+    top: 5em;
+    right: 8em;
+    padding: 3em;
+    color: #F0F0F0;
+    background: firebrick;
+    max-width: 15em;
+    text-align: center;
+  }
+
+.PC-cards {
+    position: absolute;
+    height: 20%;
+    bottom: 0;
 }
 
 /* Style the child divs */
@@ -60,10 +78,14 @@
     align-items: center;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
+    padding: .5em;
+    border: 2px solid #0f0f0f;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .5);
 }
 
 .cardpic {
     height: 8em;
+    padding-bottom: 1em;
 }
 
 .carddesc {
