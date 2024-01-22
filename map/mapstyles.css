@@ -63,6 +63,9 @@
 
 body {
     font-family: "Press Start 2P";
+    color: #F0F0F0;
+    -webkit-text-stroke: 1px black;
+    font-weight: bolder;
     margin: 0;
     padding: 0;
     height: 100vh;
@@ -70,10 +73,11 @@ body {
     align-items: center;
     justify-content: center;
     animation: 2s ease-in alternate-reverse infinite blurry;
+    background: url("./media/mapbg.png");
 }
 
 .map {
-    background: #0f0f0f;
+    background: rgba(0, 0, 0, .70);
     padding: 0 1em;
     width: 95vw;
     height: 90vh;
@@ -92,10 +96,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-weight: bolder;
     animation: 2s ease-in alternate-reverse infinite figureEight;
     background-repeat: no-repeat;
     background-size: cover;
+    color: white;
 }
 
 .card-zone {
@@ -235,17 +239,19 @@ body {
 }
 
 #encounter-result {
-    background: linen;
+    background: url("./media/mapbg.png");
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     border: 5px solid snow;
+    -webkit-text-stroke: 1px #F0F0F0;
 }
 
 .state-changes-container {
     display: flex;
     justify-content: space-between;
     width: 75%;
+    background: rgba(0, 0, 0, .70);
 }
 
 .battle-zone {
@@ -270,8 +276,6 @@ body {
 .hud {
     z-index: 1000;
     margin: .25em .25em 0 0;
-    color: #F0F0F0;
-    -webkit-text-stroke: 1px black;
     position: absolute;
     top: .25em;
     right: 0;
@@ -289,7 +293,6 @@ body {
 .map-key {
     position: fixed;
     background: #0F0F0F;
-    color: #F0F0F0;
     bottom: .5em;
     right: .5em;
     padding: 2em;
@@ -299,6 +302,37 @@ body {
     flex-direction: column;
     gap: 1em;
     align-items: flex-end;
+}
+
+.narration-box {
+    position: fixed;
+    background: #0F0F0F;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+    display: inline-block;
+    flex-direction: column;
+    top: .5em;
+    left: .5em;
+    overflow: hidden;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    padding: 1em;
+}
+
+@keyframes typing {
+    to {width: max-content;}
+}
+
+.typewriter {
+    animation: typing 2s steps(40, end) forwards;
+}
+
+.battle-mode {
+    z-index: 999;
+    max-width: 75em;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .battle-square,
@@ -331,7 +365,6 @@ body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: #F0F0F0;
 }
 
 .progress-container span::after {
@@ -361,18 +394,53 @@ progress {
 
 .money-container span::after {
     content: "원";
-    font-weight: bolder;
-}
-
-.username {
-    color: #F0F0F0;
 }
 
 #end-game {
-    background: yellow;
+    width: 75%;
+    background: url("./media/mapbg.png");
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
+
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+}
+
+.end-game-state {
+    display: flex;
+    justify-content: space-between;
+    width: 75%;
+}
+
+.end-game-state .attribute {
+    padding: 10px;
+    background: rgba(0, 0, 0, .70);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
+}
+
+.end-game-state .attribute svg {
+    transform: scale(5);
+    margin: 5em;
+}
+
+.end-game-buttons {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
+
+.end-game-buttons button {
+    border: inset 5px gray;
+    width: 10em;
+    height: 10em;
+    background: #0f0f0f;
+    color: lime;
 }
 
 .store-button-container {
@@ -385,7 +453,6 @@ progress {
     align-items: center;
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
-    color: #F0F0F0;
     -webkit-text-stroke: 1px black;
 }
 
@@ -434,7 +501,7 @@ progress {
     width: 10em;
     height: 10em;
     color: #F0F0F0;
-    background: rgba(0,0,0,.75);
+    background: rgba(0, 0, 0, .75);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -451,7 +518,8 @@ progress {
 }
 
 
-.drink_selection, .food_selection {
+.drink_selection,
+.food_selection {
     flex: 1;
     height: 100%;
     display: flex;
@@ -467,7 +535,8 @@ progress {
     margin-left: 3.5em;
 }
 
-#drinks, #food {
+#drinks,
+#food {
     height: 90%;
     display: flex;
     flex-wrap: wrap;
@@ -479,6 +548,7 @@ progress {
 #drinks {
     background-image: url("../convenience/mart_icons/cooler.png");
 }
+
 #food {
     background-image: url("../convenience/mart_icons/snacks.png");
 }
@@ -502,15 +572,15 @@ progress {
 }
 
 .battle-reward {
-    background: #0F0F0F;
+    background: url("./media/mapbg.png");
     height: 85vh;
     width: 85vw;
     border: 2px solid black;
     flex-direction: column;
     color: lime;
     border: #f0F0F0;
+    -webkit-text-stroke: 1px #F0F0F0;
 }
-
 
 .battle-reward>div {
     align-self: flex-start;
@@ -543,6 +613,7 @@ progress {
     border: inset 10px gray;
     text-align: center;
     animation: 1s steps(5) infinite alternate focusE;
+    background: rgba(0, 0, 0, .70);
 }
 
 .battle-reward-choice {
