@@ -105,3 +105,38 @@ a {
     transition: opacity 5s;
     /* Add a smooth fade transition effect */
 }
+
+.seoulnights {
+    width: 500px;
+    margin-bottom: 10em;
+}
+
+.hongdae {
+    position: absolute;
+    top: 6.5em;
+    width: 33em;
+    transform: rotate(-2deg);
+    animation: flicker 2s alternate infinite;
+}
+
+@keyframes flicker {
+    0%, 100% {
+      opacity: 1;
+      filter: contrast(2);
+    }
+    25%, 50% {
+      opacity: 0.8;
+      filter: saturate(.5);
+    }
+    75% {
+        opacity: 0.6;
+    }
+  }
+  
+  .neon-flicker {
+    animation: flicker 1s infinite;
+  }
+
+.sessionID {
+    display: none;
+}

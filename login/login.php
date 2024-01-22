@@ -1,7 +1,6 @@
 <?php
 session_start();
 $session_id = session_id();
-echo $session_id;
 
 if (isset($_SESSION['name'])) {
     // Redirect to another page if 'name' is set
@@ -24,8 +23,10 @@ if (isset($_SESSION['name'])) {
 </head>
 
 <body>
+    <div class="sessionID"><?= $session_id ?></div>
     <div class="fade-out-overlay"></div>
-    <img class="logo1" src="../media/login/logo.png">
+    <img src="../media/login/seoulnights.png" class="seoulnights" />
+    <img class="hongdae" src="../media/login/hongdae.png">
     <div class="welcome"></div>
     <img class="playerPic">
     <div class="main">
