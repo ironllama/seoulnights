@@ -349,6 +349,7 @@ if (!isset($_SESSION['loaded'])) {
                                 newLocationCard.id = data[0]["location_id"];
                                 newLocationCard.textContent = data[0]["location_name"];
                                 newLocationCard.style.backgroundImage = "url(../media/locations/" + data[0]["location_img"] + ")";
+                                newLocationCard.style.backgroundPosition = 'center';
                                 data.shift();
 
                                 parentZone.appendChild(newLocationCard.cloneNode(true));
@@ -358,6 +359,7 @@ if (!isset($_SESSION['loaded'])) {
                             newLocationCard.id = data[0]["location_id"];
                             newLocationCard.textContent = data[0]["location_name"];
                             newLocationCard.style.backgroundImage = "url(../media/locations/" + data[0]["location_img"] + ")";
+                            newLocationCard.style.backgroundPosition = 'center';
                             data.shift();
 
                             parentZone.appendChild(newLocationCard);
@@ -825,9 +827,11 @@ if (!isset($_SESSION['loaded'])) {
                         battleMusic.play();
 
                         playerHUD.style.display = "none";
-                        backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
-                        currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
-                        battleZone.style.backgroundImage = "url(../media/" + currentSessionBG + ")";
+                        // backgroundImages = ['pics/rooftop.jpeg', 'pics/ruraljapan.jpeg'];
+                        // currentSessionBG = backgroundImages[randomValue = Math.round(Math.random())];
+                        // battleZone.style.backgroundImage = "url(../media/battle/" + currentSessionBG + ")";
+                        battleZone.style.backgroundImage = "url(../media/battle/battlebg.png)";
+                        battleZone.style.backgroundPosition = 'center';
                         battleZone.style.display = "flex";
                         cardArea.innerHTML = ''; // empties out the cards from previous battle, basically makes sure its a clean slate
                         playerHealthBar.value = data['currentPlayerEnergy']; // initializes the healthbar value at begining of round to the current state of the game
