@@ -83,7 +83,7 @@ body {
     align-items: center;
     justify-content: center;
     animation: 2s ease-in alternate-reverse infinite blurry;
-    background: url("./media/mapbg.png");
+    background: url("../media/map/mapbg.png");
 }
 
 .map {
@@ -256,8 +256,7 @@ body {
 }
 
 #encounter-result {
-    font-size: 1.5em;
-    background: url("./media/mapbg.png");
+    background: url("../media/map/mapbg.png");
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
@@ -399,7 +398,7 @@ progress {
 
 #end-game {
     width: 75%;
-    background: url("./media/mapbg.png");
+    background: url("../media/map/mapbg.png");
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
@@ -539,11 +538,11 @@ progress {
 }
 
 #drinks {
-    background-image: url("../convenience/mart_icons/cooler.png");
+    background-image: url("../media/mart/cooler.png");
 }
 
 #food {
-    background-image: url("../convenience/mart_icons/snacks.png");
+    background-image: url("../media/mart/snacks.png");
 }
 
 .leave-store-button {
@@ -555,7 +554,7 @@ progress {
 }
 
 .battle-reward {
-    background: url("./media/mapbg.png");
+    background: url("../media/map/mapbg.png");
     height: 85vh;
     width: 85vw;
     border: 2px solid black;
