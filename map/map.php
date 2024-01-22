@@ -24,7 +24,7 @@ if (!isset($_SESSION['loaded'])) {
 </head>
 
 <body>
-    <div class="map">
+    <div class="map green-and-pink">
         <div class="card-zone" id="start">
             <div class="location-card" id="start-loc">Exit 9</div>
         </div>
@@ -40,7 +40,7 @@ if (!isset($_SESSION['loaded'])) {
         <div class="card-zone" id="zone9"></div>
     </div>
 
-    <div class="hud">
+    <div class="hud green-and-pink">
         <div class="username">Player: <?php echo $_SESSION['name'] ?></div>
         <div class="stat">
             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512">
@@ -71,7 +71,7 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div id="encounter-zone" class="dynamic-game-element">
+    <div id="encounter-zone" class="dynamic-game-element green-and-pink">
         <div class="event-zone dynamic-game-element">
             <div class="event-section-left">
                 <div class="event-title"></div>
@@ -187,7 +187,9 @@ if (!isset($_SESSION['loaded'])) {
                 </div>
                 <div class="moveset">
                     <h2>Enemy Moveset</h2>
-                    <div class="enemymove-zone"></div>
+                    <div class="enemymove-zone">
+                        <div class="unknown-enemy-move-div focus-b"><span class="enemy-name-span"></span> is about to use a new move!</div>
+                    </div>
                 </div>
             </div>
             <div class="card-area">
@@ -200,7 +202,7 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div id="encounter-result" class="dynamic-game-element">
+    <div id="encounter-result" class="dynamic-game-element green-and-pink">
         <div class="resolution-text">Your night continues!</div>
         <div class="state-changes-container">
             <div class="attribute energy">
@@ -225,7 +227,7 @@ if (!isset($_SESSION['loaded'])) {
         <h3>click to continue...</h3>
     </div>
 
-    <div id="end-game" class="dynamic-game-element">
+    <div id="end-game" class="dynamic-game-element green-and-pink">
         <div class="end-game-text">You win. Nice.</div>
         <div class="end-game-state">
             <div class="attribute energy">
@@ -254,7 +256,7 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div class="convenience-store dynamic-game-element">
+    <div class="convenience-store dynamic-game-element green-and-pink">
         <div class='menu_parent'>
             <div class='drink_selection'>
                 <h2>Drinks</h2>
@@ -271,7 +273,7 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div class="store-button-container">
+    <div class="store-button-container green-and-pink">
         <div class="open-store-button focus-e"></div>
         <div class="store-intro">
             <p>Convenience Store</p>
@@ -279,7 +281,7 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div class="dynamic-game-element battle-reward">
+    <div class="dynamic-game-element battle-reward green-and-pink">
         <div>
             <h2>You win the battle! Choose your reward:</h2>
         </div>
@@ -305,14 +307,16 @@ if (!isset($_SESSION['loaded'])) {
         </div>
     </div>
 
-    <div class="map-key">
+    <div class="map-key green-and-pink">
         <div class="battle-key">Battle = <div class="battle-square focus-b"></div>
         </div>
         <div class="event-key">Event = <div class="event-square focus-e"></div>
         </div>
     </div>
 
-    <div class="narration-box typewriter">Your night continues... Where will you go?</div>
+    <div class="narration-box green-and-pink">
+        <div class="narration-text marquee-elem">Your night continues... Where will you go?</div>
+    </div>
 
     <script>
         mapMusic = new Audio("media/mapmusic.mp3");
@@ -416,13 +420,12 @@ if (!isset($_SESSION['loaded'])) {
                     //Encounter Zone, Narration Box
                     const encounterZone = document.querySelector("#encounter-zone");
                     const narrationBox = document.querySelector(".narration-box");
+                    const narrationText = document.querySelector(".narration-text");
 
                     function narrationTypewriter(inString) {
-                        narrationBox.innerHTML = inString;
-                        narrationBox.classList.remove('typewriter');
-                        narrationBox.style.width = "0";
-                        void narrationBox.offsetWidth;
-                        narrationBox.classList.add('typewriter');
+                        narrationText.classList.remove("marquee-elem");
+                        narrationText.innerHTML = inString;
+                        narrationText.classList.add("marquee-elem");
                     }
 
                     function formatAsOclock(hour) {
@@ -776,6 +779,8 @@ if (!isset($_SESSION['loaded'])) {
                     enemyHealthBar = document.querySelector(".enemy-health-bar");
                     enemyHealthNum = document.querySelector(".enemy-health-num");
                     enemyMoves = [];
+                    moveZoneName = document.querySelector(".enemy-name-span");
+                    enemyMoveWarning = document.querySelector(".unknown-enemy-move-div");
 
                     //user section
                     playerHealthBar = document.querySelector(".player-health-bar");
@@ -841,6 +846,7 @@ if (!isset($_SESSION['loaded'])) {
                         enemyHealthBar.value = data['enemy_energy'];
                         enemyHealthBar.max = data['enemy_energy'];
                         enemyHealthNum.innerHTML = data['enemy_energy'] + "/" + data['enemy_energy'];
+                        moveZoneName.innerHTML = data['enemy_name'];
 
                         // setting up enemy moves to visualize
                         enemyMoves = data['enemy_moves'];
@@ -872,7 +878,6 @@ if (!isset($_SESSION['loaded'])) {
                                             playedCards.push(card['card_name']); // pushing into array to track # of cards played
                                             currentRound = card; // currentRound is basically the card you clicked just so we can track and have battle logic be sound
 
-                                        
                                         let moveID = "#move" + enemyTurn['move_id'];
                                         if (!enemyMoveset.querySelector(moveID)) {
                                             enemyMove = document.createElement("div");
@@ -892,27 +897,6 @@ if (!isset($_SESSION['loaded'])) {
 
                                         narrationTypewriter(enemyTurn["move_desc"]);
                                         playerVisualPulse(enemyMoveset.querySelector(moveID));
-
-
-                                            let moveID = "#move" + enemyTurn['move_id'];
-                                            if (!enemyMoveset.querySelector(moveID)) {
-                                                enemyMove = document.createElement("div");
-                                                enemyMove.className = "enemyMove";
-                                                enemyMove.id = "move" + enemyTurn['move_id'];
-                                                enemyMoveName = document.createElement("div");
-                                                enemyMoveName.innerHTML = enemyTurn['move_name'];
-                                                enemyMoveAttack = document.createElement("div");
-                                                enemyMoveAttack.innerHTML = "Attack: " + enemyTurn['move_attack'];
-                                                enemyMoveDefense = document.createElement("div");
-                                                enemyMoveDefense.innerHTML = "Defend: " + enemyTurn['move_defend'];
-                                                enemyMove.appendChild(enemyMoveName);
-                                                enemyMove.appendChild(enemyMoveAttack);
-                                                enemyMove.appendChild(enemyMoveDefense);
-                                                enemyMoveset.append(enemyMove);
-                                            }
-
-                                            playerVisualPulse(enemyMoveset.querySelector(moveID));
-
 
                                             // putting the card you clicked, and enemy move into an array to push to an api
                                             roundData = [currentRound, enemyTurn];
@@ -936,6 +920,7 @@ if (!isset($_SESSION['loaded'])) {
 
                                                     playerHealthBar.value = updatedHealth; // updates actual value here
                                                     playerHealthNum.innerHTML = updatedHealth + "/100"; // updates for client here so they can view
+                                                    playerVisualPulse(playerHealthNum);
 
                                                 })
 
