@@ -93,7 +93,6 @@ table {
     }
 }
 
-
 .upload {
     height: 50px;
     width: 180px;
@@ -101,6 +100,15 @@ table {
     font-family: "Press Start 2P";
     background-color: pink;
 }
+
+.mainscreen {
+    height: 50px;
+    width: 180px;
+    /* margin-top: 30px; */
+    font-family: "Press Start 2P";
+    background-color: pink;
+}
+
 
 .sns {
     display: flex;

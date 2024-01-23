@@ -16,6 +16,7 @@ session_start();
 
 <body>
     <div class="sessionID"><?= $session_id ?></div>
+    <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
             <img class="ribbon" src="../media/leaderboard/award.svg">
@@ -121,31 +122,6 @@ session_start();
                 })
             })
     }
-
-    // fetch('../HUD/updateHUD.php') //calls to existing api that gets current state of run
-    //     .then(res => res.json())
-    //     .then(data => {
-    //         console.log("final player details: " + data);
-    //         // creating table elements
-    //         tableRow = document.createElement("tr");
-    //         tableRank = document.createElement("td");
-    //         tableName = document.createElement("td");
-    //         tableScore = document.createElement("td");
-    //         tableDate = document.createElement("td");
-
-    //         tableRank.innerHTML = "?";
-    //         tableName.innerHTML = data1['player_name'];
-    //         tableScore.innerHTML = data1['run_score'];
-    //         tableDate.innerHTML = new Date(data1['run_timestamp']).toLocaleDateString('en-US');
-
-    //         tableRow.appendChild(tableRank);
-    //         tableRow.appendChild(tableName);
-    //         tableRow.appendChild(tableScore);
-    //         tableRow.appendChild(tableDate);
-
-    //         tableBody2.appendChild(tableRow);
-    //     })
-
 
     fetch('../HUD/updateHUD.php') //calls to existing api that gets current state of run
         .then(res => res.json())
