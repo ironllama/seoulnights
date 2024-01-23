@@ -24,13 +24,18 @@
     height: 200px;
 }
 
-/* Style the parent div as a grid container */
 .enemymove-zone {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(2, 1fr);
     border-radius: 10px;
     gap: 1em;
+}
+
+.PC-cards {
+    position: absolute;
+    height: 20%;
+    bottom: 0;
 }
 
 /* Style the child divs */
@@ -44,9 +49,10 @@
 .moveset {
     flex: 1;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     flex-direction: column;
+    height: 100%;
 }
 
 .card {
@@ -59,10 +65,14 @@
     align-items: center;
     border-radius: 10px;
     background-color: rgba(255, 255, 255, 0.5);
+    padding: .5em;
+    border: 2px solid #0f0f0f;
+    box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, .5);
 }
 
 .cardpic {
     height: 8em;
+    padding-bottom: 1em;
 }
 
 .carddesc {

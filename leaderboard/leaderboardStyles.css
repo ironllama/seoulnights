@@ -1,9 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
+
 body {
     background-color: cornflowerblue;
-    font-family: sans-serif;
+    font-family: "Press Start 2P";
+    color: white;
 }
 
 .main1 {
+    margin-top: 50px;
     display: flex;
     flex-direction: column;
     width: 100vw;
@@ -13,10 +17,10 @@ body {
 
 .leaderboardTitle {
     display: flex;
-    flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 100%;
+    gap: 10px;
 }
 
 table,
@@ -29,8 +33,56 @@ td {
 thead {
     font-weight: bold;
     font-size: 30px;
+    /* color: black */
 }
 
 table {
     width: 80%
+}
+
+.errorresult {
+    font-weight: bold;
+    font-size: 30px;
+    animation: blink 1s infinite alternate;
+}
+
+.tw,
+.fb {
+    display: none;
+    margin: 0;
+}
+
+.ribbon {
+    height: 50px;
+}
+
+@keyframes blink {
+    0% {
+        opacity: 1;
+        /* Start with full opacity */
+    }
+
+    100% {
+        opacity: 0;
+        /* End with zero opacity (invisible) */
+    }
+}
+
+
+.upload {
+    height: 50px;
+    width: 180px;
+    margin-top: 30px;
+    font-family: "Press Start 2P";
+    background-color: pink;
+}
+
+.sns {
+    display: flex;
+    margin-top: 10px;
+    gap: 20px;
+}
+
+td {
+    padding: 10px;
 }
