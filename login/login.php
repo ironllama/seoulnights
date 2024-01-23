@@ -24,12 +24,17 @@ if (isset($_SESSION['name'])) {
 
 <body>
     <div class="sessionID"><?= $session_id ?></div>
+    <div class="game-intro">
+        <h2>You're headed out for a night in Hongdae.</h2>
+        <p>The goal is to maximize your <span class="drunk-text">drunk</span> score while keeping your <span class="energy-text">energy</span> and <span class="money-text">money</span> levels high. Choose your path through the <span class="focus-e">events</span>, and fight your way through <span class="focus-b">battles</span> to make it to dawn (when the subway opens).</p>
+        <h2>Your train is arriving...</h2>
+    </div>
     <div class="fade-out-overlay"></div>
     <img src="../media/login/seoulnights.png" class="seoulnights" />
     <img class="hongdae" src="../media/login/hongdae.png">
     <div class="welcome"></div>
-    <img class="playerPic">
-    <div class="main">
+    <div class="logged-in-wrapper">
+        <img class="playerPic">
         <div class="buttons">
             <button class="loginButton">
                 <img class="logo" src="../media/login/googlelogin.png">
@@ -43,6 +48,7 @@ if (isset($_SESSION['name'])) {
             <!-- <button class="signoutButton">Sign Out</button> -->
         </div>
     </div>
+
     <script type="text/javascript">
         const loginButton = document.querySelector(".loginButton");
         const signoutButton = document.querySelector(".signoutButton");
@@ -53,7 +59,7 @@ if (isset($_SESSION['name'])) {
         const kakaoButton = document.getElementById("kakao-login-btn");
         const overlay = document.querySelector(".fade-out-overlay");
         const audio = new Audio('../media/music/hongdae-korean.mp3');
-
+        const introScroller = document.querySelector(".game-intro");
 
         function unlinkApp() {
             Kakao.API.request({
@@ -104,6 +110,7 @@ if (isset($_SESSION['name'])) {
                             })
 
                         playButton.addEventListener("click", function(event) {
+                            introScroller.classList.add("scroller");
                             event.preventDefault();
                             audio.play();
                             fetch('startNewGame.php', {
@@ -115,11 +122,9 @@ if (isset($_SESSION['name'])) {
                                 })
                                 .then(res => res.text())
                                 .then(data => {
-                                    console.log(data)
-
+                                    console.log(data);
                                     overlay.style.opacity = "1"; // Set overlay opacity to fully opaque
                                     overlay.style.pointerEvents = "auto"; // Allow interactions with the overlay
-
                                     // After a delay (for the fade-out effect), navigate to the new site
                                     setTimeout(function() {
                                         window.location.href = "../map/map.php";
@@ -222,6 +227,7 @@ if (isset($_SESSION['name'])) {
 
 
                     playButton.addEventListener("click", function() {
+                        introScroller.classList.add("scroller");
                         audio.play();
                         fetch('startNewGame.php', {
                                 method: 'POST',

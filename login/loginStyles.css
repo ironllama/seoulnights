@@ -16,9 +16,16 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    overflow: hidden;
+}
+
+.logged-in-wrapper {
+    display: flex;
+    gap: 2em;
 }
 
 .buttons {
+    z-index: 100;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -35,6 +42,8 @@ body {
 .playerPic {
     margin-top: 1em;
     border-radius: 5px;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
 }
 
 .signoutButton,
@@ -45,6 +54,8 @@ body {
     width: 200px;
     border-radius: 10px;
     text-align: center;
+    border: 2px solid palegreen;
+    box-shadow: 2px 2px hotpink;
 }
 
 .playButton {
@@ -100,7 +111,7 @@ a {
     opacity: 0;
     pointer-events: none;
     /* Prevent overlay from blocking interactions with the page */
-    z-index: 9999;
+    z-index: 999;
     /* Ensure overlay appears on top of other elements */
     transition: opacity 5s;
     /* Add a smooth fade transition effect */
@@ -108,7 +119,7 @@ a {
 
 .seoulnights {
     width: 500px;
-    margin-bottom: 10em;
+    margin-bottom: 8em;
 }
 
 .hongdae {
@@ -139,4 +150,80 @@ a {
 
 .sessionID {
     display: none;
+}
+
+.game-intro {
+    opacity: 1;
+    z-index: 9999;
+    position: absolute;
+    margin: 0 auto;
+    top: calc(50% + 435px);
+    max-width: 50em;
+    padding: 0 1em;
+
+    background: #0f0f0f;
+    border: 3px solid #F0F0F0;
+
+    line-height: 5em;
+    text-align: center;
+}
+
+.scroller {
+    animation: scrollFadeInOut 15s linear forwards;
+}
+
+@keyframes scrollFadeInOut {
+    0% {
+        transform: translateY(0);
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    60% {
+        transform: translateY(-800px);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-800px);
+        opacity: 0;
+    }
+}
+
+.drunk-text {
+    color: darkolivegreen;
+}
+.energy-text {
+    color: cornflowerblue;
+}
+.money-text {
+    color: gold;
+}
+
+.focus-e {
+    animation: 1s steps(5) infinite alternate focusE;
+}
+
+.focus-b {
+    animation: 1s steps(5) infinite alternate focusB;
+}
+
+@keyframes focusE {
+    from {
+        box-shadow: 0px 0px 0px lightskyblue;
+    }
+
+    to {
+        box-shadow: 0px 0px 0px .5em lightskyblue;
+    }
+}
+
+@keyframes focusB {
+    from {
+        box-shadow: 0px 0px 0px red;
+    }
+
+    to {
+        box-shadow: 0px 0px 0px .5em red;
+    }
 }
