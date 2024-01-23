@@ -13,8 +13,6 @@ session_start();
     <title>Top 10 Leaderboard</title>
     <link rel="stylesheet" href="leaderboardStyles.css">
 </head>
-
-<body>
     <div class="sessionID"><?= $session_id ?></div>
     <div class="main1">
         <div class="leaderboardTitle">
@@ -193,6 +191,6 @@ session_start();
 
     mainscreenButton.addEventListener("click", (event) => {
         event.preventDefault();
-        window.location.href = "../map/map.php";
-    });
+        window.location.href = "../login/login.php";
+    })
 </script>
