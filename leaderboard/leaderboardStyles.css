@@ -1,7 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
 
+.sessionID {
+    display: none;
+}
+
+.mainscreen {
+    margin: 1em auto;
+    border: inset 5px gray;
+    padding: 1em;
+    height: 3em;
+    font-size: 1.5em;
+    display: flex;
+    align-items: center;
+}
+
 body {
-    background-color: cornflowerblue;
+    height: 100vh;
+    width: 100vw;
+    background: #0F0F0F;
+    background-image: url("../media/map/mapbg.png");
+    background-position: bottom;
+    background-repeat: repeat-x;
     font-family: "Press Start 2P";
     color: white;
 }
@@ -23,6 +42,10 @@ body {
     gap: 10px;
 }
 
+.leaderboard {
+    background: rgba(0,0,0,.75);
+}
+
 table,
 thead,
 td {
@@ -41,6 +64,7 @@ table {
 }
 
 .errorresult {
+    margin-top: 5em;
     font-weight: bold;
     font-size: 30px;
     animation: blink 1s infinite alternate;
@@ -54,6 +78,7 @@ table {
 
 .ribbon {
     height: 50px;
+    fill: white;
 }
 
 @keyframes blink {

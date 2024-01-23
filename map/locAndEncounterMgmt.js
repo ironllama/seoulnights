@@ -78,6 +78,7 @@ function youLose() {
     storeButton.style.display = "none";
     encounterZone.style.display = "none";
     encounterResult.style.display = "flex";
+    narrationTypewriter("Go home, you're broke!")
     energyBar.value = 0;
     energyNum.innerHTML = 0;
     resolutionText.innerHTML = "You are out of money and too broke to go on! You couldn't handle a night out in Hongdae! Try again?"
@@ -109,6 +110,7 @@ function showResults(inData) {
     if (inData['updatedEnergyLevel'] <= 0) { //you lose
         energyBar.value = 0;
         energyNum.innerHTML = 0;
+        narrationTypewriter("Go home! You're wasted!");
         resolutionText.innerHTML = "You are out of energy and couldn't handle a night out in Hongdae! Try again?"
         document.querySelector(".state-changes-container").innerHTML = "";
         encounterResult.addEventListener("click", () => {

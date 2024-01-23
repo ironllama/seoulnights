@@ -13,9 +13,7 @@ session_start();
     <title>Top 10 Leaderboard</title>
     <link rel="stylesheet" href="leaderboardStyles.css">
 </head>
-
-<body>
-    <?= session_id() ?>
+    <div class="sessionID"><?= $session_id ?></div>
     <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
@@ -35,6 +33,7 @@ session_start();
             <tbody>
             </tbody>
         </table>
+        <button class="mainscreen">Return to Main Screen</button>
         <br>
         <br>
         <div class="errorresult"></div>
@@ -156,7 +155,7 @@ session_start();
                 facebook.style.display = "initial";
                 twitter.style.display = "flex";
             } else {
-                errorResult.innerHTML = "RUN HAS NOT BEEN STARTED";
+                errorResult.innerHTML = "CANNOT SUBMIT - RUN HAS NOT BEEN STARTED";
                 playerStats.style.display = "none";
                 uploadButton.style.display = "none";
             }

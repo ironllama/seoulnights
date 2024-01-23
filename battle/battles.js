@@ -203,10 +203,8 @@ function triggerBattle(data) {
                         if (playerHealthBar.value <= 0) {
                             playedCards = [];
 
-
                             battleMusic.pause();
                             mapMusic.volume = 1;
-                            alert("Battle Over, you lost!");
 
                             fetch('getRoundResult.php')
                                 .then(res => res.json())
