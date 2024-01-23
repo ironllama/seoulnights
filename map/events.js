@@ -10,7 +10,7 @@ function triggerEvent(inData) {
     let possibleChoices = 3;
     eventZone.style.display = "flex";
     eventZone.querySelector(".event-title").innerHTML = inData.event_title;
-    eventZone.querySelector(".event-image").style.backgroundImage = `url('${inData.event_img}')`;
+    eventZone.querySelector(".event-image").style.backgroundImage = `url(../media/events/'${inData.event_img}')`;
     eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
     optionButtons.forEach((button) => {
         button.classList.add("can-choose");
@@ -72,12 +72,12 @@ function triggerEvent(inData) {
         const currentPlayerState = JSON.stringify([event.currentTarget.id + ""]);
         console.log("id of chosen option button:", currentPlayerState);
         fetch(`getEncounterResults.php`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: currentPlayerState
-            })
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: currentPlayerState
+        })
             .then(response => {
                 console.log(response);
                 if (!response.ok) throw new Error('Network response was not ok');
