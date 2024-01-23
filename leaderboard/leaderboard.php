@@ -16,7 +16,6 @@ session_start();
 
 <body>
     <div class="sessionID"><?= $session_id ?></div>
-    <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
             <img class="ribbon" src="../media/leaderboard/award.svg">
@@ -35,7 +34,7 @@ session_start();
             <tbody>
             </tbody>
         </table>
-        <button class="mainscreen">Return to Main Screen</button>
+        <button class="mainscreen">Go Back</button>
         <br>
         <br>
         <div class="errorresult"></div>
@@ -192,11 +191,8 @@ session_start();
         twitter.style.display = 'none';
     })
 
-
-
     mainscreenButton.addEventListener("click", (event) => {
         event.preventDefault();
-
         window.location.href = "../map/map.php";
-    })
+    });
 </script>
