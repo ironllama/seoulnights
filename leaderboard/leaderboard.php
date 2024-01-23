@@ -15,8 +15,7 @@ session_start();
 </head>
 
 <body>
-    <?php echo session_id() ?>
-    <button class="mainscreen">Return to Main Screen</button>
+    <div class="sessionID"><?= $session_id ?></div>
     <div class="main1">
         <div class="leaderboardTitle">
             <img class="ribbon" src="../media/leaderboard/award.svg">
@@ -35,6 +34,7 @@ session_start();
             <tbody>
             </tbody>
         </table>
+        <button class="mainscreen">Return to Main Screen</button>
         <br>
         <br>
         <div class="errorresult"></div>
@@ -181,7 +181,7 @@ session_start();
                 facebook.style.display = "initial";
                 twitter.style.display = "flex";
             } else {
-                errorResult.innerHTML = "RUN HAS NOT BEEN STARTED";
+                errorResult.innerHTML = "CANNOT SUBMIT - RUN HAS NOT BEEN STARTED";
                 playerStats.style.display = "none";
                 uploadButton.style.display = "none";
             }
