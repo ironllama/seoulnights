@@ -6,7 +6,6 @@ if (isset($_SESSION['name'])) {
     // Redirect to another page if 'name' is set
     // header('Location: ../map/map.php');
     echo $_SESSION['name'];
-    exit; // Ensure the script exits after redirection
 };
 
 ?>
@@ -60,6 +59,14 @@ if (isset($_SESSION['name'])) {
         const overlay = document.querySelector(".fade-out-overlay");
         const audio = new Audio('../media/music/hongdae-korean.mp3');
         const introScroller = document.querySelector(".game-intro");
+        var redirect = <?php echo json_encode($_SESSION['name']); ?>;
+
+        if (redirect) {
+            loginButton.style.display = "none";
+            kakaoButton.style.display = "none";
+            playButton.style.display = "initial";
+            leaderboardButton.style.display = "initial";
+        }
 
         function unlinkApp() {
             Kakao.API.request({

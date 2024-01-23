@@ -11,6 +11,13 @@ if (!isset($_SESSION['loaded'])) {
     header('Location: ../login/login.php');
     exit; // Ensure the script exits after redirection
 }
+
+// if (!isset($_SESSION['loaded'])) {
+//     $_SESSION['loaded'] = true;
+// } else {
+//     header('Location: ../login/login.php');
+//     // exit; // Ensure the script exits after redirection
+// }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -325,7 +332,7 @@ if (!isset($_SESSION['loaded'])) {
     <script>
         let gameRound = 0;
         const mapElement = document.querySelector(".map");
-        
+
         //Map Zones / Location Cards
         const currentZone = document.querySelector("#start")
         let currentCards = currentZone.querySelectorAll(".location-card");

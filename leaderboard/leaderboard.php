@@ -15,6 +15,7 @@ session_start();
 </head>
 
 <body>
+    <?= session_id() ?>
     <button class="mainscreen">Return to Main Screen</button>
     <div class="main1">
         <div class="leaderboardTitle">
@@ -195,6 +196,6 @@ session_start();
     mainscreenButton.addEventListener("click", (event) => {
         event.preventDefault();
 
-        window.location.href = "../map/map.php";
+        window.location.href = "../login/login.php";
     })
 </script>
