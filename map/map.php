@@ -104,11 +104,7 @@ if (!isset($_SESSION['loaded'])) {
                                 </div>
                             </div>
                         </div>
-<<<<<<< HEAD
                         <button class="option-button option-button1">
-=======
-                        <button class="option-button option-button1  can-choose">
->>>>>>> 12c6bf89d748aa273280dba73140d5f367473eb6
                             <svg xmlns="http://www.w3.org/2000/svg" height="16" width="18" viewBox="0 0 576 512">
                                 <path d="M9.4 86.6C-3.1 74.1-3.1 53.9 9.4 41.4s32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3l-192 192c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L178.7 256 9.4 86.6zM256 416H544c17.7 0 32 14.3 32 32s-14.3 32-32 32H256c-17.7 0-32-14.3-32-32s14.3-32 32-32z" />
                             </svg>
@@ -207,21 +203,6 @@ if (!isset($_SESSION['loaded'])) {
                         <span class="player-health-num">100</span>
                     </div>
                 </div>
-<<<<<<< HEAD
-=======
-                <div class="moveset">
-                    <h2>Enemy Moveset</h2>
-                    <div class="enemymove-zone">
-                    </div>
-                </div>
-            </div>
-            <div class="card-area">
-            </div>
-            <div class="player-healthbar">
-                <h5>Your Energy</h5>
-                <progress max="100" value="100" class="player-health-bar"></progress>
-                <span class="player-health-num">100</span>
->>>>>>> 12c6bf89d748aa273280dba73140d5f367473eb6
             </div>
         </div>
     </div>
@@ -412,7 +393,6 @@ if (!isset($_SESSION['loaded'])) {
                         i++;
                     }
 
-<<<<<<< HEAD
                     let gameRound = 0;
 
                     //get map elements
@@ -823,9 +803,6 @@ if (!isset($_SESSION['loaded'])) {
                         prepareRound();
                     }
 
-=======
-                    narrationTypewriter("You arrive at Hongdae Station, Exit 9...");
->>>>>>> 12c6bf89d748aa273280dba73140d5f367473eb6
                     prepareRound();
                 });
         });
