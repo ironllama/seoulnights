@@ -444,6 +444,9 @@ progress {
     background: #0f0f0f;
     color: lime;
     font-size: 1.5em;
+    font-family: "Press Start 2P";
+    display: flex;
+    align-items: center;
 }
 
 .store-button-container {
@@ -468,6 +471,8 @@ progress {
 }
 
 .open-store-button {
+    background-image: url("../media/mart/storebutton.png");
+    background-size: cover;
     align-self: flex-start;
     height: 10vh;
     width: 10vh;

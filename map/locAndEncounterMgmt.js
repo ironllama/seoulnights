@@ -75,6 +75,7 @@ const endGame = document.querySelector("#end-game");
 const finalScore = document.querySelector(".final-score");
 
 function youLose() {
+    storeButton.style.display = "none";
     encounterZone.style.display = "none";
     encounterResult.style.display = "flex";
     energyBar.value = 0;
@@ -117,6 +118,7 @@ function showResults(inData) {
         updateHUD();
         if (gameRound >= cardZoneList.length - 1) {
             encounterResult.addEventListener("click", () => {
+                storeButton.style.display = "none";
                 endGame.style.display = "flex";
                 document.querySelector(".end-energy-num").innerHTML = energyBar.value;
                 document.querySelector(".end-drunk-num").innerHTML = drunkBar.value;
