@@ -10,7 +10,7 @@ function triggerEvent(inData) {
     let possibleChoices = 3;
     eventZone.style.display = "flex";
     eventZone.querySelector(".event-title").innerHTML = inData.event_title;
-    eventZone.querySelector(".event-image").style.backgroundImage = `url(../media/events/'${inData.event_img}')`;
+    eventZone.querySelector(".event-image").style.backgroundImage = `url("../media/events/${inData.event_img}")`;
     eventZone.querySelector(".prompt-container").innerHTML = inData.event_description;
     optionButtons.forEach((button) => {
         button.classList.add("can-choose");
