@@ -9,9 +9,9 @@
     border: inset 5px gray;
     padding: 1em;
     height: 3em;
-    font-size: 1.5em;
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 body {
@@ -106,7 +106,6 @@ table {
     width: 180px;
     /* margin-top: 30px; */
     font-family: "Press Start 2P";
-    background-color: pink;
 }
 
 
