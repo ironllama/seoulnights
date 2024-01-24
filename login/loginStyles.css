@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
-
 .main {
     display: flex;
     flex-direction: column;
@@ -22,26 +21,31 @@ body {
 .logged-in-wrapper {
     display: flex;
     gap: 2em;
+    align-items: center;
+}
+
+.not-logged-in {
+    z-index: 999;
 }
 
 .buttons {
     z-index: 100;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: .625rem;
     align-items: center;
     justify-content: center;
 }
 
 .welcome {
-    font-size: 40px;
+    font-size: 2.5rem;
     font-weight: bold;
     text-align: center;
 }
 
 .playerPic {
     margin-top: 1em;
-    border-radius: 5px;
+    border-radius: .3125rem;
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
 }
@@ -50,9 +54,9 @@ body {
 .playButton,
 .leaderboardButton {
     display: none;
-    height: 75px;
-    width: 200px;
-    border-radius: 10px;
+    height: 4.868rem;
+    width: 12.5rem;
+    border-radius: .625rem;
     text-align: center;
     border: 2px solid palegreen;
     box-shadow: 2px 2px hotpink;
@@ -68,14 +72,14 @@ button {
 
 .loginButton {
     font-family: sans-serif;
-    height: 49px;
-    width: 222px;
-    border-radius: 10px;
+    height: 3rem;
+    width: 13.875rem;
+    border-radius: .625rem;
     display: flex;
     justify-content: center;
     align-items: center;
     color: gray;
-    gap: 30px;
+    gap: 1.875rem;
 }
 
 h1 { 
@@ -97,8 +101,7 @@ a {
 
 .playerPic {
     display: none;
-    height: 200px;
-    width: 200px;
+    height: 5rem;
 }
 
 .fade-out-overlay {
@@ -118,7 +121,7 @@ a {
 }
 
 .seoulnights {
-    width: 500px;
+    width: 31.25rem;
     margin-bottom: 8em;
 }
 
@@ -157,7 +160,7 @@ a {
     z-index: 9999;
     position: absolute;
     margin: 0 auto;
-    top: calc(50% + 435px);
+    top: calc(50% + 27.187rem);
     max-width: 50em;
     padding: 0 1em;
 
@@ -181,11 +184,11 @@ a {
         opacity: 1;
     }
     60% {
-        transform: translateY(-800px);
+        transform: translateY(-50rem);
         opacity: 1;
     }
     100% {
-        transform: translateY(-800px);
+        transform: translateY(-50rem);
         opacity: 0;
     }
 }
@@ -225,5 +228,73 @@ a {
 
     to {
         box-shadow: 0px 0px 0px .5em red;
+    }
+}
+
+@media only screen and (max-width: 393px), only screen and (max-height: 600px) {
+    body {
+        margin: 0;
+        overflow: hidden;
+        max-height: 100dvh;
+    }
+    .seoulnights {
+        margin: 0;
+        width: 20rem;
+    }
+    .buttons {
+        flex-direction: row;
+    }
+    .hongdae {
+        position: static;
+        margin-top: -13em;
+        width: 30em;
+    }
+    .welcome {
+        margin-top: -8rem;
+        font-size: 1.5rem;
+    }
+    .playerpic {
+        height: 5rem;
+    }
+    body button {
+        font-size: inherit;
+    }
+    .playButton, .leaderboardButton {
+        height: 3rem;
+        font-size: inherit;
+    }
+    .loginButton {
+        height: 3rem;
+    }
+    #kakao-login-btn {
+        height: 3rem;
+    }
+    .not-logged-in {
+        margin-top: 2em;
+    }
+    .logged-in-wrapper {
+        margin-top: -2em;
+        z-index: 995;
+    }
+
+    @keyframes scrollFadeInOut {
+        0% {
+            transform: translateY(0);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1;
+        }
+        60% {
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(-70rem);
+            opacity: 0;
+        }
+    }
+
+    .scroller {
+        animation: scrollFadeInOut 9s linear forwards;
     }
 }
