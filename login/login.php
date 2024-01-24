@@ -22,7 +22,7 @@ if (isset($_SESSION['name'])) {
 </head>
 
 <body>
-    <div class="sessionID"><?= $session_id ?></div>
+    <div class="sessionID"><?= session_id() ?></div>
     <div class="game-intro">
         <h2>You're headed out for a night in Hongdae.</h2>
         <p>The goal is to maximize your <span class="drunk-text">drunk</span> score while keeping your <span class="energy-text">energy</span> and <span class="money-text">money</span> levels high. Choose your path through the <span class="focus-e">events</span>, and fight your way through <span class="focus-b">battles</span> to make it to dawn (when the subway opens).</p>
@@ -59,7 +59,7 @@ if (isset($_SESSION['name'])) {
         const overlay = document.querySelector(".fade-out-overlay");
         const audio = new Audio('../media/music/hongdae-korean.mp3');
         const introScroller = document.querySelector(".game-intro");
-       
+
 
         function unlinkApp() {
             Kakao.API.request({
@@ -199,9 +199,6 @@ if (isset($_SESSION['name'])) {
                     // The signed-in user info.
                     const user = result.user;
                     console.log(user);
-
-
-
 
                     fetch('loginAPI.php', {
                             method: 'POST',
