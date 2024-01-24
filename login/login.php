@@ -5,7 +5,7 @@ $session_id = session_id();
 if (isset($_SESSION['name'])) {
     // Redirect to another page if 'name' is set
     // header('Location: ../map/map.php');
-    echo $_SESSION['name'];
+    // echo $_SESSION['name'];
 };
 
 ?>
@@ -32,8 +32,7 @@ if (isset($_SESSION['name'])) {
     <img src="../media/login/seoulnights.png" class="seoulnights" />
     <img class="hongdae" src="../media/login/hongdae.png">
     <div class="welcome"></div>
-    <div class="logged-in-wrapper">
-        <img class="playerPic">
+    <div class="not-logged-in">
         <div class="buttons">
             <button class="loginButton">
                 <img class="logo" src="../media/login/googlelogin.png">
@@ -42,10 +41,13 @@ if (isset($_SESSION['name'])) {
             <a id="kakao-login-btn"></a>
             <!-- <button class="api-btn" onclick="unlinkApp()">앱 탈퇴하기</button> -->
             <!-- <div id="result"></div> -->
+        </div>
+    </div>
+    <div class="logged-in-wrapper">
+        <img class="playerPic">
             <button class="playButton">Play</button>
             <button class="leaderboardButton">Leaderboard</button>
             <!-- <button class="signoutButton">Sign Out</button> -->
-        </div>
     </div>
 
     <script type="text/javascript">

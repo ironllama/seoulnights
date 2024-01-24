@@ -47,11 +47,18 @@ function narrationTypewriter(inString) {
 }
 
 function formatAsOclock(hour) {
-    hour = hour + 20;
-    hour = Math.max(0, Math.min(23, hour));
-    const formattedHour = hour === 0 ? 12 : (hour > 12 ? hour - 12 : hour);
-    const amPm = hour < 12 ? 'AM' : 'PM';
-    const oclockString = `${formattedHour} o'clock ${amPm}`;
+    let num;
+    let amOrPm;
+    if (hour < 4) {
+        num = hour + 8;
+        amOrPm = "AM";
+    } else if (hour === 4) {
+        num = 12;
+        amOrPm = "AM";
+    } else if (hour > 4) {
+        num = hour - 4;
+        amOrPm = "PM";
+    }
 
-    return oclockString;
+    return num + "o'clock " + amOrPm;
 }
