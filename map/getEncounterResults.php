@@ -48,6 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 $updatedEnergyLevel = $currentEnergyLevel;
                 $updatedMoneyLevel = $currentMoneyLevel;
                 $updatedDrunkLevel = $currentDrunkLevel + 5;
+                if ($updatedDrunkLevel > 100) $updatedDrunkLevel = 100;
             }
             if ($decoded_data[1] === "3") {
                 $updatedEnergyLevel = $currentEnergyLevel;
