@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 try {
-    $db = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
+    $db = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
 } catch (Exception $e) {
     die('Error : ' . $e->getMessage());
 }

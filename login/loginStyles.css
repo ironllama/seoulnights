@@ -1,300 +1,302 @@
-@import url('https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Gaegu:wght@300&family=Press+Start+2P&display=swap");
 .main {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1em;
 }
 
 body {
-    background: #0F0F0F;
-    color: #F0F0F0;
-    font-family: "Press Start 2P";
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
+  background: #0f0f0f;
+  color: #f0f0f0;
+  font-family: "Press Start 2P";
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
 .logged-in-wrapper {
-    display: flex;
-    gap: 2em;
-    align-items: center;
+  display: flex;
+  gap: 2em;
+  align-items: center;
 }
 
 .not-logged-in {
-    z-index: 999;
+  z-index: 999;
 }
 
 .buttons {
-    z-index: 100;
-    display: flex;
-    flex-direction: column;
-    gap: .625rem;
-    align-items: center;
-    justify-content: center;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  align-items: center;
+  justify-content: center;
 }
 
 .welcome {
-    font-size: 2.5rem;
-    font-weight: bold;
-    text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
 }
 
 .playerPic {
-    margin-top: 1em;
-    border-radius: .3125rem;
-    border: 2px solid palegreen;
-    box-shadow: 2px 2px hotpink;
+  border-radius: 0.3125rem;
+  border: 2px solid palegreen;
+  box-shadow: 2px 2px hotpink;
 }
 
 .signoutButton,
 .playButton,
 .leaderboardButton {
-    display: none;
-    height: 4.868rem;
-    width: 12.5rem;
-    border-radius: .625rem;
-    text-align: center;
-    border: 2px solid palegreen;
-    box-shadow: 2px 2px hotpink;
+  display: none;
+  height: 4.868rem;
+  width: 12.5rem;
+  border-radius: 0.625rem;
+  text-align: center;
+  border: 2px solid palegreen;
+  box-shadow: 2px 2px hotpink;
 }
 
 .playButton {
-    /* font-size: 2em; */
+  /* font-size: 2em; */
 }
 
 button {
-    font-family: inherit;
+  font-family: inherit;
 }
 
 .loginButton {
-    font-family: sans-serif;
-    height: 3rem;
-    width: 13.875rem;
-    border-radius: .625rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: gray;
-    gap: 1.875rem;
+  font-family: sans-serif;
+  height: 3rem;
+  width: 13.875rem;
+  border-radius: 0.625rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: gray;
+  gap: 1.875rem;
 }
 
-h1 { 
-    text-align: center;
-    font-size: 7em;
-    background: linear-gradient(to right, red, blue);
-    -webkit-background-clip: text;
-    color: transparent;
+h1 {
+  text-align: center;
+  font-size: 7em;
+  background: linear-gradient(to right, red, blue);
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
 }
 
 .logo {
-    height: 80%;
+  height: 80%;
 }
 
 .playerPic {
-    display: none;
-    height: 5rem;
+  display: none;
+  height: 5rem;
 }
 
 .fade-out-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-    opacity: 0;
-    pointer-events: none;
-    /* Prevent overlay from blocking interactions with the page */
-    z-index: 999;
-    /* Ensure overlay appears on top of other elements */
-    transition: opacity 5s;
-    /* Add a smooth fade transition effect */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  opacity: 0;
+  pointer-events: none;
+  /* Prevent overlay from blocking interactions with the page */
+  z-index: 999;
+  /* Ensure overlay appears on top of other elements */
+  transition: opacity 5s;
+  /* Add a smooth fade transition effect */
 }
 
 .seoulnights {
-    width: 31.25rem;
-    margin-bottom: 8em;
+  width: 31.25rem;
+  margin-bottom: 8em;
 }
 
 .hongdae {
-    position: absolute;
-    top: 6.5em;
-    width: 33em;
-    transform: rotate(-2deg);
-    animation: flicker 2s alternate infinite;
+  position: absolute;
+  top: 6.5em;
+  width: 33em;
+  transform: rotate(-2deg);
+  animation: flicker 2s alternate infinite;
 }
 
 @keyframes flicker {
-    0%, 100% {
-      opacity: 1;
-      filter: contrast(2);
-    }
-    25%, 50% {
-      opacity: 0.8;
-      filter: saturate(.5);
-    }
-    75% {
-        opacity: 0.6;
-    }
+  0%,
+  100% {
+    opacity: 1;
+    filter: contrast(2);
   }
-  
-  .neon-flicker {
-    animation: flicker 1s infinite;
+  25%,
+  50% {
+    opacity: 0.8;
+    filter: saturate(0.5);
   }
+  75% {
+    opacity: 0.6;
+  }
+}
+
+.neon-flicker {
+  animation: flicker 1s infinite;
+}
 
 .sessionID {
-    display: none;
+  display: none;
 }
 
 .game-intro {
-    opacity: 0;
-    z-index: 9999;
-    position: absolute;
-    margin: 0 auto;
-    top: calc(50% + 27.187rem);
-    max-width: 50em;
-    padding: 0 1em;
+  opacity: 0;
+  z-index: 9999;
+  position: absolute;
+  margin: 0 auto;
+  top: calc(50% + 27.187rem);
+  max-width: 50em;
+  padding: 0 1em;
 
-    background: #0f0f0f;
-    border: 3px solid #F0F0F0;
+  background: #0f0f0f;
+  border: 3px solid #f0f0f0;
 
-    line-height: 5em;
-    text-align: center;
+  line-height: 5em;
+  text-align: center;
 }
 
 .scroller {
-    animation: scrollFadeInOut 15s linear forwards;
+  animation: scrollFadeInOut 15s linear forwards;
 }
 
 @keyframes scrollFadeInOut {
-    0% {
-        transform: translateY(0);
-        opacity: 0;
-    }
-    20% {
-        opacity: 1;
-    }
-    60% {
-        transform: translateY(-50rem);
-        opacity: 1;
-    }
-    100% {
-        transform: translateY(-50rem);
-        opacity: 0;
-    }
+  0% {
+    transform: translateY(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  60% {
+    transform: translateY(-50rem);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-50rem);
+    opacity: 0;
+  }
 }
 
 .drunk-text {
-    color: darkolivegreen;
+  color: darkolivegreen;
 }
 .energy-text {
-    color: cornflowerblue;
+  color: cornflowerblue;
 }
 .money-text {
-    color: gold;
+  color: gold;
 }
 
 .focus-e {
-    animation: 1s steps(5) infinite alternate focusE;
+  animation: 1s steps(5) infinite alternate focusE;
 }
 
 .focus-b {
-    animation: 1s steps(5) infinite alternate focusB;
+  animation: 1s steps(5) infinite alternate focusB;
 }
 
 @keyframes focusE {
-    from {
-        box-shadow: 0px 0px 0px lightskyblue;
-    }
+  from {
+    box-shadow: 0px 0px 0px lightskyblue;
+  }
 
-    to {
-        box-shadow: 0px 0px 0px .5em lightskyblue;
-    }
+  to {
+    box-shadow: 0px 0px 0px 0.5em lightskyblue;
+  }
 }
 
 @keyframes focusB {
-    from {
-        box-shadow: 0px 0px 0px red;
-    }
+  from {
+    box-shadow: 0px 0px 0px red;
+  }
 
-    to {
-        box-shadow: 0px 0px 0px .5em red;
-    }
+  to {
+    box-shadow: 0px 0px 0px 0.5em red;
+  }
 }
 
 @media only screen and (max-width: 393px), only screen and (max-height: 600px) {
-    body {
-        margin: 0;
-        overflow: hidden;
-        max-height: 100dvh;
-    }
-    .seoulnights {
-        margin: 0;
-        width: 20rem;
-    }
-    .buttons {
-        flex-direction: row;
-    }
-    .hongdae {
-        position: static;
-        margin-top: -13em;
-        width: 30em;
-    }
-    .welcome {
-        margin-top: -8rem;
-        font-size: 1.5rem;
-    }
-    .playerpic {
-        height: 5rem;
-    }
-    body button {
-        font-size: inherit;
-    }
-    .playButton, .leaderboardButton {
-        height: 3rem;
-        font-size: inherit;
-    }
-    .loginButton {
-        height: 3rem;
-    }
-    #kakao-login-btn {
-        height: 3rem;
-    }
-    .not-logged-in {
-        margin-top: 2em;
-    }
-    .logged-in-wrapper {
-        margin-top: -2em;
-        z-index: 995;
-    }
+  body {
+    margin: 0;
+    overflow: hidden;
+    max-height: 100dvh;
+  }
+  .seoulnights {
+    margin: 0;
+    width: 20rem;
+  }
+  .buttons {
+    flex-direction: row;
+  }
+  .hongdae {
+    position: static;
+    margin-top: -13em;
+    width: 30em;
+  }
+  .welcome {
+    margin-top: -8rem;
+    font-size: 1.5rem;
+  }
+  .playerpic {
+    height: 5rem;
+  }
+  body button {
+    font-size: inherit;
+  }
+  .playButton,
+  .leaderboardButton {
+    height: 3rem;
+    font-size: inherit;
+  }
+  .loginButton {
+    height: 3rem;
+  }
+  #kakao-login-btn {
+    height: 3rem;
+  }
+  .not-logged-in {
+    margin-top: 2em;
+  }
+  .logged-in-wrapper {
+    margin-top: -2em;
+    z-index: 995;
+  }
 
-    @keyframes scrollFadeInOut {
-        0% {
-            transform: translateY(0);
-            opacity: 0;
-        }
-        20% {
-            opacity: 1;
-        }
-        60% {
-            opacity: 1;
-        }
-        100% {
-            transform: translateY(-70rem);
-            opacity: 0;
-        }
+  @keyframes scrollFadeInOut {
+    0% {
+      transform: translateY(0);
+      opacity: 0;
     }
+    20% {
+      opacity: 1;
+    }
+    60% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-70rem);
+      opacity: 0;
+    }
+  }
 
-    .scroller {
-        animation: scrollFadeInOut 9s linear forwards;
-    }
+  .scroller {
+    animation: scrollFadeInOut 9s linear forwards;
+  }
 }

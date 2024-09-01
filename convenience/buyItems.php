@@ -3,7 +3,7 @@ session_start();
 $sessionid = session_id();
 
 try {
-    $pdo = new PDO("mysql:host=localhost;dbname=businessdb", 'root', '');
+    $pdo = new PDO("mysql:host=localhost;dbname=u822506723_Seoul_Nights", 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die("Error: " . $e->getMessage());

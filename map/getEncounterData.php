@@ -15,7 +15,7 @@ if ($_POST['locationID'][0] == "b") {
 
 if ($_POST['locationID'] == 'store') {
     try {
-        $pdo = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
+        $pdo = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
     } catch (Exception $e) {
         die('Error : ' . $e->getMessage());
     }
@@ -39,7 +39,7 @@ $locationID = substr(($_POST['locationID']), 1); // assiging location ID to $loc
 if ($encountertype == 'event') {
     if (isset($_POST['locationID'])) {
         try {
-            $db = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
+            $db = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
 
             $findEvents = $db->prepare("SELECT * FROM location_events WHERE location_id = '$locationID' ORDER BY RAND() LIMIT 1"); // finding all possible events from location_events table
             $findEvents->execute();
@@ -86,7 +86,7 @@ if ($encountertype == 'event') {
 } else if ($encountertype == 'battle') {
 
     try {
-        $db = new PDO('mysql:host=localhost;dbname=businessdb;charset=utf8', 'root', '');
+        $db = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
     } catch (Exception $e) {
         die('Error : ' . $e->getMessage());
     }
