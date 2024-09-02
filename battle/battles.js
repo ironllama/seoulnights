@@ -149,7 +149,7 @@ function triggerBattle(data) {
               .then((res) => res.json())
               .then((data) => {
                 // what we get back is the updated values for the client
-                console.log("getRoundResult:", data);
+                // console.log("getRoundResult:", data);
 
                 updatedHealth = data["updatedEnergyLevel"];
                 updatedMoney = data["updatedMoneyLevel"];

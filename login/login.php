@@ -200,7 +200,7 @@ if (isset($_SESSION['name'])) {
 
                     // The signed-in user info.
                     const user = result.user;
-                    console.log(user);
+                    // console.log(user);
 
                     fetch('loginAPI.php', {
                             method: 'POST',
@@ -211,7 +211,7 @@ if (isset($_SESSION['name'])) {
                         })
                         .then(res => res.text())
                         .then(data => {
-                            console.log(data)
+                            // console.log(data)
                         })
 
                     // IdP data available using getAdditionalUserInfo(result)
@@ -237,7 +237,7 @@ if (isset($_SESSION['name'])) {
                             })
                             .then(res => res.text())
                             .then(data => {
-                                console.log(data);
+                                // console.log(data);
                                 overlay.style.opacity = "1"; // Set overlay opacity to fully opaque
                                 overlay.style.pointerEvents = "auto"; // Allow interactions with the overlay
 

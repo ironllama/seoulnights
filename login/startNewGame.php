@@ -25,7 +25,7 @@ $ifExists = $exists->rowCount();
 if ($ifExists == 0) {
     $newGame = $db->prepare("INSERT INTO gameplay_logs (player_name,run_sessionID,player_identifier) VALUES ('$name','$session_id','$player_identifier')");
     $newGame->execute();
-    echo "New Player Run added to the database";
+    // echo "New Player Run added to the database";
 } else if ($ifExists == 1) {
-    echo "Run has already been added. Was not added to the database";
+    // echo "Run has already been added. Was not added to the database";
 }

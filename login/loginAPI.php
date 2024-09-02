@@ -31,11 +31,11 @@ if ($loginMethod == 'google') {
     if ($ifExists == 0) {
         $newUser = $db->prepare("INSERT INTO seoulnights_users (user_identifier,name,login_method) VALUES ('$email','$full_name','$loginMethod')");
         $newUser->execute();
-        echo "New User Added to the database";
-        echo "Current Session Player: " . $_SESSION['name'];
+        // echo "New User Added to the database";
+        // echo "Current Session Player: " . $_SESSION['name'];
     } else if ($ifExists == 1) {
-        echo "User already exists. Was not added to the database";
-        echo "Current Session Player: " . $_SESSION['name'];
+        // echo "User already exists. Was not added to the database";
+        // echo "Current Session Player: " . $_SESSION['name'];
     }
 } // if loginMethod of kakao is sent over run this code
 else if ($loginMethod == 'kakao') {
@@ -48,10 +48,10 @@ else if ($loginMethod == 'kakao') {
     if ($ifExists == 0) {
         $newUser = $db->prepare("INSERT INTO seoulnights_users (user_identifier,name,login_method) VALUES ('$playerid','$full_name','$loginMethod')");
         $newUser->execute();
-        echo "New User Added to the database";
-        echo "Current Session Player: " . $_SESSION['name'];
+        // echo "New User Added to the database";
+        // echo "Current Session Player: " . $_SESSION['name'];
     } else if ($ifExists == 1) {
-        echo "User already exists. Was not added to the database";
-        echo "Current Session Player: " . $_SESSION['name'];
+        // echo "User already exists. Was not added to the database";
+        // echo "Current Session Player: " . $_SESSION['name'];
     }
 }

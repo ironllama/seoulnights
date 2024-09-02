@@ -22,13 +22,13 @@ if (isset($_POST['locationID'])) {
             shuffle($events);
             echo json_encode($events[0]);
         } else {
-            echo "No events found with locationID $locationID";
+            // echo "No events found with locationID $locationID";
         }
     } catch (Exception $e) {
         echo 'Error: ' . $e->getMessage();
     }
 } else {
-    echo "No locationID received";
+    // echo "No locationID received";
 }
 ?>
 

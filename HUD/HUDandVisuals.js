@@ -67,13 +67,13 @@ function formatAsOclock(hour) {
   let amOrPm;
   if (hour < 4) {
     num = hour + 8;
-    amOrPm = "AM";
+    amOrPm = "PM";
   } else if (hour === 4) {
     num = 12;
     amOrPm = "AM";
   } else if (hour > 4) {
     num = hour - 4;
-    amOrPm = "PM";
+    amOrPm = "AM";
   }
 
   return num + "o'clock " + amOrPm;

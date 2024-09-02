@@ -26,6 +26,7 @@ function locationClicked(event) {
     card.removeEventListener("click", locationClicked)
   );
   const locationID = event.target.id + "";
+  // console.log("sending to php:", locationID);
   fetch(`getEncounterData.php`, {
     method: "POST",
     headers: {
@@ -39,7 +40,7 @@ function locationClicked(event) {
       return response.json();
     })
     .then((encounterData) => {
-      // console.log('locationClicked:', encounterData);
+      // console.log("locationClicked:", encounterData);
       locationTrigger(encounterData);
     })
     .catch((error) => console.log(error));

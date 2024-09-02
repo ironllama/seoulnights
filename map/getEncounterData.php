@@ -56,12 +56,11 @@ if ($encountertype == 'event') {
             $eventOptions = $db->prepare("SELECT * FROM event_options where event_id = $locationEvent order by rand() limit 3");
             $eventOptions->execute();
             $eventOptionsResult = $eventOptions->fetchAll(PDO::FETCH_ASSOC); // getting all options associated with the event
-
             $options = array(); // instantiating options variable into type array
 
             foreach ($eventOptionsResult as $option) {
                 $optionid = $option['option_id']; // getting the option id of each option available to the event
-                $optionquery = $db->prepare("SELECT * FROM OPTIONS WHERE option_id=$optionid"); // querying for the specifc option
+                $optionquery = $db->prepare("SELECT * FROM options WHERE option_id=$optionid"); // querying for the specifc option
                 $optionquery->execute(); // executing the statement
                 $optionsData = $optionquery->fetch(PDO::FETCH_ASSOC); // fetching the actual data
 

@@ -18,7 +18,7 @@ if (isset($_POST['update'])) {
     $updateFinalScore = $db->prepare("UPDATE gameplay_logs set run_completed = '$yesUpdate' WHERE run_sessionID = '$sessionID'");
     $updateFinalScore->execute();
 
-    echo "Score Uploaded";
+    // echo "Score Uploaded";
 } else {
     $currentState = $db->prepare("SELECT * FROM gameplay_logs where run_sessionID = '$sessionID'");
     $currentState->execute();
