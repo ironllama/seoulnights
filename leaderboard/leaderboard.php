@@ -128,7 +128,7 @@ session_start();
                 fetch('updateLeaderboard.php')
                     .then(res1 => res1.json())
                     .then(data1 => {
-                        console.log("final player details: " + data1);
+                        // console.log("final player details: " + data1);
                         // creating table elements
                         tableRow = document.createElement("tr");
                         tableRank = document.createElement("td");
@@ -181,7 +181,7 @@ session_start();
             })
             .then(res => res.text())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 uploadCompleteMessage.innerHTML = data; // just outputs "score uploaded"
                 getLeaderboard();
             })

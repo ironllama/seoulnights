@@ -347,7 +347,7 @@ if (!isset($_SESSION['loaded'])) {
             fetch('getLocationData.php')
                 .then(res => res.json())
                 .then(data => {
-                    console.log("getLocationData:", data);
+                    // console.log("getLocationData:", data);
 
                     //map generation
                     const mapElement = document.querySelector(".map");

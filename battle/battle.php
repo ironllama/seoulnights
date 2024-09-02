@@ -154,8 +154,6 @@
             })
             .then(res => res.json())
             .then(data => {
-                console.log(data);
-
                 currentEnemy = data;
 
                 enemyPic.src = "pics/" + data['enemy_img'];
@@ -201,7 +199,6 @@
             fetch('getCards.php')
                 .then(res => res.json())
                 .then(data => {
-                    console.log(data);
                     cards = data;
                     cardArea = document.querySelector(".bot");
 
@@ -265,9 +262,9 @@
                                 location.reload();
                             }
 
-                            console.log("Turn")
-                            console.log("Your Move: " + JSON.stringify(currentRound));
-                            console.log("Enemy Move: " + JSON.stringify(enemyTurn));
+                            // console.log("Turn")
+                            // console.log("Your Move: " + JSON.stringify(currentRound));
+                            // console.log("Enemy Move: " + JSON.stringify(enemyTurn));
                             if (playedCards.length % 4 == 0 && playedCards.length > 1) {
                                 getNewCards();
                             }

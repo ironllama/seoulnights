@@ -77,7 +77,7 @@ if (isset($_SESSION['name'])) {
     </script>
     <script type="text/javascript">
         Kakao.init('3ffee278c83057c7a42a90c437cfaae2');
-        console.log(Kakao.isInitialized());
+        // console.log(Kakao.isInitialized());
 
         Kakao.Auth.createLoginButton({
             container: '#kakao-login-btn',
@@ -86,7 +86,7 @@ if (isset($_SESSION['name'])) {
                     url: '/v2/user/me',
                     success: function(result) {
                         data = result;
-                        console.log(data);
+                        // console.log(data);
                         kakao = 'kakao';
                         playerName = data['properties']['nickname'];
                         playerImgURL = data['properties']['profile_image']
@@ -108,7 +108,7 @@ if (isset($_SESSION['name'])) {
                             })
                             .then(res => res.text())
                             .then(data => {
-                                console.log(data)
+                                // console.log(data)
                             })
 
                         playButton.addEventListener("click", function(event) {
@@ -124,7 +124,7 @@ if (isset($_SESSION['name'])) {
                                 })
                                 .then(res => res.text())
                                 .then(data => {
-                                    console.log(data);
+                                    // console.log(data);
                                     overlay.style.opacity = "1"; // Set overlay opacity to fully opaque
                                     overlay.style.pointerEvents = "auto"; // Allow interactions with the overlay
                                     // After a delay (for the fade-out effect), navigate to the new site
