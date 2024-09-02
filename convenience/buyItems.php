@@ -1,4 +1,5 @@
 <?php
+require_once '../pdoconfig.php';
 session_start();
 $sessionid = session_id();
 

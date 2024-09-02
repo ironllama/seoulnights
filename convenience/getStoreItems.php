@@ -1,4 +1,6 @@
 <?php
+require_once '../pdoconfig.php';
+
 try {
     $pdo = new PDO("mysql:host=localhost;dbname=u822506723_Seoul_Nights", 'root', '');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

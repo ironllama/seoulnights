@@ -1,4 +1,5 @@
 <?php
+require_once '../pdoconfig.php';
 session_start();
 header('Content-Type: application/json');
 
@@ -7,7 +8,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 try {
-    $db = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
+    $db = new PDO(`mysql:host=$host;dbname=$dbname`, $username, $password);
 } catch (Exception $e) {
     die('Error : ' . $e->getMessage());
 }

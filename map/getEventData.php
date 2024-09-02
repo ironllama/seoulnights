@@ -1,10 +1,11 @@
 <?php
+require_once '../pdoconfig.php';
 if (isset($_POST['locationID'])) {
     $locationID = $_POST['locationID'];
     $ass_id = "%" . "(" . $locationID . ")" . "%";
 
     try {
-        $db = new PDO('mysql:host=localhost;dbname=u822506723_Seoul_Nights;charset=utf8', 'root', '');
+        $db = new PDO(`mysql:host=$host;dbname=$dbname`, $username, $password);
 
         // Using LIKE to find matching locationID within the associative_ids column
         $sql = 'SELECT * FROM events WHERE associative_id LIKE :locationID';
