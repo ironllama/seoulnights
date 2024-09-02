@@ -7,7 +7,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 try {
-    $db = new PDO(`mysql:host=$host;dbname=$dbname`, $username, $password);
+    $db = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
 } catch (Exception $e) {
     die('Error : ' . $e->getMessage());
 }
