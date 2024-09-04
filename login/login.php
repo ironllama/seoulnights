@@ -19,6 +19,20 @@ if (isset($_SESSION['name'])) {
     <link rel="stylesheet" href="loginStyles.css">
     <script src="https://developers.kakao.com/sdk/js/kakao.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <!-- styles for orientation prompt -->
+    <style>
+    #pleaserotate-graphic{
+        fill: hotpink;
+    }
+
+    #pleaserotate-backdrop {
+        color: #f0f0f0;
+        background-color: #0f0f0f;
+    }
+</style>
+    <script src="./orientationprompt.js"></script>
+
 </head>
 
 <body>
