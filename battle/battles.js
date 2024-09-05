@@ -57,7 +57,6 @@ function triggerBattle(data) {
   narrationBox.classList.add("battle-mode");
   narrationTypewriter(`A wild ${data["enemy_name"]} appeared!`);
 
-  mapMusic.volume = 0.1;
   battleMusic.play();
 
   playerHUD.style.display = "none";
@@ -206,7 +205,6 @@ function triggerBattle(data) {
               updateHUD();
               playerHUD.style.display = "flex";
               battleMusic.pause();
-              mapMusic.volume = 1;
             }
 
             //upon loss
