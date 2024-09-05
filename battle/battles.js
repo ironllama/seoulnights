@@ -212,7 +212,6 @@ function triggerBattle(data) {
               playedCards = [];
 
               battleMusic.pause();
-              mapMusic.volume = 1;
 
               fetch("getRoundResult.php")
                 .then((res) => res.json())
