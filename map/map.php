@@ -341,9 +341,7 @@ if (!isset($_SESSION['loaded'])) {
         const cardZoneList = document.querySelectorAll(".card-zone"); //creates a nodelist of zones
         const lastZone = cardZoneList[cardZoneList.length - 1]; //final round
 
-        mapMusic = new Audio("../media/music/mapmusic.mp3");
         document.addEventListener("DOMContentLoaded", () => {
-            mapMusic.play();
             fetch('getLocationData.php')
                 .then(res => res.json())
                 .then(data => {
